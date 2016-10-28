@@ -115,6 +115,9 @@ Run `npm test` to run tests once or `npm run test:watch` to continually run test
 npm run release
 ```
 
+For more information, see [generator-angular2-module](https://www.npmjs.com/package/generator-angular2-module). 
+It was used to create this project.
+
 ## License
 
 MIT
