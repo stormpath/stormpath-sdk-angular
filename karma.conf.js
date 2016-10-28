@@ -54,12 +54,7 @@ module.exports = function(config) {
         emitErrors: !WATCH,
         failOnHint: false
       },
-      plugins: [
-        new webpack.SourceMapDevToolPlugin({
-          filename: null,
-          test: /\.(ts|js)($|\?)/i
-        })
-      ].concat(WATCH ? [] : [new webpack.NoErrorsPlugin()])
+      devtool: 'inline-source-map'
     },
 
     remapIstanbulReporter: {
