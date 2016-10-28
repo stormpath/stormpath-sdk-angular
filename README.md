@@ -6,8 +6,10 @@
 [![GitHub stars](https://img.shields.io/github/stars/stormpath/stormpath-sdk-angular.svg)](https://github.com/stormpath/stormpath-sdk-angular/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/stormpath/stormpath-sdk-angular/master/LICENSE)
 
+<!--
 ## Demo
 https://stormpath.github.io/stormpath-sdk-angular/demo/
+-->
 
 ## Table of contents
 
@@ -32,17 +34,56 @@ Then use it in your app like so:
 
 ```typescript
 import {Component} from '@angular/core';
-import {HelloWorld} from 'stormpath-sdk-angular';
+import {Account,Stormpath} from 'stormpath-sdk-angular';
 
 @Component({
   selector: 'demo-app',
-  directives: [HelloWorld],
-  template: '<hello-world></hello-world>'
+  template: `<div *ngIf="(user$ | async)" class="row text-center">
+       <h2 class="">
+         Welcome, ({{ ( user$ | async ).fullName }}).
+       </h2>
+       <hr/>
+       <h4>What would you like to do?</h4>
+
+       <ul class="nav nav-pills nav-stacked text-centered">
+         <li role="presentation" (click)="showLogin()"><a href="#">Edit My Profile</a></li>
+         <li role="presentation" (click)="logout()"><a href="#"> Logout</a></li>
+       </ul>
+     </div>
+
+     <sp-authport></sp-authport>`
+  providers: [Stormpath]
 })
-export class DemoApp {}
+export class DemoApp {
+  private user$: Observable<Account | boolean>;
+  private loggedIn$: Observable<boolean>;
+  private login: boolean;
+  private register: boolean;
+
+  constructor(public stormpath: Stormpath) {}
+
+  ngOnInit() {
+    this.login = true;
+    this.register = false;
+    this.user$ = this.stormpath.user$;
+    this.loggedIn$ = this.user$.map(user => !!user);
+  }
+
+  showLogin() {
+    this.login = !(this.register = false);
+  }
+
+  showRegister() {
+    this.register = !(this.login = false);
+  }
+
+  logout() {
+    this.stormpath.logout();
+  }
+}
 ```
 
-You may also find it useful to view the [demo source](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/demo.ts).
+You may also find it useful to view the [demo source](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts).
 
 ### Usage without a module bundler
 ```
