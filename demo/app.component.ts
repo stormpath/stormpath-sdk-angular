@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
 import { Stormpath } from '../src/stormpath/stormpath.service';
 import { Account } from '../src/shared/account';
 
@@ -46,16 +45,10 @@ export class AppComponent implements OnInit {
 
   showLogin() {
     this.login = !(this.register = false);
-    // this.flip(this.login, this.register);
   }
 
   showRegister() {
     this.register = !(this.login = false);
-    // this.flip(this.register, this.login);
-  }
-
-  flip(a: boolean, b: boolean) {
-    a = !(b = false);
   }
 
   logout() {
