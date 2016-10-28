@@ -28,6 +28,7 @@
     "url": "git+https://github.com/stormpath/stormpath-sdk-angular.git"
   },
   "keywords": [
+    "angular",
     "angular2"
   ],
   "author": "Matt Raible",
