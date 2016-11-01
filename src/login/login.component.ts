@@ -24,14 +24,11 @@ import {
         </div>
       </div>
 
-
       <div class="form-group">
-
         <div class="col-xs-10 col-xs-offset-3 text-left">
           <a href="#" (click)="forgot()">&nbsp;Forgot Password?</a>
         </div>
       </div>
-
 
       <div *ngIf="error" class="alert alert-danger">{{error}}</div>
       <button (click)="login()" class="btn btn-primary pull-right">Login</button>
@@ -46,9 +43,9 @@ export class LoginComponent implements OnInit {
   protected error: string;
 
   constructor(public stormpath: Stormpath, public loginService: LoginService) {
-
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
     this.loginFormModel = {
@@ -56,14 +53,16 @@ export class LoginComponent implements OnInit {
       password: 'robert@stormpath.comA'
     };
   }
-  login() {
+
+  login(): void {
     this.error = null;
     this.stormpath.login(this.loginFormModel)
       .subscribe(null, (error: StormpathErrorResponse) => {
         this.error = error.message;
       });
   }
-  forgot() {
+
+  forgot(): void {
     this.loginService.forgotPassword();
   }
-};
+}

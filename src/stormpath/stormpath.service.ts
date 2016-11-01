@@ -11,8 +11,9 @@ import 'rxjs/add/operator/share';
 import 'rxjs/add/observable/throw';
 
 import { Account, BaseStormpathAccount } from '../shared/account';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
-let APPLICATION_JSON = 'application/json';
+let APPLICATION_JSON: string = 'application/json';
 
 class JsonGetOptions extends RequestOptions {
   constructor() {
@@ -30,7 +31,7 @@ class JsonPostOptions extends JsonGetOptions {
 }
 
 export function defaultSpTokenResolver(location: Location): string {
-  let m = location.path().match(/sptoken=([^&]+)/);
+  let m: RegExpMatchArray = location.path().match(/sptoken=([^&]+)/);
   return m && m.length === 2 ? m[1] : '';
 }
 
@@ -61,7 +62,6 @@ export interface PasswordResetRequest {
   sptoken: string;
 }
 
-
 export interface LoginFormModel {
   login: string;
   password: string;
@@ -83,12 +83,11 @@ export class LoginService {
     this.login = true;
     this.register = false;
   }
-  forgotPassword() {
+  forgotPassword(): void {
     this.forgot = true;
     this.login = false;
   }
 }
-
 
 @Injectable()
 export class Stormpath {
@@ -125,7 +124,7 @@ export class Stormpath {
       });
   }
 
-  getRegistrationViewModel() {
+  getRegistrationViewModel(): any {
     return this.http.get('/register', new JsonGetOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
@@ -139,7 +138,7 @@ export class Stormpath {
    * An observable that will return an Account if the POST was successful.
    */
   register(form: Object): Observable<Account> {
-    let observable = this.http.post('/register', JSON.stringify(form), new JsonPostOptions())
+    let observable: Observable<Account> = this.http.post('/register', JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .map(this.accountTransformer)
       .catch(this.errorTranslator)
@@ -147,49 +146,48 @@ export class Stormpath {
     return observable;
   }
 
-  login(form: LoginFormModel) {
-    let observable = this.http.post('/login', JSON.stringify(form), new JsonPostOptions())
+  login(form: LoginFormModel): Observable<Account> {
+    let observable: Observable<Account> = this.http.post('/login', JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .map(this.accountTransformer)
       .catch(this.errorTranslator)
       .share();
 
-    observable.subscribe(user => this.userSource.next(user), () => { });
+    observable.subscribe(user => this.userSource.next(user), () => undefined);
     return observable;
-
   }
 
-  logout() {
+  logout(): void {
     this.http.post('/logout', null, new JsonGetOptions())
       .catch(this.errorThrower)
       .subscribe(() => this.userSource.next(false));
   }
 
-  resendVerificationEmail(request: ResendEmailVerificationRequest) {
+  resendVerificationEmail(request: ResendEmailVerificationRequest): any {
     return this.http.post('/verify', JSON.stringify(request), new JsonPostOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
-  sendPasswordResetEmail(form: ForgotPasswordFormModel) {
+  sendPasswordResetEmail(form: ForgotPasswordFormModel): any {
     return this.http.post('/forgot', JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
-  resetPassword(form: PasswordResetRequest) {
+  resetPassword(form: PasswordResetRequest): any {
     return this.http.post('/change', JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
-  verifyEmailVerificationToken(sptoken: string) {
+  verifyEmailVerificationToken(sptoken: string): any {
     return this.http.get('/verify?sptoken=' + sptoken, new JsonGetOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
-  verifyPasswordResetToken(sptoken: string) {
+  verifyPasswordResetToken(sptoken: string): any {
     return this.http.get('/change?sptoken=' + sptoken, new JsonGetOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
@@ -200,7 +198,7 @@ export class Stormpath {
    * response is not a JSON error
    * @param {any} error
    */
-  private errorTranslator(error: any) {
+  private errorTranslator(error: any): ErrorObservable {
     let errorObject: StormpathErrorResponse;
     try {
       errorObject = error.json();
@@ -213,11 +211,11 @@ export class Stormpath {
     return Observable.throw(errorObject);
   }
 
-  private errorThrower(error: any) {
+  private errorThrower(error: any): ErrorObservable {
     return Observable.throw(error);
   }
 
-  private accountTransformer(json: any) {
+  private accountTransformer(json: any): Account {
     if (json && json.account) {
       return new Account(json.account as BaseStormpathAccount);
     } else {
@@ -225,7 +223,7 @@ export class Stormpath {
     }
   }
 
-  private jsonParser(res: Response) {
+  private jsonParser(res: Response): any {
     if (res.text() === '') {
       return null;
     }

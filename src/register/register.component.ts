@@ -13,7 +13,8 @@ import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/s
       <div class="form-group" *ngFor="let field of model?.form?.fields">
         <label [attr.for]="field.name" class="col-sm-4 control-label">{{field.label}}</label>
         <div class="col-sm-8">
-          <input class="form-control" [name]="field.name" [id]="field.name" [type]="field.type" [(ngModel)]="formModel[field.name]" [placeholder]="field.placeholder" [disabled]="creating" [required]="field.required">
+          <input class="form-control" [name]="field.name" [id]="field.name" [type]="field.type" 
+            [(ngModel)]="formModel[field.name]" [placeholder]="field.placeholder" [disabled]="creating" [required]="field.required">
         </div>
       </div>
       <div *ngIf="error" class="alert alert-danger">{{error}}</div>
@@ -32,12 +33,13 @@ import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/s
 export class RegisterComponent implements OnInit {
   @Input() autoLogin: boolean;
   protected model: Object;
-  private error: string;
+  protected error: string;
   protected viewModel$: Observable<Object>;
   protected formModel: RegistrationFormModel;
   protected unverified: boolean;
   protected canLogin: boolean;
   protected registered: boolean;
+
   constructor(public stormpath: Stormpath) {
     this.unverified = false;
     this.canLogin = false;
@@ -48,7 +50,8 @@ export class RegisterComponent implements OnInit {
       password: 'robert@stormpath.comA1'
     };
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     // this.formModel = {};
     this.stormpath.getRegistrationViewModel()
       .subscribe(model => {
@@ -57,7 +60,8 @@ export class RegisterComponent implements OnInit {
         this.error = error.message
       );
   }
-  register() {
+
+  register(): void {
     this.stormpath.register(this.formModel)
       .subscribe((account: Account) => {
         this.registered = true;
@@ -74,7 +78,8 @@ export class RegisterComponent implements OnInit {
         }
       }, error => this.error = error.message);
   }
-  onSubmit() {
+
+  onSubmit(): void {
     this.register();
   }
-};
+}
