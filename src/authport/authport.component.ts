@@ -22,10 +22,10 @@ import { Account } from '../shared/account';
                 <h4>
                   <ul class="nav nav-pills">
                     <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" (click)="showLogin()">
-                      <a href="">Sign In</a>
+                      <a>Sign In</a>
                     </li>
                     <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" class="pull-right">
-                      <a href="">Register</a>
+                      <a>Register</a>
                     </li>
                   </ul>
                 </h4>
