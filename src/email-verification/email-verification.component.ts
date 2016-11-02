@@ -31,11 +31,10 @@ export class EmailVerificationComponent implements OnInit {
   protected verificationFailed: boolean;
   protected sptoken: string;
 
-
   constructor(public stormpath: Stormpath, public location: Location) {
-
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.verifying = false;
     this.verified = false;
     this.verificationFailed = false;
@@ -45,12 +44,11 @@ export class EmailVerificationComponent implements OnInit {
     }
   }
 
-
   spTokenResolver(): string {
     return defaultSpTokenResolver(this.location);
   }
 
-  verify() {
+  verify(): void {
     this.verifying = true;
     this.stormpath.verifyEmailVerificationToken(this.sptoken)
       .subscribe(() => {
