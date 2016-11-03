@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
 import { Stormpath, LoginService } from '../stormpath/stormpath.service';
 import { Account } from '../shared/account';
 
@@ -75,13 +74,11 @@ export class AuthPortComponent implements OnInit {
 
   showLogin(): void {
     this.loginService.login = !(this.loginService.forgot = this.loginService.register = false);
-    // this.flip(this.loginService.login, this.loginService.loginService.register);
   }
 
   showRegister(): void {
     this.loginService.forgot = this.loginService.login = false;
     this.loginService.register = true;
-    // this.flip(this.loginService.loginService.register, this.loginService.login);
   }
 
   forgotPassword(): void {
@@ -89,11 +86,7 @@ export class AuthPortComponent implements OnInit {
     this.forgot = true;
   }
 
-  flip(a: boolean, b: boolean): void {
-    a = !(b = false);
-  }
-
   logout(): void {
-    // this.stormpath.logout();
+    this.stormpath.logout();
   }
 }
