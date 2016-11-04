@@ -46,18 +46,17 @@ export class ResendEmailVerificationComponent implements OnInit {
   protected sent: boolean;
 
   constructor(public stormpath: Stormpath) {
-
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.posting = false;
     this.sent = false;
     this.formModel = {
       login: ''
     };
-
   }
 
-  send() {
+  send(): void {
     this.posting = true;
     this.stormpath.resendVerificationEmail(this.formModel)
       .subscribe(() => {
@@ -68,7 +67,8 @@ export class ResendEmailVerificationComponent implements OnInit {
         this.error = error.message;
       });
   }
-  onSubmit() {
+
+  onSubmit(): void {
     this.send();
   }
-};
+}

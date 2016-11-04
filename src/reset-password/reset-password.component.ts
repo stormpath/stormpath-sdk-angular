@@ -1,8 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { Stormpath, PasswordResetRequest, defaultSpTokenResolver } from '../stormpath/stormpath.service';
-
 
 @Component({
   selector: 'reset-password',
@@ -22,13 +20,15 @@ import { Stormpath, PasswordResetRequest, defaultSpTokenResolver } from '../stor
       <div class="form-group">
         <label for="spEmail" class="col-xs-12 col-sm-4 control-label">New Password</label>
         <div class="col-xs-12 col-sm-4">
-          <input class="form-control" id="spUsername" [(ngModel)]="formModel.password" placeholder="New Password" type="password" [disabled]="posting">
+          <input class="form-control" id="spUsername" [(ngModel)]="formModel.password" 
+            placeholder="New Password" type="password" [disabled]="posting">
         </div>
       </div>
       <div class="form-group">
         <label for="spEmail" class="col-xs-12 col-sm-4 control-label">Confirm New Password</label>
         <div class="col-xs-12 col-sm-4">
-          <input class="form-control" id="spUsername" [(ngModel)]="formModel.confirmPassword" placeholder="Confirm New Password" type="password" [disabled]="posting">
+          <input class="form-control" id="spUsername" [(ngModel)]="formModel.confirmPassword" 
+            placeholder="Confirm New Password" type="password" [disabled]="posting">
         </div>
       </div>
       <div class="form-group">
@@ -40,7 +40,6 @@ import { Stormpath, PasswordResetRequest, defaultSpTokenResolver } from '../stor
     </form>
   </div>
 </div>
-
 `
 })
 @Injectable()
@@ -56,11 +55,10 @@ export class ResetPasswordComponent implements OnInit {
   protected verificationFailed: boolean;
   protected sptoken: string;
 
-
   constructor(public stormpath: Stormpath, public location: Location) {
-
   }
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.verifying = false;
     this.verified = false;
     this.verificationFailed = false;
@@ -75,14 +73,12 @@ export class ResetPasswordComponent implements OnInit {
     }
   }
 
-
   spTokenResolver(): string {
     return defaultSpTokenResolver(this.location);
   }
 
-  verify() {
+  verify(): void {
     this.verifying = true;
-
     this.stormpath.verifyPasswordResetToken(this.formModel.sptoken)
       .subscribe(() => {
         this.verifying = false;
@@ -97,7 +93,7 @@ export class ResetPasswordComponent implements OnInit {
       });
   }
 
-  send() {
+  send(): void {
     this.stormpath.resetPassword(this.formModel)
       .subscribe(
       () => {
@@ -111,7 +107,7 @@ export class ResetPasswordComponent implements OnInit {
       );
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.send();
   }
-};
+}
