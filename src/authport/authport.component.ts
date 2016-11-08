@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
 import { Stormpath, LoginService } from '../stormpath/stormpath.service';
 import { Account } from '../shared/account';
 
@@ -11,7 +10,6 @@ import { Account } from '../shared/account';
       <div class="container">
         <br/>
         <br/>
-
         <div class="row" *ngIf="(user$ | async) === false">
           <div class="col-xs-12 col-sm-offset-3 col-sm-6">
             <h1 class="text-center">Hello</h1>
@@ -23,10 +21,10 @@ import { Account } from '../shared/account';
                 <h4>
                   <ul class="nav nav-pills">
                     <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" (click)="showLogin()">
-                      <a href="">Sign In</a>
+                      <a>Sign In</a>
                     </li>
                     <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" class="pull-right">
-                      <a href="">Register</a>
+                      <a>Register</a>
                     </li>
                   </ul>
                 </h4>
@@ -76,13 +74,11 @@ export class AuthPortComponent implements OnInit {
 
   showLogin(): void {
     this.loginService.login = !(this.loginService.forgot = this.loginService.register = false);
-    // this.flip(this.loginService.login, this.loginService.loginService.register);
   }
 
   showRegister(): void {
     this.loginService.forgot = this.loginService.login = false;
     this.loginService.register = true;
-    // this.flip(this.loginService.loginService.register, this.loginService.login);
   }
 
   forgotPassword(): void {
@@ -90,11 +86,7 @@ export class AuthPortComponent implements OnInit {
     this.forgot = true;
   }
 
-  flip(a: boolean, b: boolean): void {
-    a = !(b = false);
-  }
-
   logout(): void {
-    // this.stormpath.logout();
+    this.stormpath.logout();
   }
 }

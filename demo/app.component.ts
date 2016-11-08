@@ -4,7 +4,7 @@ import { Stormpath } from '../src/stormpath/stormpath.service';
 import { Account } from '../src/shared/account';
 
 @Component({
-  selector: 'my-app',
+  selector: 'demo-app',
   template: `
       <div class="container">
         <br/>

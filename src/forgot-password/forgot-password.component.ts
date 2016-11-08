@@ -45,7 +45,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
   ngOnInit(): void {
     this.forgotPasswordFormModel = {
-      email: 'robert@stormpath.com'
+      email: ''
     };
   }
   send(): void {
