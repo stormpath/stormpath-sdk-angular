@@ -1,4 +1,4 @@
-# Stormpath Angular SDK
+# Stormpath Angular 2 SDK
 [![Build Status](https://travis-ci.org/stormpath/stormpath-sdk-angular.svg?branch=master)](https://travis-ci.org/stormpath/stormpath-sdk-angular)
 [![npm version](https://badge.fury.io/js/stormpath-sdk-angular.svg)](http://badge.fury.io/js/stormpath-sdk-angular)
 [![devDependency Status](https://david-dm.org/stormpath/stormpath-sdk-angular/dev-status.svg)](https://david-dm.org/stormpath/stormpath-sdk-angular#info=devDependencies)
@@ -27,7 +27,7 @@ Angular 2 SDK for Stormpath's API. If you're looking for AngularJS support, plea
 
 Install through npm:
 ```
-npm install --save stormpath-sdk-angular
+npm install --save angular-stormpath
 ```
 
 Then use it in your app like so:
