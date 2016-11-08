@@ -34,24 +34,25 @@ export class AppComponent implements OnInit {
   private login: boolean;
   private register: boolean;
 
-  constructor(public stormpath: Stormpath) {}
+  constructor(public stormpath: Stormpath) {
+  }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.login = true;
     this.register = false;
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
   }
 
-  showLogin() {
+  showLogin(): void {
     this.login = !(this.register = false);
   }
 
-  showRegister() {
+  showRegister(): void {
     this.register = !(this.login = false);
   }
 
-  logout() {
+  logout(): void {
     this.stormpath.logout();
   }
 }

@@ -20,7 +20,8 @@ import { Stormpath, ForgotPasswordFormModel, StormpathErrorResponse } from '../s
       <div class="form-group">
         <label for="spEmail" class="col-sm-3 control-label">Email</label>
         <div class="col-sm-9">
-          <input class="form-control" name="email" type="email" id="spEmail" [(ngModel)]="forgotPasswordFormModel.email" placeholder="Your Email Address" [disabled]="posting">
+          <input class="form-control" name="email" type="email" id="spEmail" [(ngModel)]="forgotPasswordFormModel.email" 
+            placeholder="Your Email Address" [disabled]="posting">
         </div>
       </div>
       <div class="form-group">
@@ -42,20 +43,18 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(public stormpath: Stormpath) {
     this.sent = false;
   }
-  ngOnInit() {
+  ngOnInit(): void {
     this.forgotPasswordFormModel = {
       email: 'robert@stormpath.com'
     };
   }
-  send() {
+  send(): void {
     this.error = null;
     this.stormpath.sendPasswordResetEmail(this.forgotPasswordFormModel)
-      .subscribe(
-      () => this.sent = true,
-      (error: StormpathErrorResponse) => this.error = error.message
-      );
+      .subscribe(() => this.sent = true,
+      (error: StormpathErrorResponse) => this.error = error.message);
   }
-  onSubmit() {
+  onSubmit(): void {
     this.send();
   }
-};
+}

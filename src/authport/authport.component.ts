@@ -12,13 +12,9 @@ import { Account } from '../shared/account';
         <br/>
         <br/>
 
-
         <div class="row" *ngIf="(user$ | async) === false">
           <div class="col-xs-12 col-sm-offset-3 col-sm-6">
-
-
             <h1 class="text-center">Hello</h1>
-
             <br/>
           </div>
           <div class="col-xs-12 col-sm-offset-3 col-sm-6">
@@ -26,9 +22,12 @@ import { Account } from '../shared/account';
               <div class="panel-heading">
                 <h4>
                   <ul class="nav nav-pills">
-                    <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" (click)="showLogin()"><a href="#">Sign In</a></li>
-                    <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" class="pull-right"><a>Register</a></li>
-
+                    <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" (click)="showLogin()">
+                      <a href="">Sign In</a>
+                    </li>
+                    <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" class="pull-right">
+                      <a href="">Register</a>
+                    </li>
                   </ul>
                 </h4>
               </div>
@@ -60,14 +59,14 @@ export class AuthPortComponent implements OnInit {
   private loggedIn$: Observable<boolean>;
   private login: boolean;
   private register: boolean;
-  protected forgot: boolean;
+  private forgot: boolean;
 
   constructor(public stormpath: Stormpath, public loginService: LoginService) {
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loginService.login = true;
     this.loginService.register = false;
     this.forgot = this.loginService.forgot;
@@ -75,27 +74,27 @@ export class AuthPortComponent implements OnInit {
     this.loggedIn$ = this.user$.map(user => !!user);
   }
 
-  showLogin() {
+  showLogin(): void {
     this.loginService.login = !(this.loginService.forgot = this.loginService.register = false);
     // this.flip(this.loginService.login, this.loginService.loginService.register);
   }
 
-  showRegister() {
+  showRegister(): void {
     this.loginService.forgot = this.loginService.login = false;
     this.loginService.register = true;
     // this.flip(this.loginService.loginService.register, this.loginService.login);
   }
 
-  forgotPassword() {
+  forgotPassword(): void {
     this.loginService.login = false;
     this.forgot = true;
   }
 
-  flip(a: boolean, b: boolean) {
+  flip(a: boolean, b: boolean): void {
     a = !(b = false);
   }
 
-  logout() {
+  logout(): void {
     // this.stormpath.logout();
   }
 }
