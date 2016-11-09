@@ -91,7 +91,7 @@ To override the endpoint prefix or URIs for the various endpoints, you can modif
 
 For example, to override the endpoint prefix and `/me` URI in [demo.module.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/demo.module.ts), change it to the following:
 
-```
+```typescript
 let spConfig: StormpathConfiguration = new StormpathConfiguration();
 spConfig.endpointPrefix = 'http://api.mycompany.com';
 spConfig.meUri = '/account';
