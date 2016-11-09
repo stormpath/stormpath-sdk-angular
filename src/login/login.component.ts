@@ -49,8 +49,8 @@ export class LoginComponent implements OnInit {
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
     this.loginFormModel = {
-      login: '',
-      password: ''
+      login: 'robert@stormpath.com',
+      password: 'robert@stormpath.comA'
     };
   }
 

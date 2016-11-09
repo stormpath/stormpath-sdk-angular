@@ -120,4 +120,4 @@ It was used to create this project.
 
 ## License
 
-Apache-2.0 © [Stormpath](https://stormpath.com)
+MIT
