@@ -37,7 +37,7 @@ module.exports = function(config) {
       },
       module: {
         preLoaders: [{
-          test: /\.ts$/, loader: 'tslint-loader', exclude: /node_modules/
+          test: /\.ts$/, loader: 'tslint-loader', exclude: /(test|node_modules)/
         }],
         loaders: [{
           test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/

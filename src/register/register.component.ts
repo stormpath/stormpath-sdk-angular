@@ -44,15 +44,14 @@ export class RegisterComponent implements OnInit {
     this.unverified = false;
     this.canLogin = false;
     this.formModel = {
-      email: 'robert+2@stormpath.com',
-      surname: 'robert',
-      givenName: 'robert',
-      password: 'robert@stormpath.comA1'
+      email: '',
+      surname: '',
+      givenName: '',
+      password: ''
     };
   }
 
   ngOnInit(): void {
-    // this.formModel = {};
     this.stormpath.getRegistrationViewModel()
       .subscribe(model => {
         this.model = model;
