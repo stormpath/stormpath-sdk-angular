@@ -85,6 +85,29 @@ export class DemoApp {
 
 You may also find it useful to view the [demo source](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts).
 
+### Configuration
+
+To override the endpoint prefix or URIs for the various endpoints, you can modify the defaults in [StormpathConfiguration](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/stormpath/stormpath.config.ts).
+
+For example, to override the endpoint prefix and `/me` URI in [demo.module.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/demo.module.ts), change it to the following:
+
+```
+let spConfig: StormpathConfiguration = new StormpathConfiguration();
+spConfig.endpointPrefix = 'http://api.mycompany.com';
+spConfig.meUri = '/account';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, StormpathModule],
+  bootstrap: [AppComponent],
+  providers: [{
+    provide: StormpathConfiguration, useValue: spConfig
+  }]
+})
+export class DemoModule {
+}
+```
+
 ### Usage without a module bundler
 ```
 <script src="node_modules/dist/umd/stormpath-sdk-angular/stormpath-sdk-angular.js"></script>
