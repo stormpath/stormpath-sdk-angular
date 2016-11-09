@@ -34,7 +34,7 @@ Then use it in your app like so:
 
 ```typescript
 import {Component} from '@angular/core';
-import {Account,Stormpath} from 'stormpath-sdk-angular';
+import {Account,Stormpath} from 'angular-stormpath';
 
 @Component({
   selector: 'demo-app',

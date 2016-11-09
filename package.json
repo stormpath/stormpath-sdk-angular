@@ -1,7 +1,7 @@
 {
-  "name": "stormpath-sdk-angular",
+  "name": "angular-stormpath",
   "version": "0.0.0",
-  "description": "Angular 2 SDK for Stormpath's API",
+  "description": "Stormpath Components for Angular 2.",
   "main": "./dist/umd/stormpath-sdk-angular.js",
   "module": "./dist/esm/src/index.js",
   "typings": "./dist/esm/src/index.d.ts",
@@ -29,10 +29,15 @@
   },
   "keywords": [
     "angular",
-    "angular2"
+    "angular2",
+    "angular-component",
+    "stormpath",
+    "authentication",
+    "authorization",
+    "security"
   ],
-  "author": "Matt Raible",
-  "license": "MIT",
+  "author": "Stormpath, Inc.",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/stormpath/stormpath-sdk-angular/issues"
   },
