@@ -15,8 +15,9 @@ describe('StormpathService', () => {
       providers: [
         {
           provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-          return new Http(backend, defaultOptions);
-        }, deps: [MockBackend, BaseRequestOptions]
+            return new Http(backend, defaultOptions);
+          },
+          deps: [MockBackend, BaseRequestOptions]
         },
         {provide: Stormpath, useClass: Stormpath},
         {provide: MockBackend, useClass: MockBackend},

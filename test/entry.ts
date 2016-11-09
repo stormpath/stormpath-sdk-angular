@@ -1,4 +1,5 @@
 /// <reference path="../node_modules/@types/jasmine/index.d.ts" />
+///<reference path="../src/stormpath.module.ts"/>
 import 'core-js';
 import 'zone.js/dist/zone';
 import 'zone.js/dist/long-stack-trace-zone';
@@ -12,6 +13,10 @@ import {use} from 'chai';
 import * as sinonChai from 'sinon-chai';
 import {TestBed} from '@angular/core/testing';
 import {BrowserDynamicTestingModule, platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
+import { StormpathModule } from '../src/stormpath.module';
+import { Http, ConnectionBackend, BaseRequestOptions } from '@angular/http';
+import { MockBackend } from '@angular/http/testing';
+import { Stormpath } from '../src/stormpath/stormpath.service';
 
 use(sinonChai);
 

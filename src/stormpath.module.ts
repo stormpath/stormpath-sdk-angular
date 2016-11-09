@@ -6,9 +6,10 @@ import { AuthPortComponent } from './authport/authport.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { HttpModule } from '@angular/http';
+import { HttpModule, RequestOptions, Http, XHRBackend } from '@angular/http';
 import { LoginService } from './stormpath/stormpath.service';
 import { StormpathConfiguration } from './stormpath/stormpath.config';
+import { StormpathHttp, CurrentDomain } from './stormpath/stormpath.http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,13 @@ import { StormpathConfiguration } from './stormpath/stormpath.config';
     LoginComponent,
     RegisterComponent
   ],
-  providers: [Stormpath, StormpathConfiguration, LoginService]
+  providers: [Stormpath, StormpathConfiguration, LoginService, CurrentDomain,
+    {
+      provide: Http,
+      useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, currentDomain: CurrentDomain) =>
+        new StormpathHttp(backend, defaultOptions, currentDomain),
+        deps: [XHRBackend, RequestOptions, CurrentDomain]
+    }]
 })
 export class StormpathModule {
 }
