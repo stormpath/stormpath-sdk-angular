@@ -46,8 +46,7 @@ import {Account,Stormpath} from 'angular-stormpath';
        <h4>What would you like to do?</h4>
 
        <ul class="nav nav-pills nav-stacked text-centered">
-         <li role="presentation" (click)="showLogin()"><a href="#">Edit My Profile</a></li>
-         <li role="presentation" (click)="logout()"><a href="#"> Logout</a></li>
+         <li role="presentation" (click)="logout()"><a href="#">Logout</a></li>
        </ul>
      </div>
 
