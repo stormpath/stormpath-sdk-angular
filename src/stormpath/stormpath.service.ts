@@ -12,6 +12,7 @@ import 'rxjs/add/observable/throw';
 
 import { Account, BaseStormpathAccount } from '../shared/account';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { StormpathConfiguration } from './stormpath.config';
 
 let APPLICATION_JSON: string = 'application/json';
 
@@ -91,11 +92,10 @@ export class LoginService {
 
 @Injectable()
 export class Stormpath {
-
   public user$: Observable<Account | boolean>;
   public userSource: ReplaySubject<Account | boolean>;
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public config: StormpathConfiguration) {
     this.userSource = new ReplaySubject<Account>(1);
     this.user$ = this.userSource.asObservable();
     this.getAccount()
@@ -110,7 +110,7 @@ export class Stormpath {
    * if the user is not logged in.
    */
   getAccount(): Observable<Account | boolean> {
-    return this.http.get('/me', new JsonGetOptions())
+    return this.http.get(this.config.meUri, new JsonGetOptions())
       .map(this.jsonParser)
       .map(this.accountTransformer)
       .catch((error: any) => {
@@ -125,7 +125,7 @@ export class Stormpath {
   }
 
   getRegistrationViewModel(): any {
-    return this.http.get('/register', new JsonGetOptions())
+    return this.http.get(this.config.registerUri, new JsonGetOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
@@ -138,7 +138,7 @@ export class Stormpath {
    * An observable that will return an Account if the POST was successful.
    */
   register(form: Object): Observable<Account> {
-    let observable: Observable<Account> = this.http.post('/register', JSON.stringify(form), new JsonPostOptions())
+    let observable: Observable<Account> = this.http.post(this.config.registerUri, JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .map(this.accountTransformer)
       .catch(this.errorTranslator)
@@ -147,7 +147,7 @@ export class Stormpath {
   }
 
   login(form: LoginFormModel): Observable<Account> {
-    let observable: Observable<Account> = this.http.post('/login', JSON.stringify(form), new JsonPostOptions())
+    let observable: Observable<Account> = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .map(this.accountTransformer)
       .catch(this.errorTranslator)
@@ -158,37 +158,37 @@ export class Stormpath {
   }
 
   logout(): void {
-    this.http.post('/logout', null, new JsonGetOptions())
+    this.http.post(this.config.logoutUri, null, new JsonGetOptions())
       .catch(this.errorThrower)
       .subscribe(() => this.userSource.next(false));
   }
 
   resendVerificationEmail(request: ResendEmailVerificationRequest): any {
-    return this.http.post('/verify', JSON.stringify(request), new JsonPostOptions())
+    return this.http.post(this.config.verifyUri, JSON.stringify(request), new JsonPostOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
   sendPasswordResetEmail(form: ForgotPasswordFormModel): any {
-    return this.http.post('/forgot', JSON.stringify(form), new JsonPostOptions())
+    return this.http.post(this.config.forgotUri, JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
   resetPassword(form: PasswordResetRequest): any {
-    return this.http.post('/change', JSON.stringify(form), new JsonPostOptions())
+    return this.http.post(this.config.changeUri, JSON.stringify(form), new JsonPostOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
   verifyEmailVerificationToken(sptoken: string): any {
-    return this.http.get('/verify?sptoken=' + sptoken, new JsonGetOptions())
+    return this.http.get(this.config.verifyUri + '?sptoken=' + sptoken, new JsonGetOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }
 
   verifyPasswordResetToken(sptoken: string): any {
-    return this.http.get('/change?sptoken=' + sptoken, new JsonGetOptions())
+    return this.http.get(this.config.changeUri + '?sptoken=' + sptoken, new JsonGetOptions())
       .map(this.jsonParser)
       .catch(this.errorTranslator);
   }

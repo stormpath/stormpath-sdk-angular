@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HttpModule } from '@angular/http';
 import { LoginService } from './stormpath/stormpath.service';
+import { StormpathConfiguration } from './stormpath/stormpath.config';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import { LoginService } from './stormpath/stormpath.service';
     LoginComponent,
     RegisterComponent
   ],
-  providers: [Stormpath, LoginService]
+  providers: [Stormpath, StormpathConfiguration, LoginService]
 })
 export class StormpathModule {
 }
