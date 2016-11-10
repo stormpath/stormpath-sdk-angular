@@ -1,6 +1,6 @@
 # Stormpath Angular 2 SDK
 [![Build Status](https://travis-ci.org/stormpath/stormpath-sdk-angular.svg?branch=master)](https://travis-ci.org/stormpath/stormpath-sdk-angular)
-[![npm version](https://badge.fury.io/js/angular-stormpath.svg)](http://badge.fury.io/js/angular-stormpaths)
+[![npm version](https://badge.fury.io/js/angular-stormpath.svg)](http://badge.fury.io/js/angular-stormpath)
 [![devDependency Status](https://david-dm.org/stormpath/stormpath-sdk-angular/dev-status.svg)](https://david-dm.org/stormpath/stormpath-sdk-angular#info=devDependencies)
 [![GitHub issues](https://img.shields.io/github/issues/stormpath/stormpath-sdk-angular.svg)](https://github.com/stormpath/stormpath-sdk-angular/issues)
 [![GitHub stars](https://img.shields.io/github/stars/stormpath/stormpath-sdk-angular.svg)](https://github.com/stormpath/stormpath-sdk-angular/stargazers)
