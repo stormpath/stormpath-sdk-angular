@@ -27,7 +27,7 @@
 
 ## About
 
-Angular 2 SDK for Stormpath's API. If you're looking for AngularJS support, please see [stormpath-sdk-angularjs](https://github.com/stormpath/stormpath-sdk-angularjs).
+Angular 2 SDK for Stormpath's API. If you're looking for **AngularJS** support, please see [stormpath-sdk-angularjs](https://github.com/stormpath/stormpath-sdk-angularjs).
 
 ## Installation
 
