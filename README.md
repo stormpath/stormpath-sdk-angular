@@ -10,11 +10,9 @@
 
 <div>
   <a href="http://angular.io">
-    <img src="https://github.com/stormpath/stormpath-sdk-angular/raw/master/static/angular.png">
-  </a>
+    <img src="https://github.com/stormpath/stormpath-sdk-angular/raw/master/static/angular.png"></a>
   <a href="https://www.stormpath.com/">
-    <img src="https://github.com/stormpath/stormpath-sdk-angular/raw/master/static/stormpath.png">
-  </a>
+    <img src="https://github.com/stormpath/stormpath-sdk-angular/raw/master/static/stormpath.png"></a>
 </div>
 
 ## Table of contents
