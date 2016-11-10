@@ -6,10 +6,19 @@
 [![GitHub stars](https://img.shields.io/github/stars/stormpath/stormpath-sdk-angular.svg)](https://github.com/stormpath/stormpath-sdk-angular/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/stormpath/stormpath-sdk-angular/master/LICENSE)
 
-<!--
+> Angular 2 Components for integrating with Stormpath's API
+
+<div>
+  <a href="http://angular.io">
+    <img src="https://github.com/stormpath/stormpath-sdk-angular/raw/master/static/angular.png">
+  </a>
+  <a href="https://www.stormpath.com/">
+    <img src="https://github.com/stormpath/stormpath-sdk-angular/raw/master/static/stormpath.png">
+  </a>
+</div>
+
 ## Demo
-https://stormpath.github.io/stormpath-sdk-angular/demo/
--->
+https://github.com/stormpath/stormpath-sdk-angular
 
 ## Table of contents
 
@@ -33,11 +42,12 @@ npm install --save angular-stormpath
 Then use it in your app like so:
 
 ```typescript
-import {Component} from '@angular/core';
-import {Account,Stormpath} from 'angular-stormpath';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Account, Stormpath } from 'angular-stormpath';
 
 @Component({
-  selector: 'demo-app',
+  selector: 'app-root',
   template: `<div *ngIf="(user$ | async)" class="row text-center">
        <h2 class="">
          Welcome, ({{ ( user$ | async ).fullName }}).
@@ -50,10 +60,10 @@ import {Account,Stormpath} from 'angular-stormpath';
        </ul>
      </div>
 
-     <sp-authport></sp-authport>`
+     <sp-authport></sp-authport>`,
   providers: [Stormpath]
 })
-export class DemoApp {
+export class AppComponent {
   private user$: Observable<Account | boolean>;
   private loggedIn$: Observable<boolean>;
   private login: boolean;
