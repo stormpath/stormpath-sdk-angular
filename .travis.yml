@@ -1,11 +1,33 @@
 language: node_js
 node_js:
 - '6'
-script: npm test
+script:
+- npm test
+- npm run typedoc
 cache:
   directories:
   - node_modules
 before_install:
-- openssl aes-256-cbc -K $encrypted_d98a3227cf72_key -iv $encrypted_d98a3227cf72_iv
+- test -z "$BUILD_DOCS" || openssl aes-256-cbc -K $encrypted_d98a3227cf72_key -iv $encrypted_d98a3227cf72_iv
   -in keypair.enc -out ~/.ssh/id_rsa -d
-- chmod 600 ~/.ssh/id_rsa
+- test -z "$BUILD_DOCS" || chmod 600 ~/.ssh/id_rsa
+after_success:
+- test -z "$BUILD_DOCS" || CURRENT_HASH=`git rev-parse HEAD`
+- test -z "$BUILD_DOCS" || RELEASE_VERSION=`git tag | xargs -I@ git log --format=format:"%ai @%n" -1 @ | sort | awk '{print $4}' | tail -n 1`
+- test -z "$BUILD_DOCS" || RELEASE_HASH=`git rev-list $RELEASE_VERSION -n 1`
+- test -z "$BUILD_DOCS" || if [ "$CURRENT_HASH" = "$RELEASE_HASH" ]; then DEPLOY_DOCS=true; fi
+- test -z "$DEPLOY_DOCS" || git config --global user.email "evangelists@stormpath.com"
+- test -z "$DEPLOY_DOCS" || git config --global user.name "stormpath-sdk-angular Auto Doc Build"
+- test -z "$DEPLOY_DOCS" || git clone git@github.com:stormpath/stormpath.github.io.git
+- test -z "$DEPLOY_DOCS" || cd stormpath.github.io
+- test -z "$DEPLOY_DOCS" || git fetch origin source:source
+- test -z "$DEPLOY_DOCS" || git checkout source
+- test -z "$DEPLOY_DOCS" || rm -rf source/angular/api
+- test -z "$DEPLOY_DOCS" || cp -r ../docs source/angular/api
+- test -z "$DEPLOY_DOCS" || git add --all
+- test -z "$DEPLOY_DOCS" || git commit -m "stormpath-sdk-angular release $RELEASE_VERSION"
+- test -z "$DEPLOY_DOCS" || git push origin source
+matrix:
+  include:
+  - env: BUILD_DOCS=true
+    node_js: 'node'
