@@ -4,9 +4,11 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class StormpathHttp extends Http {
+  private currentDomain: CurrentDomain;
 
-  constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, public currentDomain: CurrentDomain) {
+  constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
     super(backend, defaultOptions);
+    this.currentDomain = new CurrentDomain();
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {

@@ -4,8 +4,6 @@ import { Stormpath } from '../../src/stormpath/stormpath.service';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
 import { Account } from '../../src/shared/account';
-import { Observable } from 'rxjs';
-import { BaseStormpathAccount } from '../../src/shared/account';
 import { StormpathConfiguration } from '../../src/stormpath/stormpath.config';
 import { StormpathHttp, CurrentDomain } from '../../src/stormpath/stormpath.http';
 
@@ -17,10 +15,10 @@ describe('StormpathHttp', () => {
         imports: [StormpathModule],
         providers: [
           {
-            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions, currentDomain: CurrentDomain) => {
-            return new StormpathHttp(backend, defaultOptions, currentDomain);
+            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
+            return new StormpathHttp(backend, defaultOptions);
           },
-            deps: [MockBackend, BaseRequestOptions, CurrentDomain]
+            deps: [MockBackend, BaseRequestOptions]
           },
           {provide: Stormpath, useClass: Stormpath},
           {provide: MockBackend, useClass: MockBackend},

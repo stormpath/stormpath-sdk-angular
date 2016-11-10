@@ -25,12 +25,12 @@ import { StormpathHttp, CurrentDomain } from './stormpath/stormpath.http';
     LoginComponent,
     RegisterComponent
   ],
-  providers: [Stormpath, StormpathConfiguration, LoginService, CurrentDomain,
+  providers: [Stormpath, StormpathConfiguration, LoginService,
     {
       provide: Http,
-      useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, currentDomain: CurrentDomain) =>
-        new StormpathHttp(backend, defaultOptions, currentDomain),
-        deps: [XHRBackend, RequestOptions, CurrentDomain]
+      useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) =>
+        new StormpathHttp(backend, defaultOptions),
+        deps: [XHRBackend, RequestOptions]
     }]
 })
 export class StormpathModule {
