@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { Stormpath, defaultSpTokenResolver } from '../stormpath/stormpath.service';
-
 
 @Component({
   selector: 'email-verification',
@@ -24,7 +22,6 @@ import { Stormpath, defaultSpTokenResolver } from '../stormpath/stormpath.servic
 })
 @Injectable()
 export class EmailVerificationComponent implements OnInit {
-
   protected error: string;
   protected verifying: boolean;
   protected verified: boolean;

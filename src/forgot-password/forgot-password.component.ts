@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Injectable } from '@angular/core';
-
 import { Stormpath, ForgotPasswordFormModel, StormpathErrorResponse } from '../stormpath/stormpath.service';
 
 @Component({
@@ -40,20 +39,24 @@ export class ForgotPasswordComponent implements OnInit {
   protected forgotPasswordFormModel: ForgotPasswordFormModel;
   protected error: string;
   protected sent: boolean;
+
   constructor(public stormpath: Stormpath) {
     this.sent = false;
   }
+
   ngOnInit(): void {
     this.forgotPasswordFormModel = {
       email: ''
     };
   }
+
   send(): void {
     this.error = null;
     this.stormpath.sendPasswordResetEmail(this.forgotPasswordFormModel)
       .subscribe(() => this.sent = true,
       (error: StormpathErrorResponse) => this.error = error.message);
   }
+
   onSubmit(): void {
     this.send();
   }

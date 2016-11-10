@@ -4,8 +4,7 @@ import { Stormpath, PasswordResetRequest, defaultSpTokenResolver } from '../stor
 
 @Component({
   selector: 'reset-password',
-  template: `
-<div class="row">
+  template: `<div class="row">
   <div class="col-sm-offset-4 col-xs-12 col-sm-4">
     <p *ngIf="verifying" class="alert alert-warning text-center">We are verifying your password reset link</p>
     <p class="alert alert-success" *ngIf="reset">Your new password has been set, you may now login.</p>
@@ -40,11 +39,9 @@ import { Stormpath, PasswordResetRequest, defaultSpTokenResolver } from '../stor
     </form>
   </div>
 </div>
-`
-})
+`})
 @Injectable()
 export class ResetPasswordComponent implements OnInit {
-
   protected disabled: boolean;
   protected error: string;
   protected formModel: PasswordResetRequest;
