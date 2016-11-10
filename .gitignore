@@ -7,6 +7,5 @@ npm-debug.log
 demo/demo.js
 demo/demo.js.map
 dist/
-docs/
 yarn.lock
 *.tgz
