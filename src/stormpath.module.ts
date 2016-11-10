@@ -9,7 +9,7 @@ import { RegisterComponent } from './register/register.component';
 import { HttpModule, RequestOptions, Http, XHRBackend } from '@angular/http';
 import { LoginService } from './stormpath/stormpath.service';
 import { StormpathConfiguration } from './stormpath/stormpath.config';
-import { StormpathHttp, CurrentDomain } from './stormpath/stormpath.http';
+import { httpFactory } from './stormpath/stormpath.http';
 
 @NgModule({
   declarations: [
@@ -28,9 +28,8 @@ import { StormpathHttp, CurrentDomain } from './stormpath/stormpath.http';
   providers: [Stormpath, StormpathConfiguration, LoginService,
     {
       provide: Http,
-      useFactory: (backend: XHRBackend, defaultOptions: RequestOptions) =>
-        new StormpathHttp(backend, defaultOptions),
-        deps: [XHRBackend, RequestOptions]
+      useFactory: httpFactory,
+      deps: [XHRBackend, RequestOptions]
     }]
 })
 export class StormpathModule {

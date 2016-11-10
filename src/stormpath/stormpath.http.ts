@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http, ConnectionBackend, Response, RequestOptionsArgs, Request, RequestOptions } from '@angular/http';
+import {
+  Http, ConnectionBackend, Response, RequestOptionsArgs, Request, RequestOptions,
+  XHRBackend
+} from '@angular/http';
 import { Observable } from 'rxjs';
+
+// function that allows overriding the default Http provider
+export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions): Http {
+  return new StormpathHttp(backend, defaultOptions);
+}
 
 @Injectable()
 export class StormpathHttp extends Http {
