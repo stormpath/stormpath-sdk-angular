@@ -17,9 +17,6 @@
   </a>
 </div>
 
-## Demo
-https://github.com/stormpath/stormpath-sdk-angular
-
 ## Table of contents
 
 - [About](#about)
