@@ -31,7 +31,8 @@ export class StormpathHttp extends Http {
 
   private domainCheck(url: string, options: RequestOptionsArgs): void {
     if (this.currentDomain.equals(url)) {
-      options.headers.set('X-Stormpath-Agent', 'angular-stormpath/0.0.x angular/2.0.x');
+      // todo: replace 0.0.x with actual version: https://github.com/stormpath/stormpath-sdk-angular/issues/12
+      options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/0.0.x angular/2.x');
     }
   }
 }
