@@ -31,7 +31,7 @@ describe('StormpathHttp', () => {
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('angular-stormpath/0.0.x angular/2.0.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
           expect(c.request.url).toBe('/me');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -56,7 +56,7 @@ describe('StormpathHttp', () => {
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('angular-stormpath/0.0.x angular/2.0.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
           expect(c.request.url).toBe('/login');
           let response: ResponseOptions = new ResponseOptions({
             body: {
