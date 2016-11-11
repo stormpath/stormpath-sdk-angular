@@ -49,10 +49,11 @@ module.exports = {
     }
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
-      ENV: JSON.stringify(IS_PROD ? 'production' : 'development')
-    })
+      ENV: JSON.stringify(IS_PROD ? 'production' : 'development'),
+      VERSION: JSON.stringify(require('./package.json').version)
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.DedupePlugin()
   ]
 };

@@ -122,7 +122,7 @@ export class DemoModule {
 
 ## Documentation
 All documentation is auto-generated from the source via typedoc and can be viewed here:
-https://stormpath.github.io/stormpath-sdk-angular/docs/
+https://docs.stormpath.com/angular/api
 
 ## Development
 
