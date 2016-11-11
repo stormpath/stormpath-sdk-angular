@@ -22,6 +22,7 @@ after_success:
 - test -z "$DEPLOY_DOCS" || cd stormpath.github.io
 - test -z "$DEPLOY_DOCS" || git fetch origin source:source
 - test -z "$DEPLOY_DOCS" || git checkout source
+- test -z "$DEPLOY_DOCS" || mkdir -p source/angular
 - test -z "$DEPLOY_DOCS" || rm -rf source/angular/api
 - test -z "$DEPLOY_DOCS" || cp -r ../docs source/angular/api
 - test -z "$DEPLOY_DOCS" || git add --all
