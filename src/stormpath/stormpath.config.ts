@@ -96,6 +96,8 @@ export class StormpathConstants {
    * </pre>
    */
   public static readonly ENDPOINT_PREFIX: string = '';
+
+  public static readonly LOGIN_TEMPLATE: string = './login.component.html';
 }
 
 @Injectable()
@@ -108,6 +110,7 @@ export class StormpathConfiguration {
   private _registerUri: string;
   private _verifyUri: string;
   private _endpointPrefix: string;
+  private _loginTemplate: string;
 
   constructor() {
     this._changeUri = StormpathConstants.CHANGE_PASSWORD_ENDPOINT;
@@ -118,6 +121,7 @@ export class StormpathConfiguration {
     this._registerUri = StormpathConstants.REGISTER_URI;
     this._verifyUri = StormpathConstants.EMAIL_VERIFICATION_ENDPOINT;
     this._endpointPrefix = StormpathConstants.ENDPOINT_PREFIX;
+    this._loginTemplate = StormpathConstants.LOGIN_TEMPLATE;
   }
 
   get changeUri(): string {
@@ -182,5 +186,13 @@ export class StormpathConfiguration {
 
   set endpointPrefix(value: string) {
     this._endpointPrefix = value;
+  }
+
+  get loginTemplate(): string {
+    return this._loginTemplate;
+  }
+
+  set loginTemplate(value: string) {
+    this._loginTemplate = value;
   }
 }

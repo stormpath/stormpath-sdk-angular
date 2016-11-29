@@ -3,7 +3,7 @@
 const webpack = require('webpack');
 const WATCH = process.argv.indexOf('--watch') > -1;
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -19,8 +19,7 @@ module.exports = function(config) {
     ],
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -39,11 +38,25 @@ module.exports = function(config) {
         preLoaders: [{
           test: /\.ts$/, loader: 'tslint-loader', exclude: /(test|node_modules)/
         }],
-        loaders: [{
-          test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/
-        }, {
-          test: /sinon.js$/, loader: 'imports-loader?define=>false,require=>false'
-        }],
+        loaders: [
+          {
+            test: /\.ts$/,
+            loaders: ['awesome-typescript-loader', 'angular2-template-loader?keepUrl=true'],
+            exclude: /node_modules/
+          },
+          {
+            test: /\.(html|css)$/,
+            loader: 'raw-loader',
+            exclude: /\.async\.(html|css)$/
+          },
+          {
+            test: /\.async\.(html|css)$/,
+            loaders: ['file?name=[name].[hash].[ext]', 'extract']
+          },
+          {
+            test: /sinon.js$/, loader: 'imports-loader?define=>false,require=>false'
+          }
+        ],
         postLoaders: [{
           test: /src\/.+\.ts$/,
           exclude: /(test|node_modules)/,
