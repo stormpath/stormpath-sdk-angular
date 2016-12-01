@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -9,6 +9,7 @@ import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/s
 @Component({
   selector: 'register-form',
   template: `
+    <template #defaultTemplate>
     <form *ngIf="!registered" (ngSubmit)="onSubmit()" class="form-horizontal">
       <div class="form-group" *ngFor="let field of model?.form?.fields">
         <label [attr.for]="field.name" class="col-sm-4 control-label">{{field.label}}</label>
@@ -27,10 +28,15 @@ import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/s
     <p class="alert alert-success" *ngIf="canLogin">
       Your account has been created, you may now log in.
     </p>
+    </template>
+    <template
+      [ngTemplateOutlet]="customTemplate || defaultTemplate">
+    </template>
   `
 })
 @Injectable()
 export class RegisterComponent implements OnInit {
+  @Input() customTemplate: TemplateRef<any>;
   @Input() autoLogin: boolean;
   protected model: Object;
   protected error: string;

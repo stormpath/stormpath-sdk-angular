@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, Input} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Stormpath, ForgotPasswordFormModel, StormpathErrorResponse } from '../stormpath/stormpath.service';
 
 @Component({
   selector: 'forgot-password-form',
   template: `
+<template #defaultTemplate>
 <div class="row">
   <div class="col-xs-12">
     <p *ngIf="sent" class="alert alert-success">
@@ -32,10 +33,15 @@ import { Stormpath, ForgotPasswordFormModel, StormpathErrorResponse } from '../s
     </form>
   </div>
 </div>
+</template>
+<template
+  [ngTemplateOutlet]="customTemplate || defaultTemplate">
+</template>
   `
 })
 @Injectable()
 export class ForgotPasswordComponent implements OnInit {
+  @Input() customTemplate: TemplateRef<any>;
   protected forgotPasswordFormModel: ForgotPasswordFormModel;
   protected error: string;
   protected sent: boolean;

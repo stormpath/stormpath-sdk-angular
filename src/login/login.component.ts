@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, Input} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
@@ -13,6 +13,16 @@ import {
 })
 @Injectable()
 export class LoginComponent implements OnInit {
+  /**
+   * A reference to a <template> tag that if set will override this component's template. Use like so:
+   * <template #customTemplate>
+   *   // custom HTML with login form
+   * </template>
+   *
+   * Then pass customTemplate to the sp-authport component like so `[customTemplate]="customTemplate"`
+   */
+  @Input() customTemplate: TemplateRef<any>;
+
   protected loginFormModel: LoginFormModel;
   protected user$: Observable<Account | boolean>;
   protected loggedIn$: Observable<boolean>;

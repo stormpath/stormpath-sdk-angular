@@ -20,8 +20,15 @@ import { Account } from '../src/shared/account';
           </ul>
         </div>
 
-        <sp-authport></sp-authport>
-
+        <template #loginform>
+          Hi, I'm a login form
+        </template>
+        <template #authport>
+          I'm the authport!
+          <login-form [customTemplate]="loginform"></login-form>
+        </template>
+        
+        <sp-authport [customTemplate]="authport"></sp-authport>
       </div>
     `,
   providers: [Stormpath]
