@@ -11,7 +11,7 @@
   "suppressExcessPropertyErrors": "true",
   "suppressImplicitAnyIndexErrors": "true",
   "module": "commonjs",
-  "excludePrivate": true,
-  "excludeExternals": true,
-  "theme": "minimal"
+  "excludePrivate": false,
+  "excludeExternals": false,
+  "theme": "default"
 }
