@@ -1,47 +1,22 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, TemplateRef, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { Stormpath, PasswordResetRequest, defaultSpTokenResolver } from '../stormpath/stormpath.service';
 
 @Component({
   selector: 'reset-password',
-  template: `<div class="row">
-  <div class="col-sm-offset-4 col-xs-12 col-sm-4">
-    <p *ngIf="verifying" class="alert alert-warning text-center">We are verifying your password reset link</p>
-    <p class="alert alert-success" *ngIf="reset">Your new password has been set, you may now login.</p>
-    <div *ngIf="verificationFailed" class="alert alert-danger">
-      This password reset link is not valid, please request a new reset link.
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <form class="form-horizontal" *ngIf="verified && !reset" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="spEmail" class="col-xs-12 col-sm-4 control-label">New Password</label>
-        <div class="col-xs-12 col-sm-4">
-          <input class="form-control" id="spUsername" [(ngModel)]="formModel.password" 
-            placeholder="New Password" type="password" [disabled]="posting">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="spEmail" class="col-xs-12 col-sm-4 control-label">Confirm New Password</label>
-        <div class="col-xs-12 col-sm-4">
-          <input class="form-control" id="spUsername" [(ngModel)]="formModel.confirmPassword" 
-            placeholder="Confirm New Password" type="password" [disabled]="posting">
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="col-sm-offset-4 col-sm-4">
-          <p class="alert alert-danger" *ngIf="error">{{error}}</p>
-          <button type="submit" class="btn btn-primary" [disabled]="posting">Set New Password</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-`})
+  templateUrl: './reset-password.component.html'
+})
 @Injectable()
 export class ResetPasswordComponent implements OnInit {
+  /**
+   * A reference to a <template> tag that if set will override this component's template. Use like so:
+   * <template #customTemplate>
+   *   // custom HTML with login form
+   * </template>
+   *
+   * Then pass customTemplate to the resend-email-verification component like so `[customTemplate]="customTemplate"`
+   */
+  @Input() customTemplate: TemplateRef<any>;
   protected disabled: boolean;
   protected error: string;
   protected formModel: PasswordResetRequest;

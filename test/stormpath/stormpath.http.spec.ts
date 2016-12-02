@@ -1,11 +1,7 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
-import { StormpathModule } from '../../src/stormpath.module';
-import { Stormpath } from '../../src/stormpath/stormpath.service';
+import { Account, StormpathModule, Stormpath, StormpathConfiguration, StormpathHttp } from '../../src';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
-import { Account } from '../../src/shared/account';
-import { StormpathConfiguration } from '../../src/stormpath/stormpath.config';
-import { StormpathHttp, CurrentDomain } from '../../src/stormpath/stormpath.http';
 
 describe('StormpathHttp', () => {
 
@@ -31,7 +27,7 @@ describe('StormpathHttp', () => {
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('angular-stormpath/0.0.x angular/2.0.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
           expect(c.request.url).toBe('/me');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -56,7 +52,7 @@ describe('StormpathHttp', () => {
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('angular-stormpath/0.0.x angular/2.0.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
           expect(c.request.url).toBe('/login');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -142,7 +138,12 @@ describe('StormpathHttp', () => {
           });
           c.mockRespond(new Response(response));
         });
-        stormpath.register({email: 'bar@testmail.stormpath.com', password: 'foo', surname: 'Bar', givenName: 'Foo'}).subscribe((response) => {
+        stormpath.register({
+          email: 'bar@testmail.stormpath.com',
+          password: 'foo',
+          surname: 'Bar',
+          givenName: 'Foo'
+        }).subscribe((response) => {
           account = response;
         });
         tick();

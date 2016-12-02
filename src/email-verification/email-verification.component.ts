@@ -1,27 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Stormpath, defaultSpTokenResolver } from '../stormpath/stormpath.service';
 
 @Component({
   selector: 'email-verification',
-  template: `
-<div class="row">
-  <div class="col-sm-offset-4 col-xs-12 col-sm-4">
-    <p *ngIf="verifying" class="alert alert-warning">We are verifying your account</p>
-    <p *ngIf="verified" class="alert alert-success">
-      Your account has has been verified!  You may now login.
-    </p>
-    <div *ngIf="verificationFailed" class="alert alert-danger">
-      This email verification link is not valid.  Please request a new email verification link.
-    </div>
-    <p class="text-danger" *ngIf="error">{{error}}</p>
-  </div>
-</div>
-`
+  templateUrl: './email-verification.component.html'
 })
 @Injectable()
 export class EmailVerificationComponent implements OnInit {
+  /**
+   * A reference to a <template> tag that if set will override this component's template. Use like so:
+   * <template #customTemplate>
+   *   // custom HTML with login form
+   * </template>
+   *
+   * Then pass customTemplate to the email-verification component like so `[customTemplate]="customTemplate"`
+   */
+  @Input() customTemplate: TemplateRef<any>;
+
   protected error: string;
   protected verifying: boolean;
   protected verified: boolean;
@@ -60,4 +57,4 @@ export class EmailVerificationComponent implements OnInit {
         }
       });
   }
-};
+}

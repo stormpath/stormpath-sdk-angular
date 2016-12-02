@@ -12,9 +12,24 @@ module.exports = {
     preLoaders: [{
       test: /\.ts$/, loader: 'tslint-loader?emitErrors=false&failOnHint=false', exclude: /node_modules/
     }],
-    loaders: [{
-      test: /\.ts$/, loader: 'ts-loader', exclude: /node_modules/
-    }]
+    loaders: [
+      {
+        test: /\.ts$/,
+        loaders: ['awesome-typescript-loader', 'angular2-template-loader?keepUrl=true'],
+        exclude: [/\.(spec|e2e)\.ts$/, /node_modules/]
+      },
+      /* Embed files. */
+      {
+        test: /\.(html|css)$/,
+        loader: 'raw-loader',
+        exclude: /\.async\.(html|css)$/
+      },
+      /* Async loading. */
+      {
+        test: /\.async\.(html|css)$/,
+        loaders: ['file?name=[name].[hash].[ext]', 'extract']
+      }
+    ]
   },
   resolve: {
     extensions: ['', '.ts', '.js']
@@ -49,10 +64,11 @@ module.exports = {
     }
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.DedupePlugin(),
     new webpack.DefinePlugin({
-      ENV: JSON.stringify(IS_PROD ? 'production' : 'development')
-    })
+      ENV: JSON.stringify(IS_PROD ? 'production' : 'development'),
+      VERSION: JSON.stringify(require('./package.json').version)
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.DedupePlugin()
   ]
 };

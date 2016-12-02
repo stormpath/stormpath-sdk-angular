@@ -1,12 +1,7 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
-import { StormpathModule } from '../../src/stormpath.module';
-import { Stormpath } from '../../src/stormpath/stormpath.service';
+import { Account, StormpathModule, Stormpath, StormpathConfiguration } from '../../src';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
-import { Account } from '../../src/shared/account';
-import { Observable } from 'rxjs';
-import { BaseStormpathAccount } from '../../src/shared/account';
-import { StormpathConfiguration } from '../../src/stormpath/stormpath.config';
 
 describe('StormpathConfiguration', () => {
 

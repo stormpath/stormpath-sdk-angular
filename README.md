@@ -112,6 +112,38 @@ export class DemoModule {
 }
 ```
 
+To override templates, you can use the `customTemplate` attribute on a component. Below is a simple example:
+
+```html
+<template #loginform>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  <form>
+      <label>Email</label>
+      <input name="login" type="text" [(ngModel)]="loginFormModel.login">
+      <label for="passwordField">Password</label>
+      <input id="passwordField" type="password" [(ngModel)]="loginFormModel.password">
+      <button (click)="login()">Login</button>
+  </form>
+</template>
+
+<template #authport>
+  ...
+  <login-form [customTemplate]="loginform"></login-form>
+</template>
+
+<sp-authport [customTemplate]="authport"></sp-authport>
+```
+
+Below is a list of direct links to each component's HTML. You can use these as a starting point for your customizations.
+
+* [authport.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/authport/authport.component.html)
+* [email-verification.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/email-verification/email-verification.component.html)
+* [forgot-password.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/forgot-password/forgot-password.component.html)
+* [login.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/login/login.component.html)
+* [register.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/register/register.component.html)
+* [resend-email-verification.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/resend-email-verification/resend-email-verification.component.html)
+* [reset-password-component.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/reset-password/reset-password.component.html)
+
 ### Usage without a module bundler
 ```
 <script src="node_modules/dist/umd/stormpath-sdk-angular/stormpath-sdk-angular.js"></script>
@@ -122,7 +154,7 @@ export class DemoModule {
 
 ## Documentation
 All documentation is auto-generated from the source via typedoc and can be viewed here:
-https://stormpath.github.io/stormpath-sdk-angular/docs/
+https://docs.stormpath.com/angular/api
 
 ## Development
 
