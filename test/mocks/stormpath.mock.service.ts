@@ -1,10 +1,9 @@
 import { SpyObject } from './helper';
 import Spy = jasmine.Spy;
-import { Stormpath } from '../../src/stormpath/stormpath.service';
-import { Account } from '../../src/shared/account';
 import { Observable } from 'rxjs';
-import { BaseStormpathAccount } from '../../src/shared/account';
 import 'rxjs/add/operator/map';
+import { Account, BaseStormpathAccount } from '../../src/shared/account';
+import { Stormpath } from '../../src/stormpath/stormpath.service';
 
 export class MockStormpathService extends SpyObject {
   public user$: Observable<Account | boolean>;

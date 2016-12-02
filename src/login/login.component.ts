@@ -1,7 +1,6 @@
-import {Component, OnInit, TemplateRef, Input} from '@angular/core';
+import { Component, OnInit, TemplateRef, Input } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
 import { Account } from '../shared/account';
 import {
   Stormpath, LoginFormModel, LoginService, StormpathErrorResponse

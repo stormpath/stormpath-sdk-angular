@@ -1,0 +1,17 @@
+<template #defaultTemplate>
+<div class="row">
+  <div class="col-sm-offset-4 col-xs-12 col-sm-4">
+    <p *ngIf="verifying" class="alert alert-warning">We are verifying your account</p>
+    <p *ngIf="verified" class="alert alert-success">
+      Your account has has been verified!  You may now login.
+    </p>
+    <div *ngIf="verificationFailed" class="alert alert-danger">
+      This email verification link is not valid.  Please request a new email verification link.
+    </div>
+    <p class="text-danger" *ngIf="error">{{error}}</p>
+  </div>
+</div>
+</template>
+<template
+  [ngTemplateOutlet]="customTemplate || defaultTemplate">
+</template>

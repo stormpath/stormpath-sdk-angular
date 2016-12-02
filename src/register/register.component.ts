@@ -1,41 +1,24 @@
-import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Account } from '../shared/account';
 import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/stormpath.service';
 
-
 @Component({
   selector: 'register-form',
-  template: `
-    <template #defaultTemplate>
-    <form *ngIf="!registered" (ngSubmit)="onSubmit()" class="form-horizontal">
-      <div class="form-group" *ngFor="let field of model?.form?.fields">
-        <label [attr.for]="field.name" class="col-sm-4 control-label">{{field.label}}</label>
-        <div class="col-sm-8">
-          <input class="form-control" [name]="field.name" [id]="field.name" [type]="field.type" 
-            [(ngModel)]="formModel[field.name]" [placeholder]="field.placeholder" [disabled]="creating" [required]="field.required">
-        </div>
-      </div>
-      <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-      <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    <p *ngIf="unverified" class="alert alert-success">
-      Your account has been created and requires verification.
-      Please check your email for a verification link.
-    </p>
-    <p class="alert alert-success" *ngIf="canLogin">
-      Your account has been created, you may now log in.
-    </p>
-    </template>
-    <template
-      [ngTemplateOutlet]="customTemplate || defaultTemplate">
-    </template>
-  `
+  templateUrl: './register.component.html'
 })
 @Injectable()
 export class RegisterComponent implements OnInit {
+  /**
+   * A reference to a <template> tag that if set will override this component's template. Use like so:
+   * <template #customTemplate>
+   *   // custom HTML with login form
+   * </template>
+   *
+   * Then pass customTemplate to the register-form component like so `[customTemplate]="customTemplate"`
+   */
   @Input() customTemplate: TemplateRef<any>;
   @Input() autoLogin: boolean;
   protected model: Object;
@@ -60,9 +43,9 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.stormpath.getRegistrationViewModel()
       .subscribe(model => {
-        this.model = model;
-      }, error =>
-        this.error = error.message
+          this.model = model;
+        }, error =>
+          this.error = error.message
       );
   }
 

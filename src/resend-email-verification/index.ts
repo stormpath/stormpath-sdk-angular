@@ -1,1 +1,1 @@
-export * from './resend-email-verification';
+export * from './resend-email-verification.component';

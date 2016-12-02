@@ -10,20 +10,29 @@ import { HttpModule, RequestOptions, Http, XHRBackend } from '@angular/http';
 import { LoginService } from './stormpath/stormpath.service';
 import { StormpathConfiguration } from './stormpath/stormpath.config';
 import { httpFactory } from './stormpath/stormpath.http';
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
 
 @NgModule({
   declarations: [
     AuthPortComponent,
     ForgotPasswordComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    EmailVerificationComponent,
+    ResetPasswordComponent,
+    ResendEmailVerificationComponent
   ],
   imports: [CommonModule, FormsModule, HttpModule],
   exports: [
     AuthPortComponent,
     ForgotPasswordComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    EmailVerificationComponent,
+    ResetPasswordComponent,
+    ResendEmailVerificationComponent
   ],
   providers: [Stormpath, StormpathConfiguration, LoginService,
     {

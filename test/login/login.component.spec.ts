@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StormpathModule } from '../../src/stormpath.module';
-import { LoginComponent } from '../../src/login/login.component';
+import { StormpathModule, LoginComponent } from '../../src';
 
 describe('LoginComponent', () => {
 

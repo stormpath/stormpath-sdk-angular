@@ -17,7 +17,6 @@ export interface BaseStormpathAccount {
   createdAt: string;
   modifiedAt: string;
   passwordModifiedAt: string;
-  // customData? Object;
   [propName: string]: any;
 }
 
