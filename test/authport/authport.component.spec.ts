@@ -1,11 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Stormpath } from '../../src/stormpath/stormpath.service';
 import { MockStormpathService } from '../mocks/stormpath.mock.service';
 import { FormsModule } from '@angular/forms';
-import { AuthPortComponent } from '../../src/authport/authport.component';
-import { LoginComponent } from '../../src/login/login.component';
-import { ForgotPasswordComponent } from '../../src/forgot-password/forgot-password.component';
-import { RegisterComponent } from '../../src/register/register.component';
+import { AuthPortComponent, LoginComponent, ForgotPasswordComponent, RegisterComponent, Stormpath } from '../../src';
 import { Observable } from 'rxjs';
 
 describe('AuthPortComponent', () => {

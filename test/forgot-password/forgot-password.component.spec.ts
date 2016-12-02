@@ -1,6 +1,5 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { ForgotPasswordComponent } from '../../src/forgot-password/forgot-password.component';
-import { StormpathModule } from '../../src/stormpath.module';
+import { StormpathModule, ForgotPasswordComponent } from '../../src';
 
 describe('ForgotPasswordComponent', () => {
 
