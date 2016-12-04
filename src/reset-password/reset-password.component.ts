@@ -9,12 +9,13 @@ import { Stormpath, PasswordResetRequest, defaultSpTokenResolver } from '../stor
 @Injectable()
 export class ResetPasswordComponent implements OnInit {
   /**
-   * A reference to a <template> tag that if set will override this component's template. Use like so:
+   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * ```
    * <template #customTemplate>
    *   // custom HTML with login form
    * </template>
-   *
-   * Then pass customTemplate to the resend-email-verification component like so `[customTemplate]="customTemplate"`
+   * ```
+   * Then pass customTemplate to the `reset-password` component like so `[customTemplate]="customTemplate"`
    */
   @Input() customTemplate: TemplateRef<any>;
   protected disabled: boolean;
