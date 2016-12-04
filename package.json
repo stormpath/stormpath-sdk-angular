@@ -86,8 +86,6 @@
     "standard-version": "^3.0.0",
     "ts-loader": "^1.1.0",
     "tslint": "~3.15.1",
-    "tslint-loader": "~2.1.4",
-    "typedoc": "^0.5.1",
     "typescript": "^2.0.8",
     "validate-commit-msg": "~2.8.0",
     "webpack": "~1.13.0",
@@ -112,6 +110,7 @@
     }
   },
   "dependencies": {
-    "global": "^4.3.1"
+    "global": "^4.3.1",
+    "typedoc": "^0.5.1"
   }
 }
