@@ -112,37 +112,111 @@ export class DemoModule {
 }
 ```
 
-To override templates, you can use the `customTemplate` attribute on a component. Below is a simple example:
+To override templates, you can use the `customTemplate` attribute on a component. Below is an example of [app.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts) with a custom `<sp-authport>` and `<login-form>`:
 
-```html
-<template #loginform>
-  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-  <form>
-      <label>Email</label>
-      <input name="login" type="text" [(ngModel)]="loginFormModel.login">
-      <label for="passwordField">Password</label>
-      <input id="passwordField" type="password" [(ngModel)]="loginFormModel.password">
-      <button (click)="login()">Login</button>
-  </form>
-</template>
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Stormpath, StormpathErrorResponse } from '../src/stormpath/stormpath.service';
+import { Account } from '../src/shared/account';
+import { LoginFormModel } from '../dist/esm/src/stormpath/stormpath.service';
 
-<template #authport>
-  ...
-  <login-form [customTemplate]="loginform"></login-form>
-</template>
+@Component({
+  selector: 'demo-app',
+  template: `
+      <div class="container">
+        <br/>
+        <br/>
+        <div *ngIf="(user$ | async)" class="row text-center">
+          <h2 class="">
+            Welcome, ({{ ( user$ | async ).fullName }}).
+          </h2>
+          <hr/>
 
-<sp-authport [customTemplate]="authport"></sp-authport>
+          <ul class="nav nav-pills nav-stacked text-centered">
+            <li role="presentation" (click)="logout()"><a href="">Logout</a></li>
+          </ul>
+        </div>
+
+        <template #loginform>
+          <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+          <form>
+              <label for="email">Email</label>
+              <input id="email" name="login" type="text" [(ngModel)]="loginFormModel.login">
+              <label for="passwordField">Password</label>
+              <input id="passwordField" name="password" type="password" [(ngModel)]="loginFormModel.password">
+              <button (click)="login()">Login</button>
+          </form>
+        </template>
+        
+        <template #authport>
+            <div *ngIf="(user$ | async) === false">
+                <h2>Sign In</h2>
+                <login-form [customTemplate]="loginform"></login-form>
+            </div>
+        </template>
+        
+        <sp-authport [customTemplate]="authport"></sp-authport>
+
+      </div>
+    `,
+  providers: [Stormpath]
+})
+export class AppComponent implements OnInit {
+
+  protected loginFormModel: LoginFormModel;
+  protected error: string;
+
+  private user$: Observable<Account | boolean>;
+  private loggedIn$: Observable<boolean>;
+  private _login: boolean;
+  private _register: boolean;
+
+  constructor(public stormpath: Stormpath) {
+    this.loginFormModel = {
+      login: '',
+      password: ''
+    };
+  }
+
+  ngOnInit(): void {
+    this._login = true;
+    this._register = false;
+    this.user$ = this.stormpath.user$;
+    this.loggedIn$ = this.user$.map(user => !!user);
+  }
+
+  showLogin(): void {
+    this._login = !(this._register = false);
+  }
+
+  showRegister(): void {
+    this._register = !(this._login = false);
+  }
+
+  login(): void {
+    this.error = null;
+    this.stormpath.login(this.loginFormModel)
+      .subscribe(null, (error: StormpathErrorResponse) => {
+        this.error = error.message;
+      });
+  }
+
+  logout(): void {
+    this.stormpath.logout();
+  }
+}
 ```
 
-Below is a list of direct links to each component's HTML. You can use these as a starting point for your customizations.
+Below is a list of direct links to each component. You can use the HTML defined in their `template` variable as a starting point for your customizations.
 
-* [authport.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/authport/authport.component.html)
-* [email-verification.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/email-verification/email-verification.component.html)
-* [forgot-password.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/forgot-password/forgot-password.component.html)
-* [login.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/login/login.component.html)
-* [register.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/register/register.component.html)
-* [resend-email-verification.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/resend-email-verification/resend-email-verification.component.html)
-* [reset-password-component.component.html](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/reset-password/reset-password.component.html)
+* [authport.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/authport/authport.component.ts)
+* [email-verification.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/email-verification/email-verification.component.ts)
+* [forgot-password.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/forgot-password/forgot-password.component.ts)
+* [login.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/login/login.component.ts)
+* [register.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/register/register.component.ts)
+* [resend-email-verification.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/resend-email-verification/resend-email-verification.component.ts)
+* [reset-password-component.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/reset-password/reset-password.component.ts)
 
 ### Usage without a module bundler
 ```
