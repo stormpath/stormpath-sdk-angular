@@ -8,6 +8,18 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
+* resolving conflicted typedoc dependency ([da6fa97](https://github.com/stormpath/stormpath-sdk-angular/commit/da6fa97))
+* **templates:** Fixed 404 in templates by embedding them ([cd0d377](https://github.com/stormpath/stormpath-sdk-angular/commit/cd0d377))
+* **typedoc:** Fix typedoc listing of classes in right column ([0a464a4](https://github.com/stormpath/stormpath-sdk-angular/commit/0a464a4))
+
+
+
+<a name="0.0.4"></a>
+## [0.0.4](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.3...v0.0.4) (2016-12-06)
+
+
+### Bug Fixes
+
 * **templates:** Fixed 404 in templates by embedding them ([98982c4](https://github.com/stormpath/stormpath-sdk-angular/commit/98982c4))
 * **typedoc:** Fix typedoc listing of classes in right column ([0a464a4](https://github.com/stormpath/stormpath-sdk-angular/commit/0a464a4))
 
