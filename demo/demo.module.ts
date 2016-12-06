@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { StormpathModule } from '../src/stormpath.module';
 import { AppComponent } from './app.component';
-import { HttpModule, ConnectionBackend } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, StormpathModule],
+  imports: [BrowserModule, FormsModule, StormpathModule],
   bootstrap: [AppComponent],
   providers: []
 })
