@@ -8,9 +8,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* **cors:** Use withCredentials: true for requests so CORS works ([3feac7b](https://github.com/stormpath/stormpath-sdk-angular/commit/3feac7b))
 * **cors:** Use withCredentials: true for requests so CORS works ([991af7b](https://github.com/stormpath/stormpath-sdk-angular/commit/991af7b))
-
 
 
 <a name="0.0.4"></a>
