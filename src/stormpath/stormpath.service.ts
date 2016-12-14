@@ -19,7 +19,8 @@ let APPLICATION_JSON: string = 'application/json';
 class JsonGetOptions extends RequestOptions {
   constructor() {
     super({
-      headers: new Headers({ 'Accept': APPLICATION_JSON })
+      headers: new Headers({ 'Accept': APPLICATION_JSON }),
+      withCredentials: true
     });
   }
 }
