@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.5"></a>
+## [0.0.5](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.4...v0.0.5) (2016-12-14)
+
+
+### Bug Fixes
+
+* **cors:** Use withCredentials: true for requests so CORS works ([991af7b](https://github.com/stormpath/stormpath-sdk-angular/commit/991af7b))
+
+<a name="0.0.4"></a>
+## [0.0.4](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.3...v0.0.4) (2016-12-06)
+
+
+### Bug Fixes
+
+* resolving conflicted typedoc dependency ([da6fa97](https://github.com/stormpath/stormpath-sdk-angular/commit/da6fa97))
+* **templates:** Fixed 404 in templates by embedding them ([cd0d377](https://github.com/stormpath/stormpath-sdk-angular/commit/cd0d377))
+* **typedoc:** Fix typedoc listing of classes in right column ([0a464a4](https://github.com/stormpath/stormpath-sdk-angular/commit/0a464a4))
+
+<a name="0.0.4"></a>
+## [0.0.4](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.3...v0.0.4) (2016-12-06)
+
+
+### Bug Fixes
+
+* **templates:** Fixed 404 in templates by embedding them ([98982c4](https://github.com/stormpath/stormpath-sdk-angular/commit/98982c4))
+* **typedoc:** Fix typedoc listing of classes in right column ([0a464a4](https://github.com/stormpath/stormpath-sdk-angular/commit/0a464a4))
+
 <a name="0.0.3"></a>
 ## [0.0.3](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.2...v0.0.3) (2016-12-02)
 
