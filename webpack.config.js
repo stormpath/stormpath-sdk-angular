@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const IS_PROD = process.argv.indexOf('-p') > -1;
+const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
 
 module.exports = {
   devtool: IS_PROD ? 'source-map' : 'eval',
@@ -9,10 +10,13 @@ module.exports = {
     path: IS_PROD ? './demo' : ''
   },
   module: {
-    preLoaders: [{
-      test: /\.ts$/, loader: 'tslint-loader?emitErrors=false&failOnHint=false', exclude: /node_modules/
-    }],
-    loaders: [
+    rules: [
+      {
+        test: /\.ts$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
+        exclude: /node_modules/
+      },
       {
         test: /\.ts$/,
         loaders: ['awesome-typescript-loader', 'angular2-template-loader?keepUrl=true'],
@@ -32,7 +36,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.ts', '.js']
+    extensions: ['.ts', '.js']
   },
   devServer: {
     port: 8000,
@@ -69,6 +73,6 @@ module.exports = {
       VERSION: JSON.stringify(require('./package.json').version)
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.DedupePlugin()
+    new LoaderOptionsPlugin()
   ]
 };
