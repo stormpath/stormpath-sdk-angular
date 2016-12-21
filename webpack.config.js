@@ -73,6 +73,13 @@ module.exports = {
       VERSION: JSON.stringify(require('./package.json').version)
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new LoaderOptionsPlugin()
+    new LoaderOptionsPlugin({
+      options: {
+        tslint: {
+          emitErrors: false,
+          failOnHint: false
+        }
+      }
+    })
   ]
 };

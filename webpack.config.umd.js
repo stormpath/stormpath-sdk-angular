@@ -1,4 +1,7 @@
 const path = require('path');
+const webpack = require('webpack');
+const IS_PROD = process.argv.indexOf('-p') > -1;
+const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
 
 module.exports = {
   entry: './src/index.ts',
@@ -61,8 +64,7 @@ module.exports = {
           emitErrors: false,
           failOnHint: false
         }
-      },
-      resolve: {}
+      }
     })
   ]
 };
