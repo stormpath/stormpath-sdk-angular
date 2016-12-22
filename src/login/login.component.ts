@@ -6,6 +6,7 @@ import {
   Stormpath, LoginFormModel, LoginService, StormpathErrorResponse
 } from '../stormpath/stormpath.service';
 import { FormsModule } from '@angular/forms';
+import { EventManager } from '../stormpath/event-manager.service';
 
 @Component({
   selector: 'login-form',
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
   protected loggedIn$: Observable<boolean>;
   protected error: string;
 
-  constructor(public stormpath: Stormpath, public loginService: LoginService) {
+  constructor(public stormpath: Stormpath, public loginService: LoginService, public eventManager: EventManager) {
   }
 
   ngOnInit(): void {
@@ -68,12 +69,27 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  login(): void {
+  login2(): void {
     this.error = null;
     this.stormpath.login(this.loginFormModel)
       .subscribe(null, (error: StormpathErrorResponse) => {
         this.error = error.message;
       });
+  }
+
+  login () {
+    this.stormpath.login(this.loginFormModel).then(() => {
+
+      this.eventManager.broadcast(
+        {
+          name: 'authenticationSuccess',
+          content: 'Sending Authentication Success'
+        }
+      );
+
+    }).catch((error: StormpathErrorResponse) => {
+      this.error = error.message;
+    });
   }
 
   forgot(): void {

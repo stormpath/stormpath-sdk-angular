@@ -13,6 +13,8 @@ import 'rxjs/add/observable/throw';
 import { Account, BaseStormpathAccount } from '../shared/account';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { StormpathConfiguration } from './stormpath.config';
+import { CurrentDomain } from './stormpath.http';
+import { OAuthService } from './oauth.service';
 
 let APPLICATION_JSON: string = 'application/json';
 
@@ -96,7 +98,7 @@ export class Stormpath {
   public user$: Observable<Account | boolean>;
   public userSource: ReplaySubject<Account | boolean>;
 
-  constructor(public http: Http, public config: StormpathConfiguration) {
+  constructor(public http: Http, public config: StormpathConfiguration, public authServerProvider: OAuthService) {
     this.userSource = new ReplaySubject<Account>(1);
     this.user$ = this.userSource.asObservable();
     this.getAccount()
@@ -148,14 +150,24 @@ export class Stormpath {
   }
 
   login(form: LoginFormModel): Observable<Account> {
-    let observable: Observable<Account> = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
-      .map(this.jsonParser)
-      .map(this.accountTransformer)
-      .catch(this.errorTranslator)
-      .share();
+    let currentDomain = new CurrentDomain();
+    if (currentDomain.equals(this.config.loginUri)) {
+      let observable: Observable<Account> = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
+        .map(this.jsonParser)
+        .map(this.accountTransformer)
+        .catch(this.errorTranslator)
+        .share();
 
-    observable.subscribe(user => this.userSource.next(user), () => undefined);
-    return observable;
+      observable.subscribe(user => this.userSource.next(user), () => undefined);
+      return observable;
+    } else {
+      console.log('oauth baby!');
+      this.authServerProvider.login(form).subscribe(data => {
+        let observable: Observable<Account> = this.getAccount();
+        observable.subscribe(user => this.userSource.next(user), () => undefined);
+        return observable;
+      });
+    }
   }
 
   logout(): void {

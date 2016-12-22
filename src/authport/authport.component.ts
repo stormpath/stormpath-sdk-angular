@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Stormpath, LoginService } from '../stormpath/stormpath.service';
 import { Account } from '../shared/account';
+import { EventManager } from '../stormpath/event-manager.service';
 
 @Component({
   selector: 'sp-authport',
@@ -72,7 +73,7 @@ export class AuthPortComponent implements OnInit {
   private register: boolean;
   private forgot: boolean;
 
-  constructor(public stormpath: Stormpath, public loginService: LoginService) {
+  constructor(public stormpath: Stormpath, public loginService: LoginService, public eventManager: EventManager) {
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
   }
@@ -83,6 +84,14 @@ export class AuthPortComponent implements OnInit {
     this.forgot = this.loginService.forgot;
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
+    this.registerAuthenticationSuccess();
+  }
+
+  registerAuthenticationSuccess() {
+    this.eventManager.subscribe('authenticationSuccess', (message) => {
+      console.log('message received', message);
+      this.user$ = this.stormpath.getAccount();
+    });
   }
 
   showLogin(): void {

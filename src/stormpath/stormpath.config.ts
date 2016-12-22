@@ -17,6 +17,14 @@ export class StormpathConstants {
   public static readonly AUTHENTICATION_ENDPOINT: string = '/login';
 
   /**
+   * Default: `/oauth/token`
+   *
+   * The endpoint that is used to authenticate and refresh using OAuth tokens.
+   * This endpoint MUST support password and refresh_token grant authentication flows.
+   */
+  public static readonly OAUTH_AUTHENTICATION_ENDPOINT: string = '/oauth/token';
+
+  /**
    * Default: `/me`
    *
    * The URI that is used to fetch the account object of
@@ -35,6 +43,13 @@ export class StormpathConstants {
    * that relate to the user session.
    */
   public static readonly DESTROY_SESSION_ENDPOINT: string = '/logout';
+
+  /**
+   * Default: `/oauth/revoke`
+   *
+   * The endpoint that is used to revoke OAuth tokens.
+   */
+  public static readonly OAUTH_REVOKE_ENDPOINT: string = '/oauth/revoke';
 
   /**
    * Default: `/verify`
@@ -104,6 +119,8 @@ export class StormpathConfiguration {
   private _forgotUri: string;
   private _loginUri: string;
   private _logoutUri: string;
+  private _oauthLoginUri: string;
+  private _oauthLogoutUri: string;
   private _meUri: string;
   private _registerUri: string;
   private _verifyUri: string;
@@ -150,6 +167,22 @@ export class StormpathConfiguration {
 
   set logoutUri(value: string) {
     this._logoutUri = value;
+  }
+
+  get oauthLoginUri(): string {
+    return this._endpointPrefix + this._oauthLoginUri;
+  }
+
+  set oauthLoginUri(value: string) {
+    this._oauthLoginUri = value;
+  }
+
+  get oauthLogoutUri(): string {
+    return this._endpointPrefix + this._oauthLogoutUri;
+  }
+
+  set oauthLogoutUri(value: string) {
+    this._oauthLogoutUri = value;
   }
 
   get meUri(): string {
