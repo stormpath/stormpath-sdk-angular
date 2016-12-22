@@ -1,7 +1,9 @@
 'use strict';
 
+const path = require('path');
 const webpack = require('webpack');
 const WATCH = process.argv.indexOf('--watch') > -1;
+const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
 
 module.exports = function (config) {
   config.set({
@@ -29,16 +31,16 @@ module.exports = function (config) {
 
     webpack: {
       resolve: {
-        extensions: ['', '.ts', '.js'],
+        extensions: ['.ts', '.js'],
         alias: {
           sinon: 'sinon/pkg/sinon'
         }
       },
       module: {
-        preLoaders: [{
-          test: /\.ts$/, loader: 'tslint-loader', exclude: /(test|node_modules)/
-        }],
-        loaders: [
+        rules: [
+          {
+            test: /\.ts$/, enforce: 'pre', loader: 'tslint-loader', exclude: /(test|node_modules)/
+          },
           {
             test: /\.ts$/,
             loaders: ['awesome-typescript-loader', 'angular2-template-loader?keepUrl=true'],
@@ -56,18 +58,29 @@ module.exports = function (config) {
           {
             test: /sinon.js$/, loader: 'imports-loader?define=>false,require=>false'
           }
-        ],
-        postLoaders: [{
-          test: /src\/.+\.ts$/,
-          exclude: /(test|node_modules)/,
-          loader: 'sourcemap-istanbul-instrumenter-loader?force-sourcemap=true'
-        }]
+          , {
+            test: /src\/.+\.ts$/,
+            enforce: 'post',
+            exclude: /(test|node_modules)/,
+            loader: 'sourcemap-istanbul-instrumenter-loader?force-sourcemap=true'
+          }]
       },
-      tslint: {
-        emitErrors: !WATCH,
-        failOnHint: false
-      },
-      devtool: 'inline-source-map'
+      devtool: 'inline-source-map',
+      plugins: [
+        new webpack.ContextReplacementPlugin(
+          // The (\\|\/) piece accounts for path separators in *nix and Windows
+          /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+          root('./src') // location of your src
+        ),
+        new LoaderOptionsPlugin({
+          options: {
+            tslint: {
+              emitErrors: !WATCH,
+              failOnHint: false
+            }
+          }
+        })
+      ]
     },
 
     remapIstanbulReporter: {
@@ -104,3 +117,7 @@ module.exports = function (config) {
     singleRun: !WATCH
   });
 };
+
+function root(__path) {
+  return path.join(__dirname, __path);
+}
