@@ -12,18 +12,14 @@ import { Account } from '../shared/account';
     <br/>
     <div class="row" *ngIf="(user$ | async) === false">
       <div class="col-xs-12 col-sm-offset-3 col-sm-6">
-        <h1 class="text-center">Hello</h1>
-        <br/>
-      </div>
-      <div class="col-xs-12 col-sm-offset-3 col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4>
               <ul class="nav nav-pills">
-                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" (click)="showLogin()">
+                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" id="login" (click)="showLogin()">
                   <a>Sign In</a>
                 </li>
-                <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" class="pull-right">
+                <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" id="register" class="pull-right">
                   <a>Register</a>
                 </li>
               </ul>

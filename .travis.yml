@@ -3,21 +3,28 @@ node_js:
 - '6'
 script:
 - npm test
+- npm start &
+- npm run e2e
 - npm run typedoc
 cache:
   directories:
   - node_modules
 before_install:
-- test -z "$BUILD_DOCS" || openssl aes-256-cbc -K $encrypted_d98a3227cf72_key -iv $encrypted_d98a3227cf72_iv
-  -in keypair.enc -out ~/.ssh/id_rsa -d
+- test -z "$BUILD_DOCS" || openssl aes-256-cbc -K $encrypted_d98a3227cf72_key -iv
+  $encrypted_d98a3227cf72_iv -in keypair.enc -out ~/.ssh/id_rsa -d
 - test -z "$BUILD_DOCS" || chmod 600 ~/.ssh/id_rsa
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 after_success:
 - test -z "$BUILD_DOCS" || CURRENT_HASH=`git rev-parse HEAD`
-- test -z "$BUILD_DOCS" || RELEASE_VERSION=`git tag | xargs -I@ git log --format=format:"%ai @%n" -1 @ | sort | awk '{print $4}' | tail -n 1`
+- test -z "$BUILD_DOCS" || RELEASE_VERSION=`git tag | xargs -I@ git log --format=format:"%ai
+  @%n" -1 @ | sort | awk '{print $4}' | tail -n 1`
 - test -z "$BUILD_DOCS" || RELEASE_HASH=`git rev-list $RELEASE_VERSION -n 1`
-- test -z "$BUILD_DOCS" || if [ "$CURRENT_HASH" = "$RELEASE_HASH" ]; then DEPLOY_DOCS=true; fi
+- test -z "$BUILD_DOCS" || if [ "$CURRENT_HASH" = "$RELEASE_HASH" ]; then DEPLOY_DOCS=true;
+  fi
 - test -z "$DEPLOY_DOCS" || git config --global user.email "evangelists@stormpath.com"
-- test -z "$DEPLOY_DOCS" || git config --global user.name "stormpath-sdk-angular Auto Doc Build"
+- test -z "$DEPLOY_DOCS" || git config --global user.name "stormpath-sdk-angular Auto
+  Doc Build"
 - test -z "$DEPLOY_DOCS" || git clone git@github.com:stormpath/stormpath.github.io.git
 - test -z "$DEPLOY_DOCS" || cd stormpath.github.io
 - test -z "$DEPLOY_DOCS" || git fetch origin source:source
@@ -31,4 +38,13 @@ after_success:
 matrix:
   include:
   - env: BUILD_DOCS=true
-    node_js: 'node'
+    node_js: node
+notifications:
+  webhooks:
+    on_success: change
+    on_failure: always
+    on_start: false
+env:
+  global:
+  - secure: Ql5jkxDVxmLRB+enk2SXT7ZuZQbAv0txQbMYv9iFOk/eezyA+joep3VAze7h8gDsC7eipUisuPNHa0wvJklpacTrNsUfK/HM/IPUwMNdyBEX+lk28L1oT199Aijj51KBH7OuIgnTHp6RP4SahonY9iBRyUhOlAcyan4aCYvMIr9sIvx9PJAPeO5/4olR9UnIIjPsLs8+xuh1nbnu/nb6BClA3wKriSe64K+vREl3x863BPTDzVDBCKbB5F5QTRuNSlJ7NT6JnbqqH6Dt5LQYwu/h4l3gFFMzROKzOcId62EfdMlpyH/akJqxqqKuCd9cQ3eo42wSIu3zD2eq3rhEj6g4WjKilMPxYIjEah3f+75qmby7U8qEJGsuyd1J0nWRXm0e+Uei9w9TVV+shjwH85QVz09w5ktOzZm595pV9v/2gx3dzbPZ/g/xHlhTcvFdxt587EDUEeejXKHFN2/kzQTqc04ZBJ5P2E0SbuoOGv6p030VsZFVuUlZaRcjempXOD7SuoRZ/6v7mpzvT/uHuQdJPzIEUejrLUnCbJ3k/VU9jXp0V88IAl+/vF/4h9e6zuo4eLcQ0Z9q4+hMRXZbiljSENty5tdgGzUfz3bwqWaL8AuFrDyA3wdlT1tqSIjbq1yvD9IzHRToq2jvjqlidbeDKwuh+GlF79+CTjlgV14=
+  - secure: lLFXP0J7p1rwSAIYzTClDaS05Iv3w8uK1DysdqCFtS180QEP8KN5uWwJQ4+YPklrzPDrE7jN6JJgtDvch9+C4ea1Y/Tuvct3snslWyOCfrg0UKRKkNOv8n/QAgczjoTZkniCc/PElKCyYP1CRPv4jN4AyhOzgSVZ2dzm5+BnKsPf02U6dSn8SO37gOmJGinVPyXLzUpFgvShC5sz1zEahPhr87BM7yz2ImqgibXqPvHDlw0E0ZKYXoTB4w6jaVrl/R743rjJ7PNCvSs2AQT/MZoHBNHGJby3NdSmV4gOCxIhe/eu5AJ6Nu95GRy4q9ThxqlBILJseaQr8OII5ceQ5eaADgaZHqW0fVXZ3VSjdUgmxrZ8ZaVchrgZKDBbNG/tImcPAkjWP6YScUfyqPjaE21W/ckKuwq6mgtPR6mY2z1gQAie0q0mWlbWfGfXE0cvCo0z6Eyr7zsl5NS54ywdjtns8KaN+O2+SrgJbhHunxkKr3ZE/JWfmYyBie4Hb+7inmOcEFmDQJfQ5AaXiHONBnQAIq7RHE73jykpVNUog9nvD7jLSHpPj1+kHg0c18ADzApyP0BCtj42mEnfHlPpoRyrM7e4UxQtlt1WP7zOtWmF0HI9QJ6PcqG2qarC+HHwGs0dbtAU+itYvGcA4e2AD7N6rkbzHutP1ymixI+Krns=

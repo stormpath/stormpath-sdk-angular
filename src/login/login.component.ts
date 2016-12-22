@@ -31,7 +31,7 @@ import { FormsModule } from '@angular/forms';
   </div>
 
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-  <button (click)="login()" class="btn btn-primary pull-right">Login</button>
+  <button (click)="login()" id="loginBtn" type="submit" class="btn btn-primary pull-right">Login</button>
 </form>
 </template>
 <template

@@ -9,14 +9,20 @@ import { Account } from '../src/shared/account';
       <div class="container">
         <br/>
         <br/>
+        <div class="row" *ngIf="(user$ | async) === false">
+          <div class="col-xs-12 col-sm-offset-3 col-sm-6">
+            <h1 class="text-center">Hello</h1>
+            <br/>
+          </div>
+        </div>
         <div *ngIf="(user$ | async)" class="row text-center">
-          <h2 class="">
-            Welcome, ({{ ( user$ | async ).fullName }}).
-          </h2>
+          <h1>
+            Welcome, {{ ( user$ | async ).fullName }}
+          </h1>
           <hr/>
 
           <ul class="nav nav-pills nav-stacked text-centered">
-            <li role="presentation" (click)="logout()"><a href="#">Logout</a></li>
+            <li role="presentation" (click)="logout()"><a id="logout" href="#">Logout</a></li>
           </ul>
         </div>
 
