@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');s
 const webpack = require('webpack');
 const WATCH = process.argv.indexOf('--watch') > -1;
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
@@ -66,6 +67,11 @@ module.exports = function (config) {
       },
       devtool: 'inline-source-map',
       plugins: [
+        new webpack.ContextReplacementPlugin(
+          // The (\\|\/) piece accounts for path separators in *nix and Windows
+          /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+          root('./src') // location of your src
+        ),
         new LoaderOptionsPlugin({
           options: {
             tslint: {
@@ -111,3 +117,7 @@ module.exports = function (config) {
     singleRun: !WATCH
   });
 };
+
+function root(__path) {
+  return path.join(__dirname, __path);
+}
