@@ -1,3 +1,4 @@
+const path = require('path');
 const webpack = require('webpack');
 const IS_PROD = process.argv.indexOf('-p') > -1;
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
@@ -68,6 +69,11 @@ module.exports = {
     }
   },
   plugins: [
+    new webpack.ContextReplacementPlugin(
+      // The (\\|\/) piece accounts for path separators in *nix and Windows
+      /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+      root('./src') // location of your src
+    ),
     new webpack.DefinePlugin({
       ENV: JSON.stringify(IS_PROD ? 'production' : 'development'),
       VERSION: JSON.stringify(require('./package.json').version)
@@ -83,3 +89,7 @@ module.exports = {
     })
   ]
 };
+
+function root(__path) {
+  return path.join(__dirname, __path);
+}
