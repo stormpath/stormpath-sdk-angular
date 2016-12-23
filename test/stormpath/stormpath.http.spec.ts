@@ -2,6 +2,7 @@ import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { Account, StormpathModule, Stormpath, StormpathConfiguration, StormpathHttp } from '../../src';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
+import { SessionStorageService, LocalStorageService } from 'ng2-webstorage';
 
 describe('StormpathHttp', () => {
 
@@ -11,8 +12,9 @@ describe('StormpathHttp', () => {
         imports: [StormpathModule],
         providers: [
           {
-            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-            return new StormpathHttp(backend, defaultOptions);
+            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
+                                        localStorage: LocalStorageService, sessionStorage: SessionStorageService) => {
+            return new StormpathHttp(backend, defaultOptions, localStorage, sessionStorage);
           },
             deps: [MockBackend, BaseRequestOptions]
           },

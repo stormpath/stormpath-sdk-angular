@@ -18,7 +18,7 @@ import { OAuthService } from './oauth.service';
 
 let APPLICATION_JSON: string = 'application/json';
 
-class JsonGetOptions extends RequestOptions {
+export class JsonGetOptions extends RequestOptions {
   constructor() {
     super({
       headers: new Headers({ 'Accept': APPLICATION_JSON }),
@@ -27,7 +27,7 @@ class JsonGetOptions extends RequestOptions {
   }
 }
 
-class JsonPostOptions extends JsonGetOptions {
+export class JsonPostOptions extends JsonGetOptions {
   constructor() {
     super();
     this.headers.append('Content-Type', APPLICATION_JSON);
@@ -97,12 +97,14 @@ export class LoginService {
 export class Stormpath {
   public user$: Observable<Account | boolean>;
   public userSource: ReplaySubject<Account | boolean>;
+  private currentDomain: CurrentDomain;
 
-  constructor(public http: Http, public config: StormpathConfiguration, public authServerProvider: OAuthService) {
+  constructor(public http: Http, public config: StormpathConfiguration, public oauthService: OAuthService) {
     this.userSource = new ReplaySubject<Account>(1);
     this.user$ = this.userSource.asObservable();
     this.getAccount()
       .subscribe(user => this.userSource.next(user));
+    this.currentDomain = new CurrentDomain();
   }
 
   /**
@@ -150,9 +152,10 @@ export class Stormpath {
   }
 
   login(form: LoginFormModel): Observable<Account> {
-    let currentDomain = new CurrentDomain();
-    if (currentDomain.equals(this.config.loginUri)) {
-      let observable: Observable<Account> = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
+    let observable: Observable<Account>;
+
+    if (this.currentDomain.equals(this.config.loginUri)) {
+       observable = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
         .map(this.jsonParser)
         .map(this.accountTransformer)
         .catch(this.errorTranslator)
@@ -161,9 +164,8 @@ export class Stormpath {
       observable.subscribe(user => this.userSource.next(user), () => undefined);
       return observable;
     } else {
-      console.log('oauth baby!');
-      this.authServerProvider.login(form).subscribe(data => {
-        let observable: Observable<Account> = this.getAccount();
+      this.oauthService.login(form).subscribe(data => {
+        observable = this.getAccount().catch(this.errorTranslator);
         observable.subscribe(user => this.userSource.next(user), () => undefined);
         return observable;
       });
@@ -171,9 +173,16 @@ export class Stormpath {
   }
 
   logout(): void {
-    this.http.post(this.config.logoutUri, null, new JsonGetOptions())
-      .catch(this.errorThrower)
-      .subscribe(() => this.userSource.next(false));
+    if (this.currentDomain.equals(this.config.loginUri)) {
+      this.http.post(this.config.logoutUri, null, new JsonGetOptions())
+        .catch(this.errorThrower)
+        .subscribe(() => this.userSource.next(false));
+    } else {
+      console.log('calling logout');
+      this.oauthService.logout()
+        .catch(this.errorThrower)
+        .subscribe(() => this.userSource.next(false));
+    }
   }
 
   resendVerificationEmail(request: ResendEmailVerificationRequest): any {

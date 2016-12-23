@@ -69,27 +69,12 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  login2(): void {
+  login(): void {
     this.error = null;
     this.stormpath.login(this.loginFormModel)
       .subscribe(null, (error: StormpathErrorResponse) => {
         this.error = error.message;
       });
-  }
-
-  login () {
-    this.stormpath.login(this.loginFormModel).then(() => {
-
-      this.eventManager.broadcast(
-        {
-          name: 'authenticationSuccess',
-          content: 'Sending Authentication Success'
-        }
-      );
-
-    }).catch((error: StormpathErrorResponse) => {
-      this.error = error.message;
-    });
   }
 
   forgot(): void {

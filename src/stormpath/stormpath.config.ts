@@ -131,6 +131,8 @@ export class StormpathConfiguration {
     this._forgotUri = StormpathConstants.FORGOT_PASSWORD_ENDPOINT;
     this._loginUri = StormpathConstants.AUTHENTICATION_ENDPOINT;
     this._logoutUri = StormpathConstants.DESTROY_SESSION_ENDPOINT;
+    this._oauthLoginUri = StormpathConstants.OAUTH_AUTHENTICATION_ENDPOINT;
+    this._oauthLogoutUri = StormpathConstants.OAUTH_REVOKE_ENDPOINT;
     this._meUri = StormpathConstants.CURRENT_USER_URI;
     this._registerUri = StormpathConstants.REGISTER_URI;
     this._verifyUri = StormpathConstants.EMAIL_VERIFICATION_ENDPOINT;

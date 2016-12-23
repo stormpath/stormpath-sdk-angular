@@ -13,7 +13,9 @@ import { httpFactory } from './stormpath/stormpath.http';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
-import { Ng2Webstorage } from 'ng2-webstorage';
+import { Ng2Webstorage, LocalStorageService, SessionStorageService } from 'ng2-webstorage';
+import { OAuthService } from './stormpath/oauth.service';
+import { EventManager } from './stormpath/event-manager.service';
 
 @NgModule({
   declarations: [
@@ -35,11 +37,11 @@ import { Ng2Webstorage } from 'ng2-webstorage';
     ResetPasswordComponent,
     ResendEmailVerificationComponent
   ],
-  providers: [Stormpath, StormpathConfiguration, LoginService,
+  providers: [Stormpath, StormpathConfiguration, LoginService, OAuthService, EventManager,
     {
       provide: Http,
       useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions]
+      deps: [XHRBackend, RequestOptions, LocalStorageService, SessionStorageService]
     }]
 })
 export class StormpathModule {
