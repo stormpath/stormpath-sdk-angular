@@ -110,16 +110,15 @@ spConfig.meUri = '/account';
 })
 export class DemoModule {
 }
-```
+
+#### Templates
 
 To override templates, you can use the `customTemplate` attribute on a component. Below is an example of [app.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts) with a custom `<sp-authport>` and `<login-form>`:
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Stormpath, StormpathErrorResponse } from '../src/stormpath/stormpath.service';
-import { Account } from '../src/shared/account';
-import { LoginFormModel } from 'angular-stormpath';
+import { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from 'angular-stormpath';
 
 @Component({
   selector: 'demo-app',
@@ -206,6 +205,16 @@ export class AppComponent implements OnInit {
     this.stormpath.logout();
   }
 }
+
+#### Access Token Storage
+
+To change the storage mechanism for access tokens from localStorage (the default), to cookies, change the class for the 'tokenStore' provider.
+
+```typescript
+{
+  provide: 'tokenStore', useClass: CookieTokenStoreManager
+}
+```
 ```
 
 Below is a list of direct links to each component. You can use the HTML defined in their `template` variable as a starting point for your customizations.
