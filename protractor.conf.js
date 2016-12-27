@@ -40,6 +40,13 @@ exports.config = {
     jasmine.getEnv().addReporter(new HtmlScreenshotReporter({
       dest: "dist/reports/e2e/screenshots"
     }));
+    if (browser.params.api) {
+      browser.baseUrl = browser.baseUrl + '?api=' + browser.params.api
+    }
+    if (browser.params.storage) {
+      browser.baseUrl = (browser.baseUrl.indexOf('?') > -1) ? browser.baseUrl + '&' : browser.baseUrl + '?';
+      browser.baseUrl += 'storage=' + browser.params.storage;
+    }
   },
 
   useAllAngular2AppRoots: true
