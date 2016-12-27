@@ -110,6 +110,7 @@ spConfig.meUri = '/account';
 })
 export class DemoModule {
 }
+```
 
 #### Templates
 
@@ -205,6 +206,7 @@ export class AppComponent implements OnInit {
     this.stormpath.logout();
   }
 }
+```
 
 #### Access Token Storage
 
