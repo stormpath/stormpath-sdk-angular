@@ -212,6 +212,10 @@ amdefine@>=0.0.4, amdefine@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+angular2-cookie@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/angular2-cookie/-/angular2-cookie-1.2.6.tgz#8fa845531e777adb042fe2f339c0040f6ddbf09d"
+
 angular2-template-loader@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/angular2-template-loader/-/angular2-template-loader-0.6.0.tgz#8a7fae4cf5a2494968da512aa43152a82a0c99b6"
@@ -3319,6 +3323,10 @@ negotiator@0.4.9:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+ng2-webstorage@^1.4.2:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/ng2-webstorage/-/ng2-webstorage-1.4.3.tgz#cb197e11362eeeac0681309cd1ee613d219e8e94"
 
 njwt@^0.3.1:
   version "0.3.2"

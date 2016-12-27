@@ -61,6 +61,7 @@
     "@types/sinon-chai": "~2.7.26",
     "@types/tether": "^1.4.0",
     "angular2-template-loader": "^0.6.0",
+    "angular2-cookie": "^1.2.6",
     "awesome-typescript-loader": "^3.0.0-beta.17",
     "chai": "~3.5.0",
     "commitizen": "^2.9.2",
@@ -105,7 +106,9 @@
     "@angular/core": "^2.3.0",
     "@angular/forms": "^2.3.0",
     "@angular/http": "^2.3.0",
-    "rxjs": "5.0.1"
+    "rxjs": "5.0.1",
+    "ng2-webstorage": "^1.4.2",
+    "angular2-cookie": "^1.2.6"
   },
   "files": [
     "dist"

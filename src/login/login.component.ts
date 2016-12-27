@@ -5,8 +5,6 @@ import { Account } from '../shared/account';
 import {
   Stormpath, LoginFormModel, LoginService, StormpathErrorResponse
 } from '../stormpath/stormpath.service';
-import { FormsModule } from '@angular/forms';
-import { EventManager } from '../stormpath/event-manager.service';
 
 @Component({
   selector: 'login-form',

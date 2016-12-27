@@ -25,6 +25,14 @@ export class StormpathConstants {
   public static readonly OAUTH_AUTHENTICATION_ENDPOINT: string = '/oauth/token';
 
   /**
+   * Default: 'stormpath:token'
+   *
+   * The name under which tokens are stored in the token storage mechanism.
+   * Might not be relevant if the underlying storage mechanism is not key-value based.
+   */
+  public static readonly OAUTH_TOKEN_STORAGE_NAME: string = 'stormpath:token';
+
+  /**
    * Default: `/me`
    *
    * The URI that is used to fetch the account object of
@@ -121,6 +129,7 @@ export class StormpathConfiguration {
   private _logoutUri: string;
   private _oauthLoginUri: string;
   private _oauthLogoutUri: string;
+  private _oauthTokenName: string;
   private _meUri: string;
   private _registerUri: string;
   private _verifyUri: string;
@@ -133,6 +142,7 @@ export class StormpathConfiguration {
     this._logoutUri = StormpathConstants.DESTROY_SESSION_ENDPOINT;
     this._oauthLoginUri = StormpathConstants.OAUTH_AUTHENTICATION_ENDPOINT;
     this._oauthLogoutUri = StormpathConstants.OAUTH_REVOKE_ENDPOINT;
+    this._oauthTokenName = StormpathConstants.OAUTH_TOKEN_STORAGE_NAME;
     this._meUri = StormpathConstants.CURRENT_USER_URI;
     this._registerUri = StormpathConstants.REGISTER_URI;
     this._verifyUri = StormpathConstants.EMAIL_VERIFICATION_ENDPOINT;
@@ -185,6 +195,14 @@ export class StormpathConfiguration {
 
   set oauthLogoutUri(value: string) {
     this._oauthLogoutUri = value;
+  }
+
+  get oauthTokenName(): string {
+    return this._oauthTokenName;
+  }
+
+  set oauthTokenName(value: string) {
+    this._oauthTokenName = value;
   }
 
   get meUri(): string {

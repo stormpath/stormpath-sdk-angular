@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Stormpath } from '../src/stormpath/stormpath.service';
-import { Account } from '../src/shared/account';
+import { Account, Stormpath } from 'angular-stormpath';
 
 @Component({
   selector: 'demo-app',

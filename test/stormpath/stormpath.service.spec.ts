@@ -1,7 +1,10 @@
+///<reference path="../../src/stormpath/stormpath.config.ts"/>
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { Account, Stormpath, StormpathModule } from '../../src';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
+import { StormpathConfiguration } from '../../src/stormpath/stormpath.config';
+import { LocalStorageTokenStoreManager } from '../../src/stormpath/token-store.manager';
 
 describe('StormpathService', () => {
 
@@ -15,7 +18,12 @@ describe('StormpathService', () => {
           },
           deps: [MockBackend, BaseRequestOptions]
         },
-        {provide: Stormpath, useClass: Stormpath},
+        {
+          provide: Stormpath,
+          useFactory: (http: Http, config: StormpathConfiguration, tokenStore: LocalStorageTokenStoreManager, ) => {
+            return new Stormpath(http, config, tokenStore);
+          }, deps: [Http, StormpathConfiguration, LocalStorageTokenStoreManager]
+        },
         {provide: MockBackend, useClass: MockBackend},
         {provide: BaseRequestOptions, useClass: BaseRequestOptions}
       ]

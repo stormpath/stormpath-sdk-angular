@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const IS_PROD = process.argv.indexOf('-p') > -1;
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
+const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 
 module.exports = {
   devtool: IS_PROD ? 'source-map' : 'eval',
@@ -37,7 +38,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    alias: {
+      'angular-stormpath$': path.resolve(__dirname, 'src/index.ts')
+    }
   },
   devServer: {
     port: 8000,
@@ -69,6 +73,7 @@ module.exports = {
     }
   },
   plugins: [
+    new TsConfigPathsPlugin(),
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,

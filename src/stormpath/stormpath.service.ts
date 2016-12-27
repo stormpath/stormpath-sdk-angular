@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { Headers, Http, Response, RequestOptions } from "@angular/http";
-import { Location } from "@angular/common";
-import { ReplaySubject } from "rxjs/Rx";
-import { Observable } from "rxjs/Observable";
-import { Account, BaseStormpathAccount } from "../shared/account";
-import { ErrorObservable } from "rxjs/observable/ErrorObservable";
-import { StormpathConfiguration } from "./stormpath.config";
-import { CurrentDomain } from "./stormpath.http";
-import { LocalStorageService } from "ng2-webstorage";
+import { Injectable, Inject } from '@angular/core';
+import { Headers, Http, Response, RequestOptions } from '@angular/http';
+import { Location } from '@angular/common';
+import { ReplaySubject } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
+import { Account, BaseStormpathAccount } from '../shared/account';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { StormpathConfiguration } from './stormpath.config';
+import { CurrentDomain } from './stormpath.http';
+import { TokenStoreManager } from 'angular-stormpath';
 
 let APPLICATION_JSON: string = 'application/json';
 
@@ -95,7 +95,8 @@ export class Stormpath {
   private currentDomain: CurrentDomain;
   private oauthHeaders: Headers;
 
-  constructor(private http: Http, private config: StormpathConfiguration, private localStorage: LocalStorageService) {
+  constructor(public http: Http, public config: StormpathConfiguration,
+              @Inject('tokenStore') public tokenStore: TokenStoreManager) {
     this.userSource = new ReplaySubject<Account>(1);
     this.user$ = this.userSource.asObservable();
     this.getAccount().subscribe(user => this.userSource.next(user));
@@ -104,7 +105,6 @@ export class Stormpath {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json'
     });
-    console.log('storage', this.localStorage);
   }
 
   /**
@@ -129,8 +129,8 @@ export class Stormpath {
       });
   }
 
-  getAuthToken() {
-    return this.localStorage.retrieve('authenticationToken');
+  getAuthToken(): any {
+    return this.tokenStore.get(this.config.oauthTokenName);
   }
 
   getRegistrationViewModel(): any {
@@ -178,7 +178,7 @@ export class Stormpath {
           let expiredAt = new Date();
           expiredAt.setSeconds(expiredAt.getSeconds() + token.expires_in);
           token.expires_at = expiredAt.getTime();
-          this.localStorage.store('authenticationToken', token);
+          this.tokenStore.put(this.config.oauthTokenName, token);
           return Observable.of(token);
         }).flatMap(() => {
           return this.getAccount();
@@ -204,7 +204,7 @@ export class Stormpath {
 
       this.http.post(this.config.oauthLogoutUri, data, {headers: this.oauthHeaders})
         .map((response: Response) => {
-          this.localStorage.clear('authenticationToken');
+          this.tokenStore.remove(this.config.oauthTokenName);
         })
         .catch(this.errorThrower)
         .subscribe(() => this.userSource.next(false));

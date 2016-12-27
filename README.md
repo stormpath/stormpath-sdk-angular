@@ -119,7 +119,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Stormpath, StormpathErrorResponse } from '../src/stormpath/stormpath.service';
 import { Account } from '../src/shared/account';
-import { LoginFormModel } from '../dist/esm/src/stormpath/stormpath.service';
+import { LoginFormModel } from 'angular-stormpath';
 
 @Component({
   selector: 'demo-app',
