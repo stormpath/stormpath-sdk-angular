@@ -217,7 +217,6 @@ To change the storage mechanism for access tokens from localStorage (the default
   provide: 'tokenStore', useClass: CookieTokenStoreManager
 }
 ```
-```
 
 Below is a list of direct links to each component. You can use the HTML defined in their `template` variable as a starting point for your customizations.
 
