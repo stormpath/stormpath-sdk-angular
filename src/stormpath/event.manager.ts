@@ -13,17 +13,17 @@ export class EventManager {
         }).share();
     }
 
-    broadcast(event) {
+    broadcast(event: any): any {
         this.observer.next(event);
     }
 
-    subscribe(eventName, callback) {
-      return this.observable.filter((event) => {
+    subscribe(eventName: string, callback: any): any {
+      return this.observable.filter((event: any) => {
           return event.name === eventName;
         }).subscribe(callback);
     }
 
-    destroy(subscriber: Subscription) {
+    destroy(subscriber: Subscription): void {
         subscriber.unsubscribe();
     }
 }

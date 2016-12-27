@@ -1,5 +1,5 @@
 ///<reference path="stormpath/token-store.manager.ts"/>
-import { NgModule, Inject } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthPortComponent } from './authport/authport.component';
@@ -15,7 +15,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
 import { Ng2Webstorage } from 'ng2-webstorage';
 import { CookieService } from 'angular2-cookie/core';
-import { Stormpath, CookieTokenStoreManager, EventManager, LocalStorageTokenStoreManager } from './stormpath/index'
+import { Stormpath, CookieTokenStoreManager, EventManager, LocalStorageTokenStoreManager } from './stormpath/index';
 
 @NgModule({
   declarations: [
@@ -39,10 +39,10 @@ import { Stormpath, CookieTokenStoreManager, EventManager, LocalStorageTokenStor
   ],
   providers: [
     EventManager, LocalStorageTokenStoreManager, CookieTokenStoreManager, CookieService,
+    Stormpath, StormpathConfiguration, LoginService,
     {
       provide: 'tokenStore', useClass: LocalStorageTokenStoreManager,
     },
-    Stormpath, StormpathConfiguration, LoginService,
     {
       provide: Http,
       useFactory: httpFactory,

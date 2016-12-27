@@ -8,13 +8,13 @@ import {
 } from 'angular-stormpath';
 
 let config: StormpathConfiguration = new StormpathConfiguration();
-let params = {};
+let params: any = {};
 
 if (location.search) {
-  let parts = location.search.substring(1).split('&');
+  let parts: Array<String> = location.search.substring(1).split('&');
 
-  for (let i = 0; i < parts.length; i++) {
-    let nv = parts[i].split('=');
+  for (let i: number = 0; i < parts.length; i++) {
+    let nv: any = parts[i].split('=');
     if (!nv[0]) continue;
     params[nv[0]] = nv[1] || true;
   }

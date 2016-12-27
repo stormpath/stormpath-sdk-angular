@@ -129,7 +129,7 @@ export class Stormpath {
       });
   }
 
-  getAuthToken(): any {
+  getAuthToken(): string {
     return this.tokenStore.get(this.config.oauthTokenName);
   }
 
@@ -168,14 +168,14 @@ export class Stormpath {
       observable.subscribe(user => this.userSource.next(user), () => undefined);
       return observable;
     } else {
-      let data = 'username=' + encodeURIComponent(form.login) + '&password=' +
+      let data: string = 'username=' + encodeURIComponent(form.login) + '&password=' +
         encodeURIComponent(form.password) + '&grant_type=password';
 
       observable = this.http.post(this.config.oauthLoginUri, data, {
         headers: this.oauthHeaders
       }).map(this.jsonParser)
         .map(token => {
-          let expiredAt = new Date();
+          let expiredAt: Date = new Date();
           expiredAt.setSeconds(expiredAt.getSeconds() + token.expires_in);
           token.expires_at = expiredAt.getTime();
           this.tokenStore.put(this.config.oauthTokenName, token);
@@ -196,10 +196,10 @@ export class Stormpath {
         .catch(this.errorThrower)
         .subscribe(() => this.userSource.next(false));
     } else {
-      let token = this.getAuthToken();
-      let tokenValue = token.refresh_token || token.access_token;
-      let tokenHint = token.refresh_token ? 'refresh_token' : 'access_token';
-      let data = 'token=' + encodeURIComponent(tokenValue) + '&token_type_hint=' +
+      let token: any = this.getAuthToken();
+      let tokenValue: any = token.refresh_token || token.access_token;
+      let tokenHint: any = token.refresh_token ? 'refresh_token' : 'access_token';
+      let data: any = 'token=' + encodeURIComponent(tokenValue) + '&token_type_hint=' +
         encodeURIComponent(tokenHint);
 
       this.http.post(this.config.oauthLogoutUri, data, {headers: this.oauthHeaders})

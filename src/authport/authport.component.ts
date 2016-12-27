@@ -17,10 +17,12 @@ import { EventManager } from '../stormpath/event.manager';
           <div class="panel-heading">
             <h4>
               <ul class="nav nav-pills">
-                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" id="login" (click)="showLogin()">
+                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" 
+                    id="login" (click)="showLogin()">
                   <a>Sign In</a>
                 </li>
-                <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" id="register" class="pull-right">
+                <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" 
+                    id="register" class="pull-right">
                   <a>Register</a>
                 </li>
               </ul>
@@ -69,7 +71,7 @@ export class AuthPortComponent implements OnInit {
   private register: boolean;
   private forgot: boolean;
 
-  constructor(public stormpath: Stormpath, public loginService: LoginService, public eventManager: EventManager) {
+  constructor(public stormpath: Stormpath, public loginService: LoginService) {
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
   }
@@ -80,14 +82,6 @@ export class AuthPortComponent implements OnInit {
     this.forgot = this.loginService.forgot;
     this.user$ = this.stormpath.user$;
     this.loggedIn$ = this.user$.map(user => !!user);
-    this.registerAuthenticationSuccess();
-  }
-
-  registerAuthenticationSuccess() {
-    this.eventManager.subscribe('authenticationSuccess', (message) => {
-      console.log('message received', message);
-      this.user$ = this.stormpath.getAccount();
-    });
   }
 
   showLogin(): void {

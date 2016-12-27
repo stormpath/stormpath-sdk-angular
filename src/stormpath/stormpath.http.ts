@@ -27,7 +27,7 @@ export class StormpathHttp extends Http {
   constructor(private backend: ConnectionBackend,
               private defaultOptions: RequestOptions,
               private config: StormpathConfiguration,
-              @Inject('tokenStore') private tokenStore: TokenStoreManager,) {
+              @Inject('tokenStore') private tokenStore: TokenStoreManager) {
     super(backend, defaultOptions);
     this.currentDomain = new CurrentDomain();
   }
@@ -47,7 +47,7 @@ export class StormpathHttp extends Http {
       // todo: replace 0.0.x with actual version: https://github.com/stormpath/stormpath-sdk-angular/issues/12
       options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/0.0.x angular/2.x');
     } else {
-      let token = this.tokenStore.get(this.config.oauthTokenName);
+      let token: any = this.tokenStore.get(this.config.oauthTokenName);
       if (token && token.expires_at && token.expires_at > new Date().getTime()) {
         if (options == null) {
           options = new JsonGetOptions();
