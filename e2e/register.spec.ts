@@ -40,6 +40,9 @@ describe('register', () => {
 
     let success = $('.alert-success').getText();
     expect(success).toMatch(/Your account has been created, you may now log in./);
+
+    // sleep for a couple seconds because client API takes longer
+    browser.sleep(2000);
     expect(title.getText()).toMatch(/Welcome, Test User/);
 
     logout.click();

@@ -17,6 +17,7 @@
     "test:watch": "karma start --watch",
     "postinstall": "webdriver-manager update",
     "e2e": "protractor",
+    "e2e:client": "protractor --baseUrl=http://localhost:8000?api=https://raible.apps.stormpath.io",
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "typedoc": "mkdir -p dist/docs && typedoc --options typedoc.json src/*.ts",

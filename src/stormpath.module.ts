@@ -14,7 +14,6 @@ import { EmailVerificationComponent } from './email-verification/email-verificat
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
 import { Ng2Webstorage, LocalStorageService, SessionStorageService } from 'ng2-webstorage';
-import { OAuthService } from './stormpath/oauth.service';
 import { EventManager } from './stormpath/event-manager.service';
 
 @NgModule({
@@ -37,7 +36,7 @@ import { EventManager } from './stormpath/event-manager.service';
     ResetPasswordComponent,
     ResendEmailVerificationComponent
   ],
-  providers: [Stormpath, StormpathConfiguration, LoginService, OAuthService, EventManager,
+  providers: [Stormpath, StormpathConfiguration, LoginService, EventManager, LocalStorageService,
     {
       provide: Http,
       useFactory: httpFactory,

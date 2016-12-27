@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
   protected loggedIn$: Observable<boolean>;
   protected error: string;
 
-  constructor(public stormpath: Stormpath, public loginService: LoginService, public eventManager: EventManager) {
+  constructor(public stormpath: Stormpath, public loginService: LoginService) {
   }
 
   ngOnInit(): void {

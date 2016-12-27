@@ -1,27 +1,20 @@
-import { Injectable } from '@angular/core';
-import { Headers, Http, Response, RequestOptions } from '@angular/http';
-import { Location } from '@angular/common';
-
-import { ReplaySubject } from 'rxjs/Rx';
-import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/observable/throw';
-
-import { Account, BaseStormpathAccount } from '../shared/account';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { StormpathConfiguration } from './stormpath.config';
-import { CurrentDomain } from './stormpath.http';
-import { OAuthService } from './oauth.service';
+import { Injectable } from "@angular/core";
+import { Headers, Http, Response, RequestOptions } from "@angular/http";
+import { Location } from "@angular/common";
+import { ReplaySubject } from "rxjs/Rx";
+import { Observable } from "rxjs/Observable";
+import { Account, BaseStormpathAccount } from "../shared/account";
+import { ErrorObservable } from "rxjs/observable/ErrorObservable";
+import { StormpathConfiguration } from "./stormpath.config";
+import { CurrentDomain } from "./stormpath.http";
+import { LocalStorageService } from "ng2-webstorage";
 
 let APPLICATION_JSON: string = 'application/json';
 
 export class JsonGetOptions extends RequestOptions {
   constructor() {
     super({
-      headers: new Headers({ 'Accept': APPLICATION_JSON }),
+      headers: new Headers({'Accept': APPLICATION_JSON}),
       withCredentials: true
     });
   }
@@ -82,11 +75,13 @@ export class LoginService {
   public forgot: boolean;
   public login: boolean;
   public register: boolean;
+
   constructor() {
     this.forgot = false;
     this.login = true;
     this.register = false;
   }
+
   forgotPassword(): void {
     this.forgot = true;
     this.login = false;
@@ -98,13 +93,18 @@ export class Stormpath {
   public user$: Observable<Account | boolean>;
   public userSource: ReplaySubject<Account | boolean>;
   private currentDomain: CurrentDomain;
+  private oauthHeaders: Headers;
 
-  constructor(public http: Http, public config: StormpathConfiguration, public oauthService: OAuthService) {
+  constructor(private http: Http, private config: StormpathConfiguration, private localStorage: LocalStorageService) {
     this.userSource = new ReplaySubject<Account>(1);
     this.user$ = this.userSource.asObservable();
-    this.getAccount()
-      .subscribe(user => this.userSource.next(user));
+    this.getAccount().subscribe(user => this.userSource.next(user));
     this.currentDomain = new CurrentDomain();
+    this.oauthHeaders = new Headers({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json'
+    });
+    console.log('storage', this.localStorage);
   }
 
   /**
@@ -127,6 +127,10 @@ export class Stormpath {
         }
         return Observable.throw(error);
       });
+  }
+
+  getAuthToken() {
+    return this.localStorage.retrieve('authenticationToken');
   }
 
   getRegistrationViewModel(): any {
@@ -155,7 +159,7 @@ export class Stormpath {
     let observable: Observable<Account>;
 
     if (this.currentDomain.equals(this.config.loginUri)) {
-       observable = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
+      observable = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
         .map(this.jsonParser)
         .map(this.accountTransformer)
         .catch(this.errorTranslator)
@@ -164,11 +168,25 @@ export class Stormpath {
       observable.subscribe(user => this.userSource.next(user), () => undefined);
       return observable;
     } else {
-      this.oauthService.login(form).subscribe(data => {
-        observable = this.getAccount().catch(this.errorTranslator);
-        observable.subscribe(user => this.userSource.next(user), () => undefined);
-        return observable;
-      });
+      let data = 'username=' + encodeURIComponent(form.login) + '&password=' +
+        encodeURIComponent(form.password) + '&grant_type=password';
+
+      observable = this.http.post(this.config.oauthLoginUri, data, {
+        headers: this.oauthHeaders
+      }).map(this.jsonParser)
+        .map(token => {
+          let expiredAt = new Date();
+          expiredAt.setSeconds(expiredAt.getSeconds() + token.expires_in);
+          token.expires_at = expiredAt.getTime();
+          this.localStorage.store('authenticationToken', token);
+          return Observable.of(token);
+        }).flatMap(() => {
+          return this.getAccount();
+        }).catch(this.errorTranslator)
+        .share();
+
+      observable.subscribe(user => this.userSource.next(user), () => undefined);
+      return observable;
     }
   }
 
@@ -178,8 +196,16 @@ export class Stormpath {
         .catch(this.errorThrower)
         .subscribe(() => this.userSource.next(false));
     } else {
-      console.log('calling logout');
-      this.oauthService.logout()
+      let token = this.getAuthToken();
+      let tokenValue = token.refresh_token || token.access_token;
+      let tokenHint = token.refresh_token ? 'refresh_token' : 'access_token';
+      let data = 'token=' + encodeURIComponent(tokenValue) + '&token_type_hint=' +
+        encodeURIComponent(tokenHint);
+
+      this.http.post(this.config.oauthLogoutUri, data, {headers: this.oauthHeaders})
+        .map((response: Response) => {
+          this.localStorage.clear('authenticationToken');
+        })
         .catch(this.errorThrower)
         .subscribe(() => this.userSource.next(false));
     }
@@ -228,7 +254,7 @@ export class Stormpath {
       console.error(error);
     }
     if (!errorObject || !errorObject.message) {
-      errorObject = { message: 'Server Error', status: 0 };
+      errorObject = {message: 'Server Error', status: 0};
     }
     return Observable.throw(errorObject);
   }

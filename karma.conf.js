@@ -1,5 +1,4 @@
 'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
 const WATCH = process.argv.indexOf('--watch') > -1;

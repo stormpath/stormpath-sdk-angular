@@ -45,7 +45,7 @@ export class StormpathHttp extends Http {
         if (options == null) {
           options = new JsonGetOptions();
         }
-        options.headers.append('Authorization', 'Bearer ' + token.access_token);
+        options.headers.set('Authorization', 'Bearer ' + token.access_token);
       }
     }
   }
