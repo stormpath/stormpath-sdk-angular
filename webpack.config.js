@@ -2,6 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const IS_PROD = process.argv.indexOf('-p') > -1;
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
+const StringReplacePlugin = require('string-replace-webpack-plugin');
+const TOKENS = {
+  VERSION: JSON.stringify(require('./package.json').version).replace(/['"]+/g, '')
+};
 
 module.exports = {
   devtool: IS_PROD ? 'source-map' : 'eval',
@@ -22,6 +26,18 @@ module.exports = {
         test: /\.ts$/,
         loaders: ['awesome-typescript-loader', 'angular2-template-loader?keepUrl=true'],
         exclude: [/\.(spec|e2e)\.ts$/, /node_modules/]
+      },
+      /* Replace version from package.json */
+      {
+        test: /\.config.ts$/,
+        loader: StringReplacePlugin.replace({
+          replacements: [{
+            pattern: /\${(.*)}/g,
+            replacement: function (match, p1, offset, string) {
+              return TOKENS[p1];
+            }
+          }]
+        })
       },
       /* Embed files. */
       {
@@ -45,28 +61,19 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
     contentBase: 'demo',
-    proxy: {
-      '/forgot': {
-        target: 'http://localhost:3000',
-        secure: false
-      },
-      '/login': {
-        target: 'http://localhost:3000',
-        secure: false
-      },
-      '/logout': {
-        target: 'http://localhost:3000',
-        secure: false
-      },
-      '/me': {
-        target: 'http://localhost:3000',
-        secure: false
-      },
-      '/register': {
+    proxy: [
+      {
+        context: [
+          '/forgot',
+          '/login',
+          '/logout',
+          '/me',
+          '/register'
+        ],
         target: 'http://localhost:3000',
         secure: false
       }
-    }
+    ]
   },
   plugins: [
     new webpack.ContextReplacementPlugin(
@@ -75,18 +82,20 @@ module.exports = {
       root('./src') // location of your src
     ),
     new webpack.DefinePlugin({
-      ENV: JSON.stringify(IS_PROD ? 'production' : 'development'),
-      VERSION: JSON.stringify(require('./package.json').version)
+      ENV: JSON.stringify(IS_PROD ? 'production' : 'development')
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new LoaderOptionsPlugin({
+    // the LoaderOptionsPlugin is necessary to configure tslint, but causes issues with StringReplacePlugin
+    // https://github.com/wbuchwalter/tslint-loader/issues/38
+    /*new LoaderOptionsPlugin({
       options: {
         tslint: {
           emitErrors: false,
           failOnHint: false
         }
       }
-    })
+    }),*/
+    new StringReplacePlugin()
   ]
 };
 

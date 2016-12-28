@@ -2,6 +2,9 @@ import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { Account, StormpathModule, Stormpath, StormpathConfiguration, StormpathHttp } from '../../src';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
+import { VERSION } from '@angular/core';
+
+const pkgVersion = JSON.stringify(require("../../package.json").version).replace(/['"]+/g, '');
 
 describe('StormpathHttp', () => {
 
@@ -11,10 +14,11 @@ describe('StormpathHttp', () => {
         imports: [StormpathModule],
         providers: [
           {
-            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-            return new StormpathHttp(backend, defaultOptions);
+            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
+                                        config: StormpathConfiguration) => {
+            return new StormpathHttp(backend, defaultOptions, config);
           },
-            deps: [MockBackend, BaseRequestOptions]
+            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration]
           },
           {provide: Stormpath, useClass: Stormpath},
           {provide: MockBackend, useClass: MockBackend},
@@ -25,9 +29,11 @@ describe('StormpathHttp', () => {
 
     it('should add x-stormpath-agent if same domain',
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
+        expect(stormpath.config.version).toBe(pkgVersion);
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/' + pkgVersion
+            + ' angular/' + VERSION.full);
           expect(c.request.url).toBe('/me');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -52,7 +58,8 @@ describe('StormpathHttp', () => {
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/' + pkgVersion
+            + ' angular/' + VERSION.full);
           expect(c.request.url).toBe('/login');
           let response: ResponseOptions = new ResponseOptions({
             body: {

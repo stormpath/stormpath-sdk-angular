@@ -1,9 +1,11 @@
-'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
 const WATCH = process.argv.indexOf('--watch') > -1;
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
+const StringReplacePlugin = require('string-replace-webpack-plugin');
+const TOKENS = {
+  VERSION: require('./package.json').version.replace(/['"]+/g, '')
+};
 
 module.exports = function (config) {
   config.set({
@@ -47,6 +49,17 @@ module.exports = function (config) {
             exclude: /node_modules/
           },
           {
+            test: /stormpath.config.ts$/,
+            loader: StringReplacePlugin.replace({
+              replacements: [{
+                pattern: /\${(.*)}/g,
+                replacement: function (match, p1, offset, string) {
+                  return TOKENS[p1];
+                }
+              }]
+            })
+          },
+          {
             test: /\.(html|css)$/,
             loader: 'raw-loader',
             exclude: /\.async\.(html|css)$/
@@ -57,8 +70,8 @@ module.exports = function (config) {
           },
           {
             test: /sinon.js$/, loader: 'imports-loader?define=>false,require=>false'
-          }
-          , {
+          },
+          {
             test: /src\/.+\.ts$/,
             enforce: 'post',
             exclude: /(test|node_modules)/,
@@ -72,14 +85,17 @@ module.exports = function (config) {
           /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
           root('./src') // location of your src
         ),
-        new LoaderOptionsPlugin({
+        // the LoaderOptionsPlugin is necessary to configure tslint, but causes issues with StringReplacePlugin
+        // https://github.com/wbuchwalter/tslint-loader/issues/38
+        /*new LoaderOptionsPlugin({
           options: {
             tslint: {
               emitErrors: !WATCH,
               failOnHint: false
             }
           }
-        })
+        }),*/
+        new StringReplacePlugin()
       ]
     },
 

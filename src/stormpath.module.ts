@@ -38,7 +38,7 @@ import { ResendEmailVerificationComponent } from './resend-email-verification/re
     {
       provide: Http,
       useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions]
+      deps: [XHRBackend, RequestOptions, StormpathConfiguration]
     }]
 })
 export class StormpathModule {

@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, VERSION } from '@angular/core';
 import {
-  Http, ConnectionBackend, Response, RequestOptionsArgs, Request, RequestOptions,
-  XHRBackend
+  Http, ConnectionBackend, Response, RequestOptionsArgs, Request, RequestOptions, XHRBackend
 } from '@angular/http';
 import { Observable } from 'rxjs';
+import { StormpathConfiguration } from './stormpath.config';
 
 // function that allows overriding the default Http provider
-export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions): Http {
-  return new StormpathHttp(backend, defaultOptions);
+export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions, config: StormpathConfiguration): Http {
+  return new StormpathHttp(backend, defaultOptions, config);
 }
 
 @Injectable()
 export class StormpathHttp extends Http {
   private currentDomain: CurrentDomain;
 
-  constructor(backend: ConnectionBackend, defaultOptions: RequestOptions) {
+  constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, public config: StormpathConfiguration) {
     super(backend, defaultOptions);
     this.currentDomain = new CurrentDomain();
   }
@@ -31,8 +31,7 @@ export class StormpathHttp extends Http {
 
   private domainCheck(url: string, options: RequestOptionsArgs): void {
     if (this.currentDomain.equals(url)) {
-      // todo: replace 0.0.x with actual version: https://github.com/stormpath/stormpath-sdk-angular/issues/12
-      options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/0.0.x angular/2.x');
+      options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/' + this.config.version + ' angular/' + VERSION.full);
     }
   }
 }

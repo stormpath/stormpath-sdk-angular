@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export class StormpathConstants {
+  public static readonly VERSION: string = '${VERSION}'; // This value will be overwritten by webpack
+
   /**
    * Default: `/login`
    *
@@ -108,6 +110,7 @@ export class StormpathConfiguration {
   private _registerUri: string;
   private _verifyUri: string;
   private _endpointPrefix: string;
+  private _version: string;
 
   constructor() {
     this._changeUri = StormpathConstants.CHANGE_PASSWORD_ENDPOINT;
@@ -118,6 +121,7 @@ export class StormpathConfiguration {
     this._registerUri = StormpathConstants.REGISTER_URI;
     this._verifyUri = StormpathConstants.EMAIL_VERIFICATION_ENDPOINT;
     this._endpointPrefix = StormpathConstants.ENDPOINT_PREFIX;
+    this._version = StormpathConstants.VERSION;
   }
 
   get changeUri(): string {
@@ -182,5 +186,9 @@ export class StormpathConfiguration {
 
   set endpointPrefix(value: string) {
     this._endpointPrefix = value;
+  }
+
+  get version(): string {
+    return this._version;
   }
 }
