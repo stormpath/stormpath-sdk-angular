@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import {
   StormpathConfiguration, StormpathModule, CookieTokenStoreManager,
-  LocalStorageTokenStoreManager
+  LocalStorageTokenStoreManager, TokenStoreManager
 } from 'angular-stormpath';
 
 let config: StormpathConfiguration = new StormpathConfiguration();
@@ -27,7 +27,7 @@ if (params['api']) {
 }
 
 // allow switching between localStorage and cookies
-let tokenStore;
+let tokenStore: any;
 if (params['storage'] && (params['storage'] === 'cookies')) {
   tokenStore = CookieTokenStoreManager;
   console.info('Configured token storage to use cookies');
