@@ -1,6 +1,7 @@
 export * from './stormpath.module';
 
 // all components that will be codegen'd need to be exported for AOT to work
+export * from './user/index';
 export * from './authport/index';
 export * from './email-verification/index';
 export * from './forgot-password/index';

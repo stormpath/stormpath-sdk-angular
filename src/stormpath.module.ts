@@ -13,6 +13,8 @@ import { httpFactory } from './stormpath/stormpath.http';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
+import { IfUserInGroupDirective } from './user/if-user-in-group.directive';
+import { IfUserDirective } from './user/if-user.directive';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { ResendEmailVerificationComponent } from './resend-email-verification/re
     RegisterComponent,
     EmailVerificationComponent,
     ResetPasswordComponent,
-    ResendEmailVerificationComponent
+    ResendEmailVerificationComponent,
+    IfUserDirective,
+    IfUserInGroupDirective
   ],
   imports: [CommonModule, FormsModule, HttpModule],
   exports: [
@@ -32,7 +36,9 @@ import { ResendEmailVerificationComponent } from './resend-email-verification/re
     RegisterComponent,
     EmailVerificationComponent,
     ResetPasswordComponent,
-    ResendEmailVerificationComponent
+    ResendEmailVerificationComponent,
+    IfUserDirective,
+    IfUserInGroupDirective,
   ],
   providers: [Stormpath, StormpathConfiguration, LoginService,
     {
