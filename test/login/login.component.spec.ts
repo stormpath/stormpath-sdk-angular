@@ -17,8 +17,8 @@ describe('LoginComponent', () => {
     expect(html).toMatch(/<label class="(.*)control-label" for="loginField">Email<\/label>/);
     expect(html).toMatch(/<label class="(.*)control-label" for="passwordField">Password<\/label>/);
 
-    expect(html).toMatch(/<input class="form-control(.*)" id="loginField" name="login" type="text"/);
-    expect(html).toMatch(/<input class="form-control(.*)" id="passwordField" name="password" type="password"/);
+    expect(html).toMatch(/<input class="form-control(.*)" id="loginField" name="login" required="" type="text"/);
+    expect(html).toMatch(/<input class="form-control(.*)" id="passwordField" name="password" required="" type="password"/);
   });
 
 });
