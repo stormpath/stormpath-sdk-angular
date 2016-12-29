@@ -15,6 +15,6 @@ describe('ForgotPasswordComponent', () => {
     let html: string = fixture.nativeElement.innerHTML.trim();
 
     expect(html).toMatch(/<label class="(.*)control-label" for="spEmail">Email<\/label>/);
-    expect(html).toMatch(/<input class="form-control(.*)" id="spEmail" name="email" placeholder="Your Email Address" type="email"/);
+    expect(html).toMatch(/<input class="form-control(.*)" id="spEmail" name="email" placeholder="Your Email Address" required="" type="email"/);
   });
 });

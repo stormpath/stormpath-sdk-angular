@@ -16,11 +16,11 @@ import { Account } from '../shared/account';
           <div class="panel-heading">
             <h4>
               <ul class="nav nav-pills">
-                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" id="login" (click)="showLogin()">
-                  <a>Sign In</a>
+                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" id="login">
+                  <a href="" (click)="showLogin(); false">Sign In</a>
                 </li>
-                <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" id="register" class="pull-right">
-                  <a>Register</a>
+                <li role="presentation" [ngClass]="{active:loginService.register}" id="register" class="pull-right">
+                  <a href="" (click)="showRegister(); false">Register</a>
                 </li>
               </ul>
             </h4>
