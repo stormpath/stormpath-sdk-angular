@@ -12,25 +12,23 @@ export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
 
 @Injectable()
 export class StormpathHttp extends Http {
-  private currentDomain: CurrentDomain;
 
   constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, public config: StormpathConfiguration) {
     super(backend, defaultOptions);
-    this.currentDomain = new CurrentDomain();
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    this.domainCheck(url, options);
+    this.addHeaders(url, options);
     return super.get(url, options);
   }
 
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    this.domainCheck(url, options);
+    this.addHeaders(url, options);
     return super.post(url, body, options);
   }
 
-  private domainCheck(url: string, options: RequestOptionsArgs): void {
-    if (this.currentDomain.equals(url)) {
+  private addHeaders(url: string, options: RequestOptionsArgs): void {
+    if (this.config.endpointUris.indexOf(url) > -1) {
       options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/' + this.config.version + ' angular/' + VERSION.full);
     }
   }

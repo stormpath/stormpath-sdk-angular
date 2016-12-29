@@ -27,7 +27,7 @@ describe('StormpathHttp', () => {
       });
     });
 
-    it('should add x-stormpath-agent if same domain',
+    it('should add x-stormpath-agent if me endpoint',
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         expect(stormpath.config.version).toBe(pkgVersion);
         let account: boolean | Account;
@@ -79,6 +79,27 @@ describe('StormpathHttp', () => {
         expect(account['username']).toBe('bar');
       }))
     );
+
+    it('should not add x-stormpath-agent if not Stormpath endpoint',
+      inject([Stormpath, MockBackend, Http], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend, http: Http) => {
+        mockBackend.connections.subscribe(c => {
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.url).toBe('/random-endpoint');
+          let response: ResponseOptions = new ResponseOptions({
+            body: {
+              foo: 'bar'
+            }
+          });
+          c.mockRespond(new Response(response));
+        });
+        let data: any;
+        http.get('/random-endpoint').subscribe((response) => {
+          data = response.json();
+        });
+        tick();
+        expect(data['foo']).toBe('bar');
+      }))
+    );
   });
 
   describe('different domain', () => {
@@ -91,9 +112,10 @@ describe('StormpathHttp', () => {
         imports: [StormpathModule],
         providers: [
           {
-            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          }, deps: [MockBackend, BaseRequestOptions]
+            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
+                                        config: StormpathConfiguration) => {
+            return new StormpathHttp(backend, defaultOptions, config);
+          }, deps: [MockBackend, BaseRequestOptions, StormpathConfiguration]
           },
           {provide: Stormpath, useClass: Stormpath},
           {provide: MockBackend, useClass: MockBackend},
@@ -103,11 +125,11 @@ describe('StormpathHttp', () => {
       });
     });
 
-    it('should not add x-stormpath-agent if different domain',
+    it('should add x-stormpath-agent if stormpath endpoint',
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeTruthy();
           expect(c.request.url).toBe('http://api.mycompany.com/me');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -128,11 +150,11 @@ describe('StormpathHttp', () => {
       }))
     );
 
-    it('should not add x-stormpath-agent if post request',
+    it('should add x-stormpath-agent if post request',
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeTruthy();
           expect(c.request.url).toBe('http://api.mycompany.com/register');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -155,6 +177,27 @@ describe('StormpathHttp', () => {
         });
         tick();
         expect(account['username']).toBe('bar');
+      }))
+    );
+
+    it('should not add x-stormpath-agent if not Stormpath endpoint',
+      inject([Stormpath, MockBackend, Http], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend, http: Http) => {
+        mockBackend.connections.subscribe(c => {
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.url).toBe('/random-endpoint');
+          let response: ResponseOptions = new ResponseOptions({
+            body: {
+              foo: 'bar'
+            }
+          });
+          c.mockRespond(new Response(response));
+        });
+        let data: any;
+        http.get('/random-endpoint').subscribe((response) => {
+          data = response.json();
+        });
+        tick();
+        expect(data['foo']).toBe('bar');
       }))
     );
   });

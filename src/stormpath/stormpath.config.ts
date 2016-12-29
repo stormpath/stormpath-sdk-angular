@@ -124,6 +124,16 @@ export class StormpathConfiguration {
     this._version = StormpathConstants.VERSION;
   }
 
+  /**
+   * Return a list of all available URIs. This list is used to decide whether
+   * X-Stormpath-Agent is sent as a header or not.
+   *
+   * @returns {[string]} Array of all Stormpath endpoints, in alphabetical order.
+   */
+  get endpointUris(): Array<string> {
+    return [this.changeUri, this.forgotUri, this.loginUri, this.logoutUri, this.meUri, this.registerUri, this.verifyUri];
+  }
+
   get changeUri(): string {
     return this._endpointPrefix + this._changeUri;
   }
