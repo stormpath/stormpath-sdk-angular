@@ -18,7 +18,7 @@ import { Account, Stormpath } from 'angular-stormpath';
           <hr/>
 
           <ul class="nav nav-pills nav-stacked text-centered">
-            <li role="presentation" (click)="logout()"><a id="logout" href="#">Logout</a></li>
+            <li role="presentation" (click)="logout(); false"><a id="logout" href="#">Logout</a></li>
           </ul>
         </div>
 

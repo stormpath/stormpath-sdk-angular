@@ -15,12 +15,12 @@ import { Stormpath, ForgotPasswordFormModel, StormpathErrorResponse } from '../s
   </div>
   <div class="row">
     <div class="col-xs-12">
-      <form class="form-horizontal" *ngIf="!sent" (ngSubmit)="onSubmit()">
+      <form class="form-horizontal" *ngIf="!sent" #form="ngForm" (ngSubmit)="onSubmit(form.value)">
         <div class="form-group">
           <label for="spEmail" class="col-sm-3 control-label">Email</label>
           <div class="col-sm-9">
             <input class="form-control" name="email" type="email" id="spEmail" [(ngModel)]="forgotPasswordFormModel.email"
-                   placeholder="Your Email Address" [disabled]="posting">
+                   placeholder="Your Email Address" [disabled]="posting" required>
           </div>
         </div>
         <div class="form-group">
@@ -70,7 +70,7 @@ export class ForgotPasswordComponent implements OnInit {
         (error: StormpathErrorResponse) => this.error = error.message);
   }
 
-  onSubmit(): void {
+  onSubmit(form: any): void {
     this.send();
   }
 }

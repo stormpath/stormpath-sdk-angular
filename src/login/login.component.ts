@@ -9,28 +9,28 @@ import {
 @Component({
   selector: 'login-form',
   template: `<template #defaultTemplate>
-<form class="form-horizontal">
+<form class="form-horizontal" #form="ngForm" (ngSubmit)="login(form.value)">
   <div class="form-group">
     <label for="loginField" class="col-sm-3 control-label">Email</label>
     <div class="col-sm-9">
-      <input class="form-control" name="login" id="loginField" type="text" [(ngModel)]="loginFormModel.login">
+      <input class="form-control" name="login" id="loginField" type="text" required [(ngModel)]="loginFormModel.login">
     </div>
   </div>
   <div class="form-group">
     <label for="passwordField" class="col-sm-3 control-label">Password</label>
     <div class="col-sm-9">
-      <input class="form-control" name="password" id="passwordField" type="password" [(ngModel)]="loginFormModel.password">
+      <input class="form-control" name="password" id="passwordField" type="password" required [(ngModel)]="loginFormModel.password">
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-xs-10 col-xs-offset-3 text-left">
-      <a href="#" (click)="forgot()">&nbsp;Forgot Password?</a>
+      <a href="#" (click)="forgot(); false">&nbsp;Forgot Password?</a>
     </div>
   </div>
 
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-  <button (click)="login()" id="loginBtn" type="submit" class="btn btn-primary pull-right">Login</button>
+  <button id="loginBtn" type="submit" class="btn btn-primary pull-right">Login</button>
 </form>
 </template>
 <template
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  login(): void {
+  login(form: any): void {
     this.error = null;
     this.stormpath.login(this.loginFormModel)
       .subscribe(null, (error: StormpathErrorResponse) => {
