@@ -98,6 +98,7 @@
     "ts-node": "^1.7.2",
     "tslint": "^4.0.2",
     "tslint-loader": "^3.3.0",
+    "typedoc": "^0.5.1",
     "typescript": "^2.1.4",
     "validate-commit-msg": "~2.8.0",
     "webpack": "2.2.0-rc.2",
@@ -122,9 +123,5 @@
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "global": "^4.3.1",
-    "typedoc": "^0.5.1"
   }
 }
