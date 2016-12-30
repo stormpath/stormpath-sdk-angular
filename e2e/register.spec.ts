@@ -40,7 +40,7 @@ describe('register', () => {
 
     browser.wait(function() {
       return browser.driver.isElementPresent(by.css('.alert-success'));
-    });
+    }, 10000);
 
     let success = $('.alert-success').getText();
     expect(success).toMatch(/Your account has been created, you may now log in./);
