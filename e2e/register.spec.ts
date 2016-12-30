@@ -1,4 +1,4 @@
-import { browser, element, by, $ } from 'protractor';
+import { browser, element, by, $, protractor } from 'protractor';
 
 describe('register', () => {
 
@@ -38,11 +38,13 @@ describe('register', () => {
     password.sendKeys('Stormpath123');
     element(by.css('button[type=submit]')).click();
 
+    browser.wait(function() {
+      return browser.driver.isElementPresent(by.css('.alert-success'));
+    });
+
     let success = $('.alert-success').getText();
     expect(success).toMatch(/Your account has been created, you may now log in./);
 
-    // sleep for a few seconds because client API takes longer
-    browser.sleep(5000);
     expect(title.getText()).toMatch(/Welcome, Test User/);
 
     logout.click();
