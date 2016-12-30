@@ -5,7 +5,9 @@ import { ReplaySubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Account, BaseStormpathAccount } from '../shared/account';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { CurrentDomain, StormpathConfiguration, TokenStoreManager } from './index';
+import { StormpathConfiguration } from './stormpath.config';
+import { CurrentDomain } from './stormpath.http';
+import { TokenStoreManager } from 'angular-stormpath';
 
 let APPLICATION_JSON: string = 'application/json';
 
