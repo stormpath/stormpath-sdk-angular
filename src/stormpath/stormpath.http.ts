@@ -22,30 +22,27 @@ export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
 
 @Injectable()
 export class StormpathHttp extends Http {
-  private currentDomain: CurrentDomain;
 
   constructor(private backend: ConnectionBackend,
               private defaultOptions: RequestOptions,
               private config: StormpathConfiguration,
               @Inject('tokenStore') private tokenStore: TokenStoreManager) {
     super(backend, defaultOptions);
-    this.currentDomain = new CurrentDomain();
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    this.domainCheck(url, options);
+    this.addHeaders(url, options);
     return super.get(url, options);
   }
 
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    this.domainCheck(url, options);
+    this.addHeaders(url, options);
     return super.post(url, body, options);
   }
 
-  private domainCheck(url: string, options: RequestOptionsArgs): void {
-    if (this.currentDomain.equals(url)) {
-      // todo: replace 0.0.x with actual version: https://github.com/stormpath/stormpath-sdk-angular/issues/12
-      options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/0.0.x angular/2.x');
+  private addHeaders(url: string, options: RequestOptionsArgs): void {
+    if (this.config.endpointUris.indexOf(url) > -1) {
+      options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/' + this.config.version + ' angular/' + VERSION.full);
     } else {
       let token: any = this.tokenStore.get(this.config.oauthTokenName);
       if (token && token.expires_at && token.expires_at > new Date().getTime()) {

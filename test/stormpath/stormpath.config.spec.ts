@@ -101,4 +101,13 @@ describe('StormpathConfiguration', () => {
       expect(config.verifyUri).toBe('http://api.mycompany.com/account/verify-password');
     }))
   );
+
+  it('should return all endpoints',
+    inject([StormpathConfiguration], fakeAsync((config: StormpathConfiguration) => {
+        expect(config.endpointUris).toEqual([
+          config.changeUri, config.forgotUri, config.loginUri, config.logoutUri, config.meUri,
+          config.registerUri, config.verifyUri
+        ])
+    }))
+  );
 });
