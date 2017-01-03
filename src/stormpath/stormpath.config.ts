@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Headers } from '@angular/http';
 
 export class StormpathConstants {
   /**
@@ -31,6 +32,11 @@ export class StormpathConstants {
    * Might not be relevant if the underlying storage mechanism is not key-value based.
    */
   public static readonly OAUTH_TOKEN_STORAGE_NAME: string = 'stormpath:token';
+
+  public static readonly OAUTH_HEADERS: Headers = new Headers({
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json'
+  });
 
   /**
    * Default: `/me`

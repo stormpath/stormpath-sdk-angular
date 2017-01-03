@@ -5,9 +5,10 @@ import { ReplaySubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Account, BaseStormpathAccount } from '../shared/account';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { StormpathConfiguration } from './stormpath.config';
+import { AuthToken } from './auth.token';
+import { StormpathConfiguration, StormpathConstants } from './stormpath.config';
 import { CurrentDomain } from './stormpath.http';
-import { TokenStoreManager } from 'angular-stormpath';
+import { TokenStoreManager } from './token-store.manager';
 
 let APPLICATION_JSON: string = 'application/json';
 
@@ -101,10 +102,7 @@ export class Stormpath {
     this.user$ = this.userSource.asObservable();
     this.getAccount().subscribe(user => this.userSource.next(user));
     this.currentDomain = new CurrentDomain();
-    this.oauthHeaders = new Headers({
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json'
-    });
+    this.oauthHeaders = StormpathConstants.OAUTH_HEADERS;
   }
 
   /**
@@ -129,7 +127,12 @@ export class Stormpath {
       });
   }
 
-  getAuthToken(): string {
+  /**
+   * Retrieves the OAuth token data object from storage, relying on its set token
+   * store for the loading implementation details.
+   * @returns {@link AuthToken}
+   */
+  getToken(): AuthToken {
     return this.tokenStore.get(this.config.oauthTokenName);
   }
 
@@ -175,11 +178,8 @@ export class Stormpath {
         headers: this.oauthHeaders
       }).map(this.jsonParser)
         .map(token => {
-          let expiredAt: Date = new Date();
-          expiredAt.setSeconds(expiredAt.getSeconds() + token.expires_in);
-          token.expires_at = expiredAt.getTime();
-          this.tokenStore.put(this.config.oauthTokenName, token);
-          return Observable.of(token);
+          let authToken: AuthToken = this.tokenStore.setToken(this.config.oauthTokenName, token);
+          return Observable.of(authToken);
         }).flatMap(() => {
           return this.getAccount();
         }).catch(this.errorTranslator)
@@ -196,9 +196,9 @@ export class Stormpath {
         .catch(this.errorThrower)
         .subscribe(() => this.userSource.next(false));
     } else {
-      let token: any = this.getAuthToken();
-      let tokenValue: any = token.refresh_token || token.access_token;
-      let tokenHint: any = token.refresh_token ? 'refresh_token' : 'access_token';
+      let token: AuthToken = this.getToken();
+      let tokenValue: any = token.refreshToken || token.accessToken;
+      let tokenHint: any = token.refreshToken ? 'refresh_token' : 'access_token';
       let data: any = 'token=' + encodeURIComponent(tokenValue) + '&token_type_hint=' +
         encodeURIComponent(tokenHint);
 
