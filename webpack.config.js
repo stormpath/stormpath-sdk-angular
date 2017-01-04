@@ -72,6 +72,7 @@ module.exports = {
           '/login',
           '/logout',
           '/me',
+          '/oauth',
           '/register'
         ],
         target: 'http://localhost:3000',
