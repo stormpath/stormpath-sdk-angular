@@ -38,13 +38,10 @@ describe('register', () => {
     password.sendKeys('Stormpath123');
     element(by.css('button[type=submit]')).click();
 
-    browser.wait(function() {
-      return browser.driver.isElementPresent(by.css('.alert-success'));
-    }, 10000);
-
     let success = $('.alert-success').getText();
     expect(success).toMatch(/Your account has been created, you may now log in./);
 
+    browser.sleep(2000);
     expect(title.getText()).toMatch(/Welcome, Test User/);
 
     logout.click();

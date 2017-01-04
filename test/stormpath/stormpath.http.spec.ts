@@ -16,16 +16,10 @@ describe('StormpathHttp', () => {
         providers: [
           {
             provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
-                                        tokenStore: TokenStoreManager, config: StormpathConfiguration) => {
+                                        config: StormpathConfiguration, tokenStore: TokenStoreManager) => {
             return new StormpathHttp(backend, defaultOptions, config, tokenStore);
           },
-            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration]
-          },
-          {
-            provide: Stormpath,
-            useFactory: (http: Http, tokenStore: LocalStorageTokenStoreManager, config: StormpathConfiguration) => {
-              return new Stormpath(http, config, tokenStore);
-            }, deps: [Http, LocalStorageTokenStoreManager, StormpathConfiguration]
+            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration, LocalStorageTokenStoreManager]
           },
           {provide: MockBackend, useClass: MockBackend},
           {provide: BaseRequestOptions, useClass: BaseRequestOptions}
@@ -119,15 +113,10 @@ describe('StormpathHttp', () => {
         providers: [
           {
             provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
-                                        config: StormpathConfiguration) => {
-            return new StormpathHttp(backend, defaultOptions, config);
-          }, deps: [MockBackend, BaseRequestOptions, StormpathConfiguration]
+                                        config: StormpathConfiguration, tokenStore: TokenStoreManager) => {
+            return new StormpathHttp(backend, defaultOptions, config, tokenStore);
           },
-          {
-            provide: Stormpath,
-            useFactory: (http: Http, tokenStore: LocalStorageTokenStoreManager, config: StormpathConfiguration) => {
-              return new Stormpath(http, config, tokenStore);
-            }, deps: [Http, LocalStorageTokenStoreManager, StormpathConfiguration]
+            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration, LocalStorageTokenStoreManager]
           },
           {provide: MockBackend, useClass: MockBackend},
           {provide: BaseRequestOptions, useClass: BaseRequestOptions},
