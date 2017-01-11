@@ -174,13 +174,13 @@ export class StormpathConfiguration {
    *
    * <pre>
    *   let config: StormpathConfiguration = new StormpathConfiguration();
-   *   config.autoAuthorizedUris.push('http://localhost:3000/myapi/');
+   *   config.autoAuthorizedUris.push(new RegExp('http://localhost:3000/myapi/*)');
    * </pre>
    *
    * @returns {[string]}
    */
-  get autoAuthorizedUris(): Array<string>  {
-    return [this.meUri];
+  get autoAuthorizedUris(): Array<RegExp>  {
+    return [new RegExp(this.meUri)];
   }
 
   get changeUri(): string {

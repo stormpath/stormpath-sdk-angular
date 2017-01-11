@@ -72,7 +72,9 @@ export class StormpathHttp extends Http {
    */
   private addHeaders(url: string|Request, options: RequestOptionsArgs): void {
     let requestUri: string = (url instanceof Request) ? url.url : url;
-    let addToken: boolean = this.config.autoAuthorizedUris.indexOf(requestUri) > -1;
+    let addToken: boolean = this.config.autoAuthorizedUris.some(rx => rx.test(requestUri));
+    console.log('requestUri', requestUri);
+    console.log('addToken', addToken);
 
     if (options == null && addToken) {
       // add headers 'accept: application/json' and 'withCredential: true'
