@@ -31,6 +31,8 @@ describe('login', () => {
     password.sendKeys('Stormpath1');
     element(by.css('button[type=submit]')).click();
 
+    // sleep for 1 second because client API takes a smidge longer
+    browser.sleep(1000);
     expect(title.getText()).toMatch(/Welcome, Hip User/);
 
     logout.click();

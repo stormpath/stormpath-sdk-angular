@@ -1,4 +1,4 @@
-# Stormpath Angular 2 SDK
+# Stormpath Angular SDK
 [![Build Status](https://travis-ci.org/stormpath/stormpath-sdk-angular.svg?branch=master)](https://travis-ci.org/stormpath/stormpath-sdk-angular)
 [![npm version](https://badge.fury.io/js/angular-stormpath.svg)](http://badge.fury.io/js/angular-stormpath)
 [![devDependency Status](https://david-dm.org/stormpath/stormpath-sdk-angular/dev-status.svg)](https://david-dm.org/stormpath/stormpath-sdk-angular#info=devDependencies)
@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/stormpath/stormpath-sdk-angular.svg)](https://github.com/stormpath/stormpath-sdk-angular/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-APACHE-red.svg)](https://raw.githubusercontent.com/stormpath/stormpath-sdk-angular/master/LICENSE)
 
-> Angular 2 Components for integrating with Stormpath's API
+> Angular Components for integrating with Stormpath's API
 
 <div>
   <a href="http://angular.io">
@@ -25,7 +25,7 @@
 
 ## About
 
-Angular 2 SDK for Stormpath's API. If you're looking for **AngularJS** support, please see [stormpath-sdk-angularjs](https://github.com/stormpath/stormpath-sdk-angularjs).
+Angular SDK for Stormpath's API. If you're looking for **AngularJS** support, please see [stormpath-sdk-angularjs](https://github.com/stormpath/stormpath-sdk-angularjs).
 
 ## Installation
 
@@ -112,14 +112,16 @@ export class DemoModule {
 }
 ```
 
+**NOTE:** If your Angular app is on a different domain than your endpoints, OAuth will be used for login/logout. The access token will be stored in localStorage under the name `stormpath:token` and it will be automatically added as an `Authorization` header when you send HTTP requests.
+
+#### Templates
+
 To override templates, you can use the `customTemplate` attribute on a component. Below is an example of [app.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts) with a custom `<sp-authport>` and `<login-form>`:
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Stormpath, StormpathErrorResponse } from '../src/stormpath/stormpath.service';
-import { Account } from '../src/shared/account';
-import { LoginFormModel } from '../dist/esm/src/stormpath/stormpath.service';
+import { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from 'angular-stormpath';
 
 @Component({
   selector: 'demo-app',
@@ -205,6 +207,18 @@ export class AppComponent implements OnInit {
   logout(): void {
     this.stormpath.logout();
   }
+}
+```
+
+**NOTE:** One problem with this approach is you'll need to copy all the referenced variables in the template into your component. Another option is to extend the existing Stormpath component and override its `template` variable in `@Component`.
+
+#### Access Token Storage
+
+To change the storage mechanism for authentication tokens from localStorage (the default), to cookies, change the class for the 'tokenStore' provider.
+
+```typescript
+{
+  provide: 'tokenStore', useClass: CookieTokenStoreManager
 }
 ```
 

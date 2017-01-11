@@ -2,6 +2,7 @@ import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { Account, StormpathModule, Stormpath, StormpathConfiguration, StormpathHttp } from '../../src';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
+import { TokenStoreManager, LocalStorageTokenStoreManager } from '../../src/stormpath/token-store.manager';
 import { VERSION } from '@angular/core';
 
 const pkgVersion = JSON.stringify(require("../../package.json").version).replace(/['"]+/g, '');
@@ -15,12 +16,11 @@ describe('StormpathHttp', () => {
         providers: [
           {
             provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
-                                        config: StormpathConfiguration) => {
-            return new StormpathHttp(backend, defaultOptions, config);
+                                        config: StormpathConfiguration, tokenStore: TokenStoreManager) => {
+            return new StormpathHttp(backend, defaultOptions, config, tokenStore);
           },
-            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration]
+            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration, LocalStorageTokenStoreManager]
           },
-          {provide: Stormpath, useClass: Stormpath},
           {provide: MockBackend, useClass: MockBackend},
           {provide: BaseRequestOptions, useClass: BaseRequestOptions}
         ]
@@ -113,11 +113,11 @@ describe('StormpathHttp', () => {
         providers: [
           {
             provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
-                                        config: StormpathConfiguration) => {
-            return new StormpathHttp(backend, defaultOptions, config);
-          }, deps: [MockBackend, BaseRequestOptions, StormpathConfiguration]
+                                        config: StormpathConfiguration, tokenStore: TokenStoreManager) => {
+            return new StormpathHttp(backend, defaultOptions, config, tokenStore);
           },
-          {provide: Stormpath, useClass: Stormpath},
+            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration, LocalStorageTokenStoreManager]
+          },
           {provide: MockBackend, useClass: MockBackend},
           {provide: BaseRequestOptions, useClass: BaseRequestOptions},
           {provide: StormpathConfiguration, useValue: config}

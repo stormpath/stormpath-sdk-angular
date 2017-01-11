@@ -17,6 +17,9 @@
     "test:watch": "karma start --watch",
     "postinstall": "webdriver-manager update && node node_modules/phantomjs-prebuilt/install.js",
     "e2e": "protractor",
+    "e2e:cookies": "protractor --params.storage cookies",
+    "e2e:client": "protractor --params.api https://raible.apps.stormpath.io",
+    "e2e:client+cookies": "protractor --params.api https://raible.apps.stormpath.io --params.storage cookies",
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "typedoc": "mkdir -p dist/docs && typedoc --options typedoc.json src/*.ts",
@@ -60,6 +63,7 @@
     "@types/sinon-chai": "~2.7.26",
     "@types/tether": "^1.4.0",
     "angular2-template-loader": "^0.6.0",
+    "angular2-cookie": "^1.2.6",
     "awesome-typescript-loader": "^3.0.0-beta.17",
     "chai": "~3.5.0",
     "commitizen": "^2.9.2",
@@ -80,11 +84,12 @@
     "karma-remap-istanbul": "^0.3.2",
     "karma-sourcemap-loader": "~0.3.7",
     "karma-webpack": "~1.8.0",
+    "ng2-webstorage": "^1.4.2",
     "phantomjs-prebuilt": "~2.1.7",
     "protractor": "4.0.14",
     "protractor-jasmine2-screenshot-reporter": "0.3.2",
     "raw-loader": "^0.5.1",
-    "rxjs": "5.0.1",
+    "rxjs": "^5.0.2",
     "sinon": "~1.17.4",
     "sinon-chai": "~2.8.0",
     "sourcemap-istanbul-instrumenter-loader": "~0.2.0",
@@ -94,17 +99,20 @@
     "ts-node": "^1.7.2",
     "tslint": "^4.0.2",
     "tslint-loader": "^3.3.0",
+    "typedoc": "^0.5.1",
     "typescript": "^2.1.4",
     "validate-commit-msg": "~2.8.0",
-    "webpack": "2.2.0-rc.1",
+    "webpack": "2.2.0-rc.3",
     "webpack-dev-server": "^1.16.2",
     "zone.js": "^0.7.4"
   },
-  "peerDependencies": {
-    "@angular/core": "^2.3.0",
-    "@angular/forms": "^2.3.0",
-    "@angular/http": "^2.3.0",
-    "rxjs": "5.0.1"
+  "dependencies": {
+    "@angular/core": "^2.4.0",
+    "@angular/forms": "^2.4.0",
+    "@angular/http": "^2.4.0",
+    "rxjs": "^5.0.2",
+    "ng2-webstorage": "^1.4.2",
+    "angular2-cookie": "^1.2.6"
   },
   "files": [
     "dist"
@@ -116,9 +124,5 @@
     "commitizen": {
       "path": "node_modules/cz-conventional-changelog"
     }
-  },
-  "dependencies": {
-    "global": "^4.3.1",
-    "typedoc": "^0.5.1"
   }
 }

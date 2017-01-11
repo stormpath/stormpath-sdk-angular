@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Headers } from '@angular/http';
 
 export class StormpathConstants {
   public static readonly VERSION: string = '${VERSION}'; // This value will be overwritten by webpack
@@ -19,6 +20,27 @@ export class StormpathConstants {
   public static readonly AUTHENTICATION_ENDPOINT: string = '/login';
 
   /**
+   * Default: `/oauth/token`
+   *
+   * The endpoint that is used to authenticate and refresh using OAuth tokens.
+   * This endpoint MUST support password and refresh_token grant authentication flows.
+   */
+  public static readonly OAUTH_AUTHENTICATION_ENDPOINT: string = '/oauth/token';
+
+  /**
+   * Default: 'stormpath:token'
+   *
+   * The name under which tokens are stored in the token storage mechanism.
+   * Might not be relevant if the underlying storage mechanism is not key-value based.
+   */
+  public static readonly OAUTH_TOKEN_STORAGE_NAME: string = 'stormpath:token';
+
+  public static readonly OAUTH_HEADERS: Headers = new Headers({
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json'
+  });
+
+  /**
    * Default: `/me`
    *
    * The URI that is used to fetch the account object of
@@ -37,6 +59,13 @@ export class StormpathConstants {
    * that relate to the user session.
    */
   public static readonly DESTROY_SESSION_ENDPOINT: string = '/logout';
+
+  /**
+   * Default: `/oauth/revoke`
+   *
+   * The endpoint that is used to revoke OAuth tokens.
+   */
+  public static readonly OAUTH_REVOKE_ENDPOINT: string = '/oauth/revoke';
 
   /**
    * Default: `/verify`
@@ -106,6 +135,9 @@ export class StormpathConfiguration {
   private _forgotUri: string;
   private _loginUri: string;
   private _logoutUri: string;
+  private _oauthLoginUri: string;
+  private _oauthLogoutUri: string;
+  private _oauthTokenName: string;
   private _meUri: string;
   private _registerUri: string;
   private _verifyUri: string;
@@ -117,6 +149,9 @@ export class StormpathConfiguration {
     this._forgotUri = StormpathConstants.FORGOT_PASSWORD_ENDPOINT;
     this._loginUri = StormpathConstants.AUTHENTICATION_ENDPOINT;
     this._logoutUri = StormpathConstants.DESTROY_SESSION_ENDPOINT;
+    this._oauthLoginUri = StormpathConstants.OAUTH_AUTHENTICATION_ENDPOINT;
+    this._oauthLogoutUri = StormpathConstants.OAUTH_REVOKE_ENDPOINT;
+    this._oauthTokenName = StormpathConstants.OAUTH_TOKEN_STORAGE_NAME;
     this._meUri = StormpathConstants.CURRENT_USER_URI;
     this._registerUri = StormpathConstants.REGISTER_URI;
     this._verifyUri = StormpathConstants.EMAIL_VERIFICATION_ENDPOINT;
@@ -132,6 +167,20 @@ export class StormpathConfiguration {
    */
   get endpointUris(): Array<string> {
     return [this.changeUri, this.forgotUri, this.loginUri, this.logoutUri, this.meUri, this.registerUri, this.verifyUri];
+  }
+
+  /**
+   * Return a list of URIs that get a Bearer token added automatically. To add to this list, use the following syntax:
+   *
+   * <pre>
+   *   let config: StormpathConfiguration = new StormpathConfiguration();
+   *   config.autoAuthorizedUris.push(new RegExp('http://localhost:3000/myapi/*)');
+   * </pre>
+   *
+   * @returns {[string]}
+   */
+  get autoAuthorizedUris(): Array<RegExp>  {
+    return [new RegExp(this.meUri)];
   }
 
   get changeUri(): string {
@@ -164,6 +213,30 @@ export class StormpathConfiguration {
 
   set logoutUri(value: string) {
     this._logoutUri = value;
+  }
+
+  get oauthLoginUri(): string {
+    return this._endpointPrefix + this._oauthLoginUri;
+  }
+
+  set oauthLoginUri(value: string) {
+    this._oauthLoginUri = value;
+  }
+
+  get oauthLogoutUri(): string {
+    return this._endpointPrefix + this._oauthLogoutUri;
+  }
+
+  set oauthLogoutUri(value: string) {
+    this._oauthLogoutUri = value;
+  }
+
+  get oauthTokenName(): string {
+    return this._oauthTokenName;
+  }
+
+  set oauthTokenName(value: string) {
+    this._oauthTokenName = value;
   }
 
   get meUri(): string {

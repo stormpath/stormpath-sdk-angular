@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const IS_PROD = process.argv.indexOf('-p') > -1;
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
 const StringReplacePlugin = require('string-replace-webpack-plugin');
+const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPlugin;
 const TOKENS = {
   VERSION: JSON.stringify(require('./package.json').version).replace(/['"]+/g, '')
 };
@@ -53,7 +54,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    alias: {
+      'angular-stormpath$': path.resolve(__dirname, 'src/index.ts')
+    }
   },
   devServer: {
     port: 8000,
@@ -68,6 +72,7 @@ module.exports = {
           '/login',
           '/logout',
           '/me',
+          '/oauth',
           '/register'
         ],
         target: 'http://localhost:3000',
@@ -76,6 +81,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new TsConfigPathsPlugin(),
     new webpack.ContextReplacementPlugin(
       // The (\\|\/) piece accounts for path separators in *nix and Windows
       /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,

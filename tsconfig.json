@@ -9,6 +9,11 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "angular-stormpath": ["./src/index"]
+    },
     "types": [
       "jasmine",
       "node"
