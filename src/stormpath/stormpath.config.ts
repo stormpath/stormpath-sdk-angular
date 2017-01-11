@@ -169,6 +169,20 @@ export class StormpathConfiguration {
     return [this.changeUri, this.forgotUri, this.loginUri, this.logoutUri, this.meUri, this.registerUri, this.verifyUri];
   }
 
+  /**
+   * Return a list of URIs that get a Bearer token added automatically. To add to this list, use the following syntax:
+   *
+   * <pre>
+   *   let config: StormpathConfiguration = new StormpathConfiguration();
+   *   config.autoAuthorizedUris.push('http://localhost:3000/myapi/');
+   * </pre>
+   *
+   * @returns {[string]}
+   */
+  get autoAuthorizedUris(): Array<string>  {
+    return [this.meUri];
+  }
+
   get changeUri(): string {
     return this._endpointPrefix + this._changeUri;
   }
