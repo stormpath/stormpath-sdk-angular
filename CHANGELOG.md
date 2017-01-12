@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.8"></a>
+## [0.0.8](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.7...v0.0.8) (2017-01-12)
+
+
+### Bug Fixes
+
+* **module:** Attempt to fix ERROR in Error encountered resolving symbol values statically. Reference ([d501c09](https://github.com/stormpath/stormpath-sdk-angular/commit/d501c09))
+
+
+
 <a name="0.0.7"></a>
 ## [0.0.7](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.6...v0.0.7) (2017-01-12)
 
