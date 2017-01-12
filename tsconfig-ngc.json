@@ -15,8 +15,7 @@
     "lib": ["es6", "dom"]
   },
   "files": [
-    "src/index.ts",
-    "src/globals.d.ts"
+    "src/index.ts"
   ],
   "angularCompilerOptions": {
     "strictMetadataEmit": true,
