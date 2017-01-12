@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.7"></a>
+## [0.0.7](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.6...v0.0.7) (2017-01-12)
+
+
+### Bug Fixes
+
+* **install:** Change postinstall to pree2e to prevent installation issues ([38e8f42](https://github.com/stormpath/stormpath-sdk-angular/commit/38e8f42))
+* **package.json:** Fixed name of task ([21253e8](https://github.com/stormpath/stormpath-sdk-angular/commit/21253e8))
+* **webpack:** Revert to rc3, rc4 doesn't work w/o changes ([10aca2d](https://github.com/stormpath/stormpath-sdk-angular/commit/10aca2d))
+
+
+
 <a name="0.0.6"></a>
 ## [0.0.6](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.5...v0.0.6) (2017-01-12)
 
