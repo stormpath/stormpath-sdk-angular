@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.6"></a>
+## [0.0.6](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.5...v0.0.6) (2017-01-12)
+
+
+### Bug Fixes
+
+* **demo:** Fix logout link so event propogation is stopped ([7758ed2](https://github.com/stormpath/stormpath-sdk-angular/commit/7758ed2)), closes [#22](https://github.com/stormpath/stormpath-sdk-angular/issues/22)
+* **forms:** Add required field validation to login and forgot password forms. ([#40](https://github.com/stormpath/stormpath-sdk-angular/issues/40)) ([ca2f339](https://github.com/stormpath/stormpath-sdk-angular/commit/ca2f339)), closes [#24](https://github.com/stormpath/stormpath-sdk-angular/issues/24)
+* **webpack:** Change X-Stormpath-Agent to read versions from package.json and Angular ([8e3747e](https://github.com/stormpath/stormpath-sdk-angular/commit/8e3747e))
+
+
+### Features
+
+* **oauth:** Add support for OAuth and Client API ([#37](https://github.com/stormpath/stormpath-sdk-angular/issues/37)) ([e18ed49](https://github.com/stormpath/stormpath-sdk-angular/commit/e18ed49))
+* **tests:** Add Protractor configuration and tests ([41c216a](https://github.com/stormpath/stormpath-sdk-angular/commit/41c216a))
+
+
+### Performance Improvements
+
+* **webpack:** Upgrade to webpack 2 for better performance and ES6 ([9c8b345](https://github.com/stormpath/stormpath-sdk-angular/commit/9c8b345))
+
+
+
 <a name="0.0.5"></a>
 ## [0.0.5](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.4...v0.0.5) (2016-12-14)
 
