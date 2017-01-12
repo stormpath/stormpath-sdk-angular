@@ -1,7 +1,7 @@
 {
   "name": "angular-stormpath",
   "version": "0.0.6",
-  "description": "Stormpath Components for Angular 2.",
+  "description": "Stormpath Components for Angular.",
   "main": "./dist/umd/stormpath-sdk-angular.js",
   "module": "./dist/esm/src/index.js",
   "typings": "./dist/esm/src/index.d.ts",
@@ -15,7 +15,7 @@
     "build:clean": "rm -rf dist",
     "test": "karma start",
     "test:watch": "karma start --watch",
-    "postinstall": "webdriver-manager update && node node_modules/phantomjs-prebuilt/install.js",
+    "pree2enp": "webdriver-manager update && node node_modules/phantomjs-prebuilt/install.js",
     "e2e": "protractor",
     "e2e:cookies": "protractor --params.storage cookies",
     "e2e:client": "protractor --params.api https://raible.apps.stormpath.io",
@@ -102,7 +102,7 @@
     "typedoc": "^0.5.1",
     "typescript": "^2.1.4",
     "validate-commit-msg": "~2.8.0",
-    "webpack": "2.2.0-rc.3",
+    "webpack": "2.2.0-rc.4",
     "webpack-dev-server": "^1.16.2",
     "zone.js": "^0.7.4"
   },
