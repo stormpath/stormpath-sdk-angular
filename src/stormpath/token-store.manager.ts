@@ -43,12 +43,12 @@ export class LocalStorageTokenStoreManager extends TokenStoreManager {
 @Injectable()
 export class CookieTokenStoreManager extends TokenStoreManager {
 
-  constructor(private cookieStorage: CookieService) {
+  constructor(private cookieService: CookieService) {
     super();
   }
 
   get(key: string): AuthToken {
-    let token: any = this.cookieStorage.getObject(key);
+    let token: any = this.cookieService.getObject(key);
     if (token) {
       return new AuthToken(token.accessToken, token.refreshToken, token.tokenType, token.expiresIn, token.expiresAt, token.exp);
     } else {
@@ -57,10 +57,10 @@ export class CookieTokenStoreManager extends TokenStoreManager {
   }
 
   put(key: string, value: AuthToken): void {
-    this.cookieStorage.putObject(key, value);
+    this.cookieService.putObject(key, value);
   }
 
   remove(key: string): void {
-    this.cookieStorage.remove(key);
+    this.cookieService.remove(key);
   }
 }
