@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import {
   StormpathConfiguration, StormpathModule, CookieTokenStoreManager,
-  LocalStorageTokenStoreManager, TokenStoreManager
+  LocalStorageTokenStoreManager
 } from 'angular-stormpath';
 
 let config: StormpathConfiguration = new StormpathConfiguration();

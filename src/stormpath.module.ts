@@ -1,4 +1,3 @@
-///<reference path="stormpath/token-store.manager.ts"/>
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,9 +12,11 @@ import { httpFactory } from './stormpath/stormpath.http';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
+import { EventManager } from './stormpath/event.manager';
+import { LocalStorageTokenStoreManager, CookieTokenStoreManager } from './stormpath/token-store.manager'
+import { Stormpath } from './stormpath/stormpath.service';
 import { Ng2Webstorage } from 'ng2-webstorage';
 import { CookieService } from 'angular2-cookie/core';
-import { Stormpath, CookieTokenStoreManager, EventManager, LocalStorageTokenStoreManager } from './stormpath/index';
 
 @NgModule({
   declarations: [
