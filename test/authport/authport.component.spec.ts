@@ -3,6 +3,7 @@ import { MockStormpathService } from '../mocks/stormpath.mock.service';
 import { FormsModule } from '@angular/forms';
 import { AuthPortComponent, LoginComponent, ForgotPasswordComponent, RegisterComponent, Stormpath } from '../../src';
 import { Observable } from 'rxjs';
+import { EventManager } from '../../src/stormpath/event.manager';
 
 describe('AuthPortComponent', () => {
   let mockStormpathService: MockStormpathService;
@@ -27,7 +28,8 @@ describe('AuthPortComponent', () => {
       declarations: [AuthPortComponent, LoginComponent, ForgotPasswordComponent, RegisterComponent],
       imports: [FormsModule],
       providers: [
-        {provide: Stormpath, useValue: mockStormpathService}
+        {provide: Stormpath, useValue: mockStormpathService},
+        {provide: EventManager, useClass: EventManager}
       ]
     });
   });

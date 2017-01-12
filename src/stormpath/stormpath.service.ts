@@ -1,31 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Location } from '@angular/common';
-
 import { ReplaySubject } from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
-
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/share';
-import 'rxjs/add/observable/throw';
-
 import { Account, BaseStormpathAccount } from '../shared/account';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { StormpathConfiguration } from './stormpath.config';
+import { AuthToken } from './auth.token';
+import { StormpathConfiguration, StormpathConstants } from './stormpath.config';
+import { CurrentDomain } from './stormpath.http';
+import { TokenStoreManager } from './token-store.manager';
 
 let APPLICATION_JSON: string = 'application/json';
 
-class JsonGetOptions extends RequestOptions {
+export class JsonGetOptions extends RequestOptions {
   constructor() {
     super({
-      headers: new Headers({ 'Accept': APPLICATION_JSON }),
+      headers: new Headers({'Accept': APPLICATION_JSON}),
       withCredentials: true
     });
   }
 }
 
-class JsonPostOptions extends JsonGetOptions {
+export class JsonPostOptions extends JsonGetOptions {
   constructor() {
     super();
     this.headers.append('Content-Type', APPLICATION_JSON);
@@ -80,11 +76,13 @@ export class LoginService {
   public forgot: boolean;
   public login: boolean;
   public register: boolean;
+
   constructor() {
     this.forgot = false;
     this.login = true;
     this.register = false;
   }
+
   forgotPassword(): void {
     this.forgot = true;
     this.login = false;
@@ -95,12 +93,16 @@ export class LoginService {
 export class Stormpath {
   public user$: Observable<Account | boolean>;
   public userSource: ReplaySubject<Account | boolean>;
+  private currentDomain: CurrentDomain;
+  private oauthHeaders: Headers;
 
-  constructor(public http: Http, public config: StormpathConfiguration) {
+  constructor(public http: Http, public config: StormpathConfiguration,
+              @Inject('tokenStore') public tokenStore: TokenStoreManager) {
     this.userSource = new ReplaySubject<Account>(1);
     this.user$ = this.userSource.asObservable();
-    this.getAccount()
-      .subscribe(user => this.userSource.next(user));
+    this.getAccount().subscribe(user => this.userSource.next(user));
+    this.currentDomain = new CurrentDomain();
+    this.oauthHeaders = StormpathConstants.OAUTH_HEADERS;
   }
 
   /**
@@ -123,6 +125,15 @@ export class Stormpath {
         }
         return Observable.throw(error);
       });
+  }
+
+  /**
+   * Retrieves the OAuth token data object from storage, relying on its set token
+   * store for the loading implementation details.
+   * @returns {@link AuthToken}
+   */
+  getToken(): AuthToken {
+    return this.tokenStore.get(this.config.oauthTokenName);
   }
 
   getRegistrationViewModel(): any {
@@ -148,20 +159,56 @@ export class Stormpath {
   }
 
   login(form: LoginFormModel): Observable<Account> {
-    let observable: Observable<Account> = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
-      .map(this.jsonParser)
-      .map(this.accountTransformer)
-      .catch(this.errorTranslator)
-      .share();
+    let observable: Observable<Account>;
 
-    observable.subscribe(user => this.userSource.next(user), () => undefined);
-    return observable;
+    if (this.currentDomain.equals(this.config.loginUri)) {
+      observable = this.http.post(this.config.loginUri, JSON.stringify(form), new JsonPostOptions())
+        .map(this.jsonParser)
+        .map(this.accountTransformer)
+        .catch(this.errorTranslator)
+        .share();
+
+      observable.subscribe(user => this.userSource.next(user), () => undefined);
+      return observable;
+    } else {
+      let data: string = 'username=' + encodeURIComponent(form.login) + '&password=' +
+        encodeURIComponent(form.password) + '&grant_type=password';
+
+      observable = this.http.post(this.config.oauthLoginUri, data, {
+        headers: this.oauthHeaders
+      }).map(this.jsonParser)
+        .map(token => {
+          let authToken: AuthToken = this.tokenStore.setToken(this.config.oauthTokenName, token);
+          return Observable.of(authToken);
+        }).flatMap(() => {
+          return this.getAccount();
+        }).catch(this.errorTranslator)
+        .share();
+
+      observable.subscribe(user => this.userSource.next(user), () => undefined);
+      return observable;
+    }
   }
 
   logout(): void {
-    this.http.post(this.config.logoutUri, null, new JsonGetOptions())
-      .catch(this.errorThrower)
-      .subscribe(() => this.userSource.next(false));
+    if (this.currentDomain.equals(this.config.loginUri)) {
+      this.http.post(this.config.logoutUri, null, new JsonGetOptions())
+        .catch(this.errorThrower)
+        .subscribe(() => this.userSource.next(false));
+    } else {
+      let token: AuthToken = this.getToken();
+      let tokenValue: any = token.refreshToken || token.accessToken;
+      let tokenHint: any = token.refreshToken ? 'refresh_token' : 'access_token';
+      let data: any = 'token=' + encodeURIComponent(tokenValue) + '&token_type_hint=' +
+        encodeURIComponent(tokenHint);
+
+      this.http.post(this.config.oauthLogoutUri, data, {headers: this.oauthHeaders})
+        .map((response: Response) => {
+          this.tokenStore.remove(this.config.oauthTokenName);
+        })
+        .catch(this.errorThrower)
+        .subscribe(() => this.userSource.next(false));
+    }
   }
 
   resendVerificationEmail(request: ResendEmailVerificationRequest): any {
@@ -199,7 +246,7 @@ export class Stormpath {
    * response is not a JSON error
    * @param {any} error
    */
-  private errorTranslator(error: any): ErrorObservable {
+  private errorTranslator(error: any): ErrorObservable<StormpathErrorResponse> {
     let errorObject: StormpathErrorResponse;
     try {
       errorObject = error.json();
@@ -207,12 +254,12 @@ export class Stormpath {
       console.error(error);
     }
     if (!errorObject || !errorObject.message) {
-      errorObject = { message: 'Server Error', status: 0 };
+      errorObject = {message: 'Server Error', status: 0};
     }
     return Observable.throw(errorObject);
   }
 
-  private errorThrower(error: any): ErrorObservable {
+  private errorThrower(error: any): ErrorObservable<StormpathErrorResponse> {
     return Observable.throw(error);
   }
 

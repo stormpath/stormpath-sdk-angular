@@ -1,6 +1,6 @@
+///<reference path="stormpath/token-store.manager.ts"/>
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Stormpath } from './stormpath/stormpath.service';
 import { FormsModule } from '@angular/forms';
 import { AuthPortComponent } from './authport/authport.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -13,6 +13,9 @@ import { httpFactory } from './stormpath/stormpath.http';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
+import { Ng2Webstorage } from 'ng2-webstorage';
+import { CookieService } from 'angular2-cookie/core';
+import { Stormpath, CookieTokenStoreManager, EventManager, LocalStorageTokenStoreManager } from './stormpath/index';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,7 @@ import { ResendEmailVerificationComponent } from './resend-email-verification/re
     ResetPasswordComponent,
     ResendEmailVerificationComponent
   ],
-  imports: [CommonModule, FormsModule, HttpModule],
+  imports: [CommonModule, FormsModule, HttpModule, Ng2Webstorage],
   exports: [
     AuthPortComponent,
     ForgotPasswordComponent,
@@ -34,12 +37,18 @@ import { ResendEmailVerificationComponent } from './resend-email-verification/re
     ResetPasswordComponent,
     ResendEmailVerificationComponent
   ],
-  providers: [Stormpath, StormpathConfiguration, LoginService,
+  providers: [
+    EventManager, LocalStorageTokenStoreManager, CookieTokenStoreManager, CookieService,
+    Stormpath, StormpathConfiguration, LoginService,
+    {
+      provide: 'tokenStore', useClass: LocalStorageTokenStoreManager,
+    },
     {
       provide: Http,
       useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions]
-    }]
+      deps: [XHRBackend, RequestOptions, StormpathConfiguration, 'tokenStore']
+    }
+  ]
 })
 export class StormpathModule {
 }
