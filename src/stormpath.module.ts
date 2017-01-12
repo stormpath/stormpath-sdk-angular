@@ -41,12 +41,9 @@ import { Stormpath, CookieTokenStoreManager, EventManager, LocalStorageTokenStor
     EventManager, LocalStorageTokenStoreManager, CookieTokenStoreManager, CookieService,
     Stormpath, StormpathConfiguration, LoginService,
     {
-      provide: 'tokenStore', useClass: LocalStorageTokenStoreManager,
-    },
-    {
       provide: Http,
       useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions, StormpathConfiguration, 'tokenStore']
+      deps: [XHRBackend, RequestOptions, StormpathConfiguration, LocalStorageTokenStoreManager]
     }
   ]
 })
