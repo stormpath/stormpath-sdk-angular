@@ -72,11 +72,15 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/account.html" class="tsd-kind-icon">Account</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/authportcomponent.html" class="tsd-kind-icon">Auth<wbr>Port<wbr>Component</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/authtoken.html" class="tsd-kind-icon">Auth<wbr>Token</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/cookietokenstoremanager.html" class="tsd-kind-icon">Cookie<wbr>Token<wbr>Store<wbr>Manager</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/currentdomain.html" class="tsd-kind-icon">Current<wbr>Domain</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/emailverificationcomponent.html" class="tsd-kind-icon">Email<wbr>Verification<wbr>Component</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/eventmanager.html" class="tsd-kind-icon">Event<wbr>Manager</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/forgotpasswordcomponent.html" class="tsd-kind-icon">Forgot<wbr>Password<wbr>Component</a></li>
-								<li class="tsd-kind-class tsd-is-external tsd-is-not-exported"><a href="classes/jsongetoptions.html" class="tsd-kind-icon">Json<wbr>Get<wbr>Options</a></li>
-								<li class="tsd-kind-class tsd-is-external tsd-is-not-exported"><a href="classes/jsonpostoptions.html" class="tsd-kind-icon">Json<wbr>Post<wbr>Options</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/jsongetoptions.html" class="tsd-kind-icon">Json<wbr>Get<wbr>Options</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/jsonpostoptions.html" class="tsd-kind-icon">Json<wbr>Post<wbr>Options</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/localstoragetokenstoremanager.html" class="tsd-kind-icon">Local<wbr>Storage<wbr>Token<wbr>Store<wbr>Manager</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/logincomponent.html" class="tsd-kind-icon">Login<wbr>Component</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/loginservice.html" class="tsd-kind-icon">Login<wbr>Service</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/registercomponent.html" class="tsd-kind-icon">Register<wbr>Component</a></li>
@@ -87,6 +91,7 @@
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/stormpathconstants.html" class="tsd-kind-icon">Stormpath<wbr>Constants</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/stormpathhttp.html" class="tsd-kind-icon">Stormpath<wbr>Http</a></li>
 								<li class="tsd-kind-class"><a href="classes/stormpathmodule.html" class="tsd-kind-icon">Stormpath<wbr>Module</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/tokenstoremanager.html" class="tsd-kind-icon">Token<wbr>Store<wbr>Manager</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
@@ -125,7 +130,7 @@
 					<div class="tsd-signature tsd-kind-icon">APPLICATION_<wbr>JSON<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;application/json&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in stormpath/stormpath.service.ts:17</li>
+							<li>Defined in <a href="https://github.com/stormpath/stormpath-sdk-angular/blob/037d4e8/src/stormpath/stormpath.service.ts#L13">stormpath/stormpath.service.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -142,7 +147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in stormpath/stormpath.service.ts:34</li>
+									<li>Defined in <a href="https://github.com/stormpath/stormpath-sdk-angular/blob/037d4e8/src/stormpath/stormpath.service.ts#L31">stormpath/stormpath.service.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -159,13 +164,13 @@
 					<a name="httpfactory" class="tsd-anchor"></a>
 					<h3>http<wbr>Factory</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">http<wbr>Factory<span class="tsd-signature-symbol">(</span>backend<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">XHRBackend</span>, defaultOptions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Http</span></li>
+						<li class="tsd-signature tsd-kind-icon">http<wbr>Factory<span class="tsd-signature-symbol">(</span>backend<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">XHRBackend</span>, defaultOptions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestOptions</span>, config<span class="tsd-signature-symbol">: </span><a href="classes/stormpathconfiguration.html" class="tsd-signature-type">StormpathConfiguration</a>, tokenStore<span class="tsd-signature-symbol">: </span><a href="classes/tokenstoremanager.html" class="tsd-signature-type">TokenStoreManager</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Http</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in stormpath/stormpath.http.ts:9</li>
+									<li>Defined in <a href="https://github.com/stormpath/stormpath-sdk-angular/blob/037d4e8/src/stormpath/stormpath.http.ts#L19">stormpath/stormpath.http.ts:19</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -175,6 +180,12 @@
 								</li>
 								<li>
 									<h5>defaultOptions: <span class="tsd-signature-type">RequestOptions</span></h5>
+								</li>
+								<li>
+									<h5>config: <a href="classes/stormpathconfiguration.html" class="tsd-signature-type">StormpathConfiguration</a></h5>
+								</li>
+								<li>
+									<h5>tokenStore: <a href="classes/tokenstoremanager.html" class="tsd-signature-type">TokenStoreManager</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Http</span></h4>
@@ -200,19 +211,31 @@
 						<a href="classes/authportcomponent.html" class="tsd-kind-icon">Auth<wbr>Port<wbr>Component</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/authtoken.html" class="tsd-kind-icon">Auth<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/cookietokenstoremanager.html" class="tsd-kind-icon">Cookie<wbr>Token<wbr>Store<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/currentdomain.html" class="tsd-kind-icon">Current<wbr>Domain</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/emailverificationcomponent.html" class="tsd-kind-icon">Email<wbr>Verification<wbr>Component</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/eventmanager.html" class="tsd-kind-icon">Event<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/forgotpasswordcomponent.html" class="tsd-kind-icon">Forgot<wbr>Password<wbr>Component</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/jsongetoptions.html" class="tsd-kind-icon">Json<wbr>Get<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/jsonpostoptions.html" class="tsd-kind-icon">Json<wbr>Post<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/localstoragetokenstoremanager.html" class="tsd-kind-icon">Local<wbr>Storage<wbr>Token<wbr>Store<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/logincomponent.html" class="tsd-kind-icon">Login<wbr>Component</a>
@@ -243,6 +266,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/stormpathmodule.html" class="tsd-kind-icon">Stormpath<wbr>Module</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/tokenstoremanager.html" class="tsd-kind-icon">Token<wbr>Store<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/basestormpathaccount.html" class="tsd-kind-icon">Base<wbr>Stormpath<wbr>Account</a>

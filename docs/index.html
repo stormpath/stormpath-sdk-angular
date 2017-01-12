@@ -64,7 +64,7 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="stormpath-angular-2-sdk">Stormpath Angular 2 SDK</h1>
+				<h1 id="stormpath-angular-sdk">Stormpath Angular SDK</h1>
 				<p><a href="https://travis-ci.org/stormpath/stormpath-sdk-angular"><img src="https://travis-ci.org/stormpath/stormpath-sdk-angular.svg?branch=master" alt="Build Status"></a>
 					<a href="http://badge.fury.io/js/angular-stormpath"><img src="https://badge.fury.io/js/angular-stormpath.svg" alt="npm version"></a>
 					<a href="https://david-dm.org/stormpath/stormpath-sdk-angular#info=devDependencies"><img src="https://david-dm.org/stormpath/stormpath-sdk-angular/dev-status.svg" alt="devDependency Status"></a>
@@ -72,7 +72,7 @@
 					<a href="https://github.com/stormpath/stormpath-sdk-angular/stargazers"><img src="https://img.shields.io/github/stars/stormpath/stormpath-sdk-angular.svg" alt="GitHub stars"></a>
 				<a href="https://raw.githubusercontent.com/stormpath/stormpath-sdk-angular/master/LICENSE"><img src="https://img.shields.io/badge/license-APACHE-red.svg" alt="GitHub license"></a></p>
 				<blockquote>
-					<p>Angular 2 Components for integrating with Stormpath&#39;s API</p>
+					<p>Angular Components for integrating with Stormpath&#39;s API</p>
 				</blockquote>
 				<div>
 					<a href="http://angular.io">
@@ -89,7 +89,7 @@
 					<li><a href="#licence">License</a></li>
 				</ul>
 				<h2 id="about">About</h2>
-				<p>Angular 2 SDK for Stormpath&#39;s API. If you&#39;re looking for <strong>AngularJS</strong> support, please see <a href="https://github.com/stormpath/stormpath-sdk-angularjs">stormpath-sdk-angularjs</a>.</p>
+				<p>Angular SDK for Stormpath&#39;s API. If you&#39;re looking for <strong>AngularJS</strong> support, please see <a href="https://github.com/stormpath/stormpath-sdk-angularjs">stormpath-sdk-angularjs</a>.</p>
 				<h2 id="installation">Installation</h2>
 				<p>Install through npm:</p>
 				<pre><code>npm <span class="hljs-keyword">install</span> <span class="hljs-comment">--save angular-stormpath</span>
@@ -98,7 +98,7 @@
 <span class="hljs-keyword">import</span> { Observable } from <span class="hljs-string">'rxjs'</span>;
 <span class="hljs-keyword">import</span> { Account, Stormpath } from <span class="hljs-string">'angular-stormpath'</span>;
 
-@Component({
+<span class="hljs-meta">@Component</span>({
   selector: <span class="hljs-string">'app-root'</span>,
   template: <span class="hljs-string">`&lt;div *ngIf="(user$ | async)" class="row text-center"&gt;
        &lt;h2 class=""&gt;
@@ -121,7 +121,7 @@
   <span class="hljs-keyword">private</span> login: <span class="hljs-built_in">boolean</span>;
   <span class="hljs-keyword">private</span> register: <span class="hljs-built_in">boolean</span>;
 
-  <span class="hljs-keyword">constructor</span>(public stormpath: Stormpath) {}
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> stormpath: Stormpath</span>) {}
 
   ngOnInit() {
     <span class="hljs-keyword">this</span>.login = <span class="hljs-literal">true</span>;
@@ -151,7 +151,7 @@
 spConfig.endpointPrefix = <span class="hljs-string">'http://api.mycompany.com'</span>;
 spConfig.meUri = <span class="hljs-string">'/account'</span>;
 
-@NgModule({
+<span class="hljs-meta">@NgModule</span>({
   declarations: [AppComponent],
   imports: [BrowserModule, StormpathModule],
   bootstrap: [AppComponent],
@@ -162,14 +162,14 @@ spConfig.meUri = <span class="hljs-string">'/account'</span>;
 <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> DemoModule {
 }
 </code></pre>
+				<p><strong>NOTE:</strong> If your Angular app is on a different domain than your endpoints, OAuth will be used for login/logout. The access token will be stored in localStorage under the name <code>stormpath:token</code> and it will be automatically added as an <code>Authorization</code> header when you send HTTP requests.</p>
+				<h4 id="templates">Templates</h4>
 				<p>To override templates, you can use the <code>customTemplate</code> attribute on a component. Below is an example of <a href="https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts">app.component.ts</a> with a custom <code>&lt;sp-authport&gt;</code> and <code>&lt;login-form&gt;</code>:</p>
 				<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> { Component, OnInit } from <span class="hljs-string">'@angular/core'</span>;
 <span class="hljs-keyword">import</span> { Observable } from <span class="hljs-string">'rxjs/Observable'</span>;
-<span class="hljs-keyword">import</span> { Stormpath, StormpathErrorResponse } from <span class="hljs-string">'../src/stormpath/stormpath.service'</span>;
-<span class="hljs-keyword">import</span> { Account } from <span class="hljs-string">'../src/shared/account'</span>;
-<span class="hljs-keyword">import</span> { LoginFormModel } from <span class="hljs-string">'../dist/esm/src/stormpath/stormpath.service'</span>;
+<span class="hljs-keyword">import</span> { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from <span class="hljs-string">'angular-stormpath'</span>;
 
-@Component({
+<span class="hljs-meta">@Component</span>({
   selector: <span class="hljs-string">'demo-app'</span>,
   template: <span class="hljs-string">`
       &lt;div class="container"&gt;
@@ -220,7 +220,7 @@ spConfig.meUri = <span class="hljs-string">'/account'</span>;
   <span class="hljs-keyword">private</span> _login: <span class="hljs-built_in">boolean</span>;
   <span class="hljs-keyword">private</span> _register: <span class="hljs-built_in">boolean</span>;
 
-  <span class="hljs-keyword">constructor</span>(public stormpath: Stormpath) {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">public</span> stormpath: Stormpath</span>) {
     <span class="hljs-keyword">this</span>.loginFormModel = {
       login: <span class="hljs-string">''</span>,
       password: <span class="hljs-string">''</span>
@@ -253,6 +253,13 @@ spConfig.meUri = <span class="hljs-string">'/account'</span>;
   logout(): <span class="hljs-built_in">void</span> {
     <span class="hljs-keyword">this</span>.stormpath.logout();
   }
+}
+</code></pre>
+				<p><strong>NOTE:</strong> One problem with this approach is you&#39;ll need to copy all the referenced variables in the template into your component. Another option is to extend the existing Stormpath component and override its <code>template</code> variable in <code>@Component</code>.</p>
+				<h4 id="access-token-storage">Access Token Storage</h4>
+				<p>To change the storage mechanism for authentication tokens from localStorage (the default), to cookies, change the class for the &#39;tokenStore&#39; provider.</p>
+				<pre><code class="lang-typescript">{
+  provide: <span class="hljs-string">'tokenStore'</span>, useClass: CookieTokenStoreManager
 }
 </code></pre>
 				<p>Below is a list of direct links to each component. You can use the HTML defined in their <code>template</code> variable as a starting point for your customizations.</p>
@@ -312,19 +319,31 @@ spConfig.meUri = <span class="hljs-string">'/account'</span>;
 						<a href="classes/authportcomponent.html" class="tsd-kind-icon">Auth<wbr>Port<wbr>Component</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/authtoken.html" class="tsd-kind-icon">Auth<wbr>Token</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/cookietokenstoremanager.html" class="tsd-kind-icon">Cookie<wbr>Token<wbr>Store<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/currentdomain.html" class="tsd-kind-icon">Current<wbr>Domain</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/emailverificationcomponent.html" class="tsd-kind-icon">Email<wbr>Verification<wbr>Component</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/eventmanager.html" class="tsd-kind-icon">Event<wbr>Manager</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/forgotpasswordcomponent.html" class="tsd-kind-icon">Forgot<wbr>Password<wbr>Component</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/jsongetoptions.html" class="tsd-kind-icon">Json<wbr>Get<wbr>Options</a>
 					</li>
-					<li class=" tsd-kind-class tsd-is-external tsd-is-not-exported">
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/jsonpostoptions.html" class="tsd-kind-icon">Json<wbr>Post<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/localstoragetokenstoremanager.html" class="tsd-kind-icon">Local<wbr>Storage<wbr>Token<wbr>Store<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/logincomponent.html" class="tsd-kind-icon">Login<wbr>Component</a>
@@ -355,6 +374,9 @@ spConfig.meUri = <span class="hljs-string">'/account'</span>;
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/stormpathmodule.html" class="tsd-kind-icon">Stormpath<wbr>Module</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/tokenstoremanager.html" class="tsd-kind-icon">Token<wbr>Store<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/basestormpathaccount.html" class="tsd-kind-icon">Base<wbr>Stormpath<wbr>Account</a>
