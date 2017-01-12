@@ -53,11 +53,12 @@ import { Account } from '../shared/account';
 @Injectable()
 export class AuthPortComponent implements OnInit {
   /**
-   * A reference to a <template> tag that if set will override this component's template. Use like so:
+   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * ```
    * <template #customTemplate>
    *   // custom HTML with login form
    * </template>
-   *
+   * ```
    * Then pass customTemplate to the sp-authport component like so `[customTemplate]="customTemplate"`
    */
   @Input() customTemplate: TemplateRef<any>;
