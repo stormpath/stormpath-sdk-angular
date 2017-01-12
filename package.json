@@ -100,7 +100,7 @@
     "tslint": "^4.0.2",
     "tslint-loader": "^3.3.0",
     "typedoc": "^0.5.1",
-    "typescript": "^2.1.4",
+    "typescript": "~2.0.10",
     "validate-commit-msg": "~2.8.0",
     "webpack": "2.2.0-rc.3",
     "webpack-dev-server": "^1.16.2",

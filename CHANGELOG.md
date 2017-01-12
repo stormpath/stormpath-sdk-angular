@@ -5,12 +5,9 @@ All notable changes to this project will be documented in this file. See [standa
 <a name="0.0.9"></a>
 ## [0.0.9](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.8...v0.0.9) (2017-01-12)
 
-
 ### Bug Fixes
 
-* **exports:** Export auth.token in an attemp to fix install error ([9dc1ba0](https://github.com/stormpath/stormpath-sdk-angular/commit/9dc1ba0))
-
-
+* **exports:** Export auth.token in an attempt to fix install error ([9dc1ba0](https://github.com/stormpath/stormpath-sdk-angular/commit/9dc1ba0))
 
 <a name="0.0.8"></a>
 ## [0.0.8](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.7...v0.0.8) (2017-01-12)
@@ -19,7 +16,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * **module:** Attempt to fix ERROR in Error encountered resolving symbol values statically. Reference ([d501c09](https://github.com/stormpath/stormpath-sdk-angular/commit/d501c09))
-
 
 
 <a name="0.0.7"></a>
