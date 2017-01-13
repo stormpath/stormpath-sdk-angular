@@ -19,6 +19,7 @@
 
 - [About](#about)
 - [Installation](#installation)
+  - [Configuration](#configuration)
 - [Documentation](#documentation)
 - [Development](#development)
 - [License](#licence)
@@ -96,23 +97,35 @@ To override the endpoint prefix or URIs for the various endpoints, you can modif
 For example, to override the endpoint prefix and `/me` URI in [demo.module.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/demo.module.ts), change it to the following:
 
 ```typescript
-let spConfig: StormpathConfiguration = new StormpathConfiguration();
-spConfig.endpointPrefix = 'http://api.mycompany.com';
-spConfig.meUri = '/account';
+export function stormpathConfig(): StormpathConfiguration {
+ let spConfig: StormpathConfiguration = new StormpathConfiguration();
+ spConfig.endpointPrefix = 'http://api.mycompany.com';
+ spConfig.meUri = '/account';
+ return spConfig;
+}
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, StormpathModule],
   bootstrap: [AppComponent],
   providers: [{
-    provide: StormpathConfiguration, useValue: spConfig
+    provide: StormpathConfiguration, useFactory: stormpathConfig
   }]
 })
 export class DemoModule {
 }
 ```
 
-**NOTE:** If your Angular app is on a different domain than your endpoints, OAuth will be used for login/logout. The access token will be stored in localStorage under the name `stormpath:token` and it will be automatically added as an `Authorization` header when you send HTTP requests.
+#### OAuth
+
+If your Angular app is on a different domain than your endpoints, OAuth will be used for login/logout. The access token will be stored in localStorage under the name `stormpath:token` and it will be automatically added as an `Authorization` header when you send HTTP requests to your `/me` endpoint. 
+
+If you'd like to add this header to additional URLs, you'll need to add them as follows:
+
+```typescript
+let config: StormpathConfiguration = new StormpathConfiguration();
+config.autoAuthorizedUris.push(new RegExp('http://localhost:3000/myapi/*)');
+```
 
 #### Templates
 
@@ -136,7 +149,7 @@ import { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from 'angu
           <hr/>
 
           <ul class="nav nav-pills nav-stacked text-centered">
-            <li role="presentation" (click)="logout()"><a href="">Logout</a></li>
+            <li role="presentation" (click)="logout(); false"><a href="">Logout</a></li>
           </ul>
         </div>
 
@@ -256,13 +269,27 @@ Run `npm start` to start a development server on port 8000 with auto reload + te
 ### Testing
 Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
 
+### Using npm link
+
+If you want to use `npm link` to use this module in another Angular project, follow the steps below:
+
+1. Build this project using `npm run build:dist`.
+2. Run `npm link` in this project's directory.
+3. Run `npm link angular-stormpath` in the `<test-project>`.
+4. Run `rm -rf node_modules/angular-stormpath/node_modules` in `<test-project>`.
+5. Manually install dependencies required by `angular-stormpath`:
+
+```
+npm install ng2-webstorage angular2-cookie --save
+```
+
 ### Release
 * Bump the version in package.json (once the module hits 1.0 this will become automatic)
 ```bash
 npm run release
 ```
 
-For more information, see [generator-angular2-module](https://www.npmjs.com/package/generator-angular2-module). 
+For more information, see [generator-angular-library](https://www.npmjs.com/package/generator-angular-library). 
 It was used to create this project.
 
 ## License
