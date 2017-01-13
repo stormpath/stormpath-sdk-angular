@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="0.1.0"></a>
+# [0.1.0](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.9...v0.1.0) (2017-01-13)
+
+
+### Bug Fixes
+
+* **build:** Fix installation by downgrading to TypeScript 2.0.10. ([#45](https://github.com/stormpath/stormpath-sdk-angular/issues/45)) ([2ec5ae3](https://github.com/stormpath/stormpath-sdk-angular/commit/2ec5ae3))
+
+
+
+<a name="0.1.0"></a>
 ## [0.1.0](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.5...v0.1.0) (2017-01-12)
 
 
