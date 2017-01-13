@@ -7,23 +7,28 @@ import {
   LocalStorageTokenStoreManager
 } from 'angular-stormpath';
 
-let config: StormpathConfiguration = new StormpathConfiguration();
 let params: any = {};
 
-if (location.search) {
-  let parts: Array<String> = location.search.substring(1).split('&');
+export function stormpathConfig(): StormpathConfiguration {
+  let config: StormpathConfiguration = new StormpathConfiguration();
 
-  for (let i: number = 0; i < parts.length; i++) {
-    let nv: any = parts[i].split('=');
-    if (!nv[0]) continue;
-    params[nv[0]] = nv[1] || true;
+  if (location.search) {
+    let parts: Array<String> = location.search.substring(1).split('&');
+
+    for (let i: number = 0; i < parts.length; i++) {
+      let nv: any = parts[i].split('=');
+      if (!nv[0]) continue;
+      params[nv[0]] = nv[1] || true;
+    }
   }
-}
 
 // allow switching between local server and client api
-if (params['api']) {
-  config.endpointPrefix = params['api'];
-  console.info('Configured endpointPrefix to be: ' + params['api']);
+  if (params['api']) {
+    config.endpointPrefix = params['api'];
+    console.info('Configured endpointPrefix to be: ' + params['api']);
+  }
+
+  return config;
 }
 
 // allow switching between localStorage and cookies
@@ -42,7 +47,7 @@ if (params['storage'] && (params['storage'] === 'cookies')) {
   bootstrap: [AppComponent],
   providers: [
     {
-      provide: StormpathConfiguration, useValue: config
+      provide: StormpathConfiguration, useFactory: stormpathConfig
     },
     {
       provide: 'tokenStore', useClass: tokenStore

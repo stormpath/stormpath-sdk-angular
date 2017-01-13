@@ -2,40 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.0.9"></a>
-## [0.0.9](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.8...v0.0.9) (2017-01-12)
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.9...v0.1.0) (2017-01-13)
 
 
 ### Bug Fixes
 
-* **exports:** Export auth.token in an attemp to fix install error ([9dc1ba0](https://github.com/stormpath/stormpath-sdk-angular/commit/9dc1ba0))
+* **build:** Fix installation by downgrading to TypeScript 2.0.10. ([#45](https://github.com/stormpath/stormpath-sdk-angular/issues/45)) ([2ec5ae3](https://github.com/stormpath/stormpath-sdk-angular/commit/2ec5ae3))
 
 
 
-<a name="0.0.8"></a>
-## [0.0.8](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.7...v0.0.8) (2017-01-12)
-
-
-### Bug Fixes
-
-* **module:** Attempt to fix ERROR in Error encountered resolving symbol values statically. Reference ([d501c09](https://github.com/stormpath/stormpath-sdk-angular/commit/d501c09))
-
-
-
-<a name="0.0.7"></a>
-## [0.0.7](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.6...v0.0.7) (2017-01-12)
-
-
-### Bug Fixes
-
-* **install:** Change postinstall to pree2e to prevent installation issues ([38e8f42](https://github.com/stormpath/stormpath-sdk-angular/commit/38e8f42))
-* **package.json:** Fixed name of task ([21253e8](https://github.com/stormpath/stormpath-sdk-angular/commit/21253e8))
-* **webpack:** Revert to rc3, rc4 doesn't work w/o changes ([10aca2d](https://github.com/stormpath/stormpath-sdk-angular/commit/10aca2d))
-
-
-
-<a name="0.0.6"></a>
-## [0.0.6](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.5...v0.0.6) (2017-01-12)
+<a name="0.1.0"></a>
+## [0.1.0](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.5...v0.1.0) (2017-01-12)
 
 ### Bug Fixes
 
