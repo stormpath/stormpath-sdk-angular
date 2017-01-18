@@ -8,8 +8,6 @@ import { Account } from '../shared/account';
   selector: 'sp-authport',
   template: `<template #defaultTemplate>
   <div class="container">
-    <br/>
-    <br/>
     <div class="row" *ngIf="(user$ | async) === false">
       <div class="col-xs-12 col-sm-offset-3 col-sm-6">
         <div class="panel panel-default">
