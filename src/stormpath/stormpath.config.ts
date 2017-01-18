@@ -143,6 +143,7 @@ export class StormpathConfiguration {
   private _verifyUri: string;
   private _endpointPrefix: string;
   private _version: string;
+  private _autoAuthorizedUris: Array<RegExp> = [];
 
   constructor() {
     this._changeUri = StormpathConstants.CHANGE_PASSWORD_ENDPOINT;
@@ -180,7 +181,12 @@ export class StormpathConfiguration {
    * @returns {[string]}
    */
   get autoAuthorizedUris(): Array<RegExp>  {
-    return [new RegExp(this.meUri)];
+    // if empty, set to me and return. Can't do in constructor because /me will be set as default
+    // and won't be picked up if it's overriden by a developer.
+    if (this._autoAuthorizedUris.length === 0) {
+      this._autoAuthorizedUris = [new RegExp(this.meUri)];
+    }
+    return this._autoAuthorizedUris;
   }
 
   get changeUri(): string {

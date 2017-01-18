@@ -110,4 +110,13 @@ describe('StormpathConfiguration', () => {
         ])
     }))
   );
+
+  it('should allow adding to the autoAuthorizedUris',
+    inject([StormpathConfiguration], fakeAsync((config: StormpathConfiguration) => {
+      expect(config.autoAuthorizedUris).toEqual([new RegExp(config.meUri)]);
+      let myApi = new RegExp('http://localhost:8080/my-api');
+      config.autoAuthorizedUris.push(myApi);
+      expect(config.autoAuthorizedUris).toEqual([new RegExp(config.meUri), myApi]);
+    }))
+  );
 });
