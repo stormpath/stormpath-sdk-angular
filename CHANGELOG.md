@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.0...v0.1.1) (2017-01-20)
+
+
+### Bug Fixes
+
+* **config:** Allow autoAuthorizedUris to be modified ([#48](https://github.com/stormpath/stormpath-sdk-angular/issues/48)) ([ca81cbe](https://github.com/stormpath/stormpath-sdk-angular/commit/ca81cbe)), closes [#47](https://github.com/stormpath/stormpath-sdk-angular/issues/47)
+* **dependencies:** Lock down version of ng2-webstorage to 1.4.3. ([6b00209](https://github.com/stormpath/stormpath-sdk-angular/commit/6b00209)), closes [#46](https://github.com/stormpath/stormpath-sdk-angular/issues/46)
+* **security:** Set autocomplete="off" for all forms ([#52](https://github.com/stormpath/stormpath-sdk-angular/issues/52)) ([e85dc7d](https://github.com/stormpath/stormpath-sdk-angular/commit/e85dc7d)), closes [#51](https://github.com/stormpath/stormpath-sdk-angular/issues/51)
+
+
+
 <a name="0.1.0"></a>
 ## [0.1.0](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.5...v0.1.0) (2017-01-12)
 
