@@ -8,19 +8,17 @@ import { Account } from '../shared/account';
   selector: 'sp-authport',
   template: `<template #defaultTemplate>
   <div class="container">
-    <br/>
-    <br/>
     <div class="row" *ngIf="(user$ | async) === false">
       <div class="col-xs-12 col-sm-offset-3 col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4>
               <ul class="nav nav-pills">
-                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" id="login" (click)="showLogin()">
-                  <a>Sign In</a>
+                <li role="presentation" [ngClass]="{active:loginService.login || loginService.forgot}" id="login">
+                  <a href="" (click)="showLogin(); false">Sign In</a>
                 </li>
-                <li role="presentation" [ngClass]="{active:loginService.register}" (click)="showRegister()" id="register" class="pull-right">
-                  <a>Register</a>
+                <li role="presentation" [ngClass]="{active:loginService.register}" id="register" class="pull-right">
+                  <a href="" (click)="showRegister(); false">Register</a>
                 </li>
               </ul>
             </h4>
@@ -53,11 +51,12 @@ import { Account } from '../shared/account';
 @Injectable()
 export class AuthPortComponent implements OnInit {
   /**
-   * A reference to a <template> tag that if set will override this component's template. Use like so:
+   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * ```
    * <template #customTemplate>
    *   // custom HTML with login form
    * </template>
-   *
+   * ```
    * Then pass customTemplate to the sp-authport component like so `[customTemplate]="customTemplate"`
    */
   @Input() customTemplate: TemplateRef<any>;

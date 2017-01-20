@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Stormpath } from './stormpath/stormpath.service';
 import { FormsModule } from '@angular/forms';
 import { AuthPortComponent } from './authport/authport.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -13,6 +12,11 @@ import { httpFactory } from './stormpath/stormpath.http';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
+import { EventManager } from './stormpath/event.manager';
+import { LocalStorageTokenStoreManager, CookieTokenStoreManager } from './stormpath/token-store.manager';
+import { Stormpath } from './stormpath/stormpath.service';
+import { Ng2Webstorage } from 'ng2-webstorage';
+import { CookieService } from 'angular2-cookie/core';
 import { IfUserInGroupDirective } from './user/if-user-in-group.directive';
 import { IfUserDirective } from './user/if-user.directive';
 
@@ -28,7 +32,7 @@ import { IfUserDirective } from './user/if-user.directive';
     IfUserDirective,
     IfUserInGroupDirective
   ],
-  imports: [CommonModule, FormsModule, HttpModule],
+  imports: [CommonModule, FormsModule, HttpModule, Ng2Webstorage],
   exports: [
     AuthPortComponent,
     ForgotPasswordComponent,
@@ -40,12 +44,18 @@ import { IfUserDirective } from './user/if-user.directive';
     IfUserDirective,
     IfUserInGroupDirective,
   ],
-  providers: [Stormpath, StormpathConfiguration, LoginService,
+  providers: [
+    EventManager, LocalStorageTokenStoreManager, CookieTokenStoreManager, CookieService,
+    Stormpath, StormpathConfiguration, LoginService,
+    {
+      provide: 'tokenStore', useClass: LocalStorageTokenStoreManager,
+    },
     {
       provide: Http,
       useFactory: httpFactory,
-      deps: [XHRBackend, RequestOptions]
-    }]
+      deps: [XHRBackend, RequestOptions, StormpathConfiguration, 'tokenStore']
+    }
+  ]
 })
 export class StormpathModule {
 }

@@ -1,4 +1,4 @@
-import { browser, element, by, $ } from 'protractor';
+import { browser, element, by, $, protractor } from 'protractor';
 
 describe('register', () => {
 
@@ -40,6 +40,8 @@ describe('register', () => {
 
     let success = $('.alert-success').getText();
     expect(success).toMatch(/Your account has been created, you may now log in./);
+
+    browser.sleep(2000);
     expect(title.getText()).toMatch(/Welcome, Test User/);
 
     logout.click();

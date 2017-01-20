@@ -1,4 +1,4 @@
-# Stormpath Angular 2 SDK
+# Stormpath Angular SDK
 [![Build Status](https://travis-ci.org/stormpath/stormpath-sdk-angular.svg?branch=master)](https://travis-ci.org/stormpath/stormpath-sdk-angular)
 [![npm version](https://badge.fury.io/js/angular-stormpath.svg)](http://badge.fury.io/js/angular-stormpath)
 [![devDependency Status](https://david-dm.org/stormpath/stormpath-sdk-angular/dev-status.svg)](https://david-dm.org/stormpath/stormpath-sdk-angular#info=devDependencies)
@@ -6,7 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/stormpath/stormpath-sdk-angular.svg)](https://github.com/stormpath/stormpath-sdk-angular/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-APACHE-red.svg)](https://raw.githubusercontent.com/stormpath/stormpath-sdk-angular/master/LICENSE)
 
-> Angular 2 Components for integrating with Stormpath's API
+> Angular Components for integrating with Stormpath's API
 
 <div>
   <a href="http://angular.io">
@@ -19,13 +19,14 @@
 
 - [About](#about)
 - [Installation](#installation)
+  - [Configuration](#configuration)
 - [Documentation](#documentation)
 - [Development](#development)
 - [License](#licence)
 
 ## About
 
-Angular 2 SDK for Stormpath's API. If you're looking for **AngularJS** support, please see [stormpath-sdk-angularjs](https://github.com/stormpath/stormpath-sdk-angularjs).
+Angular SDK for Stormpath's API. If you're looking for **AngularJS** support, please see [stormpath-sdk-angularjs](https://github.com/stormpath/stormpath-sdk-angularjs).
 
 ## Installation
 
@@ -96,30 +97,44 @@ To override the endpoint prefix or URIs for the various endpoints, you can modif
 For example, to override the endpoint prefix and `/me` URI in [demo.module.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/demo.module.ts), change it to the following:
 
 ```typescript
-let spConfig: StormpathConfiguration = new StormpathConfiguration();
-spConfig.endpointPrefix = 'http://api.mycompany.com';
-spConfig.meUri = '/account';
+export function stormpathConfig(): StormpathConfiguration {
+ let spConfig: StormpathConfiguration = new StormpathConfiguration();
+ spConfig.endpointPrefix = 'http://api.mycompany.com';
+ spConfig.meUri = '/account';
+ return spConfig;
+}
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, StormpathModule],
   bootstrap: [AppComponent],
   providers: [{
-    provide: StormpathConfiguration, useValue: spConfig
+    provide: StormpathConfiguration, useFactory: stormpathConfig
   }]
 })
 export class DemoModule {
 }
 ```
 
+#### OAuth
+
+If your Angular app is on a different domain than your endpoints, OAuth will be used for login/logout. The access token will be stored in localStorage under the name `stormpath:token` and it will be automatically added as an `Authorization` header when you send HTTP requests to your `/me` endpoint. 
+
+If you'd like to add this header to additional URLs, you'll need to add them as follows:
+
+```typescript
+let config: StormpathConfiguration = new StormpathConfiguration();
+config.autoAuthorizedUris.push(new RegExp('http://localhost:3000/myapi/*)');
+```
+
+#### Templates
+
 To override templates, you can use the `customTemplate` attribute on a component. Below is an example of [app.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts) with a custom `<sp-authport>` and `<login-form>`:
 
 ```typescript
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Stormpath, StormpathErrorResponse } from '../src/stormpath/stormpath.service';
-import { Account } from '../src/shared/account';
-import { LoginFormModel } from '../dist/esm/src/stormpath/stormpath.service';
+import { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from 'angular-stormpath';
 
 @Component({
   selector: 'demo-app',
@@ -134,7 +149,7 @@ import { LoginFormModel } from '../dist/esm/src/stormpath/stormpath.service';
           <hr/>
 
           <ul class="nav nav-pills nav-stacked text-centered">
-            <li role="presentation" (click)="logout()"><a href="">Logout</a></li>
+            <li role="presentation" (click)="logout(); false"><a href="">Logout</a></li>
           </ul>
         </div>
 
@@ -208,6 +223,18 @@ export class AppComponent implements OnInit {
 }
 ```
 
+**NOTE:** One problem with this approach is you'll need to copy all the referenced variables in the template into your component. Another option is to extend the existing Stormpath component and override its `template` variable in `@Component`.
+
+#### Access Token Storage
+
+To change the storage mechanism for authentication tokens from localStorage (the default), to cookies, change the class for the 'tokenStore' provider.
+
+```typescript
+{
+  provide: 'tokenStore', useClass: CookieTokenStoreManager
+}
+```
+
 Below is a list of direct links to each component. You can use the HTML defined in their `template` variable as a starting point for your customizations.
 
 * [authport.component.ts](https://github.com/stormpath/stormpath-sdk-angular/blob/master/src/authport/authport.component.ts)
@@ -242,13 +269,27 @@ Run `npm start` to start a development server on port 8000 with auto reload + te
 ### Testing
 Run `npm test` to run tests once or `npm run test:watch` to continually run tests.
 
+### Using npm link
+
+If you want to use `npm link` to use this module in another Angular project, follow the steps below:
+
+1. Build this project using `npm run build:dist`.
+2. Run `npm link` in this project's directory.
+3. Run `npm link angular-stormpath` in the `<test-project>`.
+4. Run `rm -rf node_modules/angular-stormpath/node_modules` in `<test-project>`.
+5. Manually install dependencies required by `angular-stormpath`:
+
+```
+npm install ng2-webstorage angular2-cookie --save
+```
+
 ### Release
 * Bump the version in package.json (once the module hits 1.0 this will become automatic)
 ```bash
 npm run release
 ```
 
-For more information, see [generator-angular2-module](https://www.npmjs.com/package/generator-angular2-module). 
+For more information, see [generator-angular-library](https://www.npmjs.com/package/generator-angular-library). 
 It was used to create this project.
 
 ## License

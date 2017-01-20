@@ -2,6 +2,10 @@ import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { Account, StormpathModule, Stormpath, StormpathConfiguration, StormpathHttp } from '../../src';
 import { MockBackend } from '@angular/http/testing';
 import { Response, ResponseOptions, BaseRequestOptions, Http, ConnectionBackend } from '@angular/http';
+import { TokenStoreManager, LocalStorageTokenStoreManager } from '../../src/stormpath/token-store.manager';
+import { VERSION } from '@angular/core';
+
+const pkgVersion = JSON.stringify(require("../../package.json").version).replace(/['"]+/g, '');
 
 describe('StormpathHttp', () => {
 
@@ -11,23 +15,25 @@ describe('StormpathHttp', () => {
         imports: [StormpathModule],
         providers: [
           {
-            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-            return new StormpathHttp(backend, defaultOptions);
+            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
+                                        config: StormpathConfiguration, tokenStore: TokenStoreManager) => {
+            return new StormpathHttp(backend, defaultOptions, config, tokenStore);
           },
-            deps: [MockBackend, BaseRequestOptions]
+            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration, LocalStorageTokenStoreManager]
           },
-          {provide: Stormpath, useClass: Stormpath},
           {provide: MockBackend, useClass: MockBackend},
           {provide: BaseRequestOptions, useClass: BaseRequestOptions}
         ]
       });
     });
 
-    it('should add x-stormpath-agent if same domain',
+    it('should add x-stormpath-agent if me endpoint',
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
+        expect(stormpath.config.version).toBe(pkgVersion);
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/' + pkgVersion
+            + ' angular/' + VERSION.full);
           expect(c.request.url).toBe('/me');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -52,7 +58,8 @@ describe('StormpathHttp', () => {
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/0.0.x angular/2.x');
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBe('stormpath-sdk-angular/' + pkgVersion
+            + ' angular/' + VERSION.full);
           expect(c.request.url).toBe('/login');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -72,6 +79,27 @@ describe('StormpathHttp', () => {
         expect(account['username']).toBe('bar');
       }))
     );
+
+    it('should not add x-stormpath-agent if not Stormpath endpoint',
+      inject([Stormpath, MockBackend, Http], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend, http: Http) => {
+        mockBackend.connections.subscribe(c => {
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.url).toBe('/random-endpoint');
+          let response: ResponseOptions = new ResponseOptions({
+            body: {
+              foo: 'bar'
+            }
+          });
+          c.mockRespond(new Response(response));
+        });
+        let data: any;
+        http.get('/random-endpoint').subscribe((response) => {
+          data = response.json();
+        });
+        tick();
+        expect(data['foo']).toBe('bar');
+      }))
+    );
   });
 
   describe('different domain', () => {
@@ -84,11 +112,12 @@ describe('StormpathHttp', () => {
         imports: [StormpathModule],
         providers: [
           {
-            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions) => {
-            return new Http(backend, defaultOptions);
-          }, deps: [MockBackend, BaseRequestOptions]
+            provide: Http, useFactory: (backend: ConnectionBackend, defaultOptions: BaseRequestOptions,
+                                        config: StormpathConfiguration, tokenStore: TokenStoreManager) => {
+            return new StormpathHttp(backend, defaultOptions, config, tokenStore);
           },
-          {provide: Stormpath, useClass: Stormpath},
+            deps: [MockBackend, BaseRequestOptions, StormpathConfiguration, LocalStorageTokenStoreManager]
+          },
           {provide: MockBackend, useClass: MockBackend},
           {provide: BaseRequestOptions, useClass: BaseRequestOptions},
           {provide: StormpathConfiguration, useValue: config}
@@ -96,11 +125,11 @@ describe('StormpathHttp', () => {
       });
     });
 
-    it('should not add x-stormpath-agent if different domain',
+    it('should add x-stormpath-agent if stormpath endpoint',
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeTruthy();
           expect(c.request.url).toBe('http://api.mycompany.com/me');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -121,11 +150,11 @@ describe('StormpathHttp', () => {
       }))
     );
 
-    it('should not add x-stormpath-agent if post request',
+    it('should add x-stormpath-agent if post request',
       inject([Stormpath, MockBackend], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend) => {
         let account: boolean | Account;
         mockBackend.connections.subscribe(c => {
-          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeTruthy();
           expect(c.request.url).toBe('http://api.mycompany.com/register');
           let response: ResponseOptions = new ResponseOptions({
             body: {
@@ -148,6 +177,27 @@ describe('StormpathHttp', () => {
         });
         tick();
         expect(account['username']).toBe('bar');
+      }))
+    );
+
+    it('should not add x-stormpath-agent if not Stormpath endpoint',
+      inject([Stormpath, MockBackend, Http], fakeAsync((stormpath: Stormpath, mockBackend: MockBackend, http: Http) => {
+        mockBackend.connections.subscribe(c => {
+          expect(c.request.headers.get('X-Stormpath-Agent')).toBeFalsy();
+          expect(c.request.url).toBe('/random-endpoint');
+          let response: ResponseOptions = new ResponseOptions({
+            body: {
+              foo: 'bar'
+            }
+          });
+          c.mockRespond(new Response(response));
+        });
+        let data: any;
+        http.get('/random-endpoint').subscribe((response) => {
+          data = response.json();
+        });
+        tick();
+        expect(data['foo']).toBe('bar');
       }))
     );
   });

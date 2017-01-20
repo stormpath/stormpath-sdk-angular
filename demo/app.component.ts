@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Stormpath } from '../src/stormpath/stormpath.service';
-import { Account } from '../src/shared/account';
+import { Account, Stormpath } from 'angular-stormpath';
 
 @Component({
   selector: 'demo-app',
   template: `
       <div class="container">
-        <br/>
-        <br/>
         <div class="row" *ngIf="(user$ | async) === false">
           <div class="col-xs-12 col-sm-offset-3 col-sm-6">
             <h1 class="text-center">Hello</h1>
-            <br/>
           </div>
         </div>
         <div *ngIf="(user$ | async)" class="row text-center">
@@ -22,7 +18,7 @@ import { Account } from '../src/shared/account';
           <hr/>
 
           <ul class="nav nav-pills nav-stacked text-centered">
-            <li role="presentation" (click)="logout()"><a id="logout" href="#">Logout</a></li>
+            <li role="presentation" (click)="logout(); false"><a id="logout" href="#">Logout</a></li>
           </ul>
         </div>
 
