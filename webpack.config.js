@@ -13,7 +13,7 @@ module.exports = {
   entry: './demo/entry.ts',
   output: {
     filename: 'demo.js',
-    path: IS_PROD ? './demo' : ''
+    path: IS_PROD ? './demo' : '/'
   },
   module: {
     rules: [

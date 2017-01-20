@@ -9,9 +9,10 @@ exports.config = {
   ],
 
   capabilities: {
-    'browserName': 'firefox',
+    'browserName': 'chrome',
     'phantomjs.binary.path': require('phantomjs-prebuilt').path,
-    'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG']
+    'phantomjs.ghostdriver.cli.args': ['--loglevel=DEBUG'],
+    marionette: false
   },
 
   directConnect: true,

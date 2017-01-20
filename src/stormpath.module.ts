@@ -13,7 +13,7 @@ import { EmailVerificationComponent } from './email-verification/email-verificat
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResendEmailVerificationComponent } from './resend-email-verification/resend-email-verification.component';
 import { EventManager } from './stormpath/event.manager';
-import { LocalStorageTokenStoreManager, CookieTokenStoreManager } from './stormpath/token-store.manager'
+import { LocalStorageTokenStoreManager, CookieTokenStoreManager } from './stormpath/token-store.manager';
 import { Stormpath } from './stormpath/stormpath.service';
 import { Ng2Webstorage } from 'ng2-webstorage';
 import { CookieService } from 'angular2-cookie/core';
