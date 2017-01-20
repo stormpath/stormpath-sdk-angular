@@ -17,7 +17,7 @@ import { Stormpath, ResendEmailVerificationRequest } from '../stormpath/stormpat
 
 <div class="row">
   <div class="col-xs-12">
-    <form class="form-horizontal" *ngIf="!sent" (ngSubmit)="onSubmit()">
+    <form class="form-horizontal" *ngIf="!sent" (ngSubmit)="onSubmit()" autocomplete="off">
 
       <div class="form-group">
         <label for="spUsername" class="col-xs-12 col-sm-4 control-label">Email address</label>
