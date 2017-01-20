@@ -8,7 +8,7 @@ import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/s
 @Component({
   selector: 'register-form',
   template: `<template #defaultTemplate>
-  <form *ngIf="!registered" (ngSubmit)="onSubmit()" class="form-horizontal">
+  <form *ngIf="!registered" (ngSubmit)="onSubmit()" class="form-horizontal" autocomplete="off">
     <div class="form-group" *ngFor="let field of model?.form?.fields">
       <label [attr.for]="field.name" class="col-sm-4 control-label">{{field.label}}</label>
       <div class="col-sm-8">

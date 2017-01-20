@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'login-form',
   template: `<template #defaultTemplate>
-<form class="form-horizontal" #form="ngForm" (ngSubmit)="login(form.value)">
+<form class="form-horizontal" #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
   <div class="form-group">
     <label for="loginField" class="col-sm-3 control-label">Email</label>
     <div class="col-sm-9">
