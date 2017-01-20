@@ -2,13 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.1.0"></a>
-# [0.1.0](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.0.9...v0.1.0) (2017-01-13)
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.0...v0.1.1) (2017-01-20)
 
 
 ### Bug Fixes
 
-* **build:** Fix installation by downgrading to TypeScript 2.0.10. ([#45](https://github.com/stormpath/stormpath-sdk-angular/issues/45)) ([2ec5ae3](https://github.com/stormpath/stormpath-sdk-angular/commit/2ec5ae3))
+* **config:** Allow autoAuthorizedUris to be modified ([#48](https://github.com/stormpath/stormpath-sdk-angular/issues/48)) ([ca81cbe](https://github.com/stormpath/stormpath-sdk-angular/commit/ca81cbe)), closes [#47](https://github.com/stormpath/stormpath-sdk-angular/issues/47)
+* **dependencies:** Lock down version of ng2-webstorage to 1.4.3. ([6b00209](https://github.com/stormpath/stormpath-sdk-angular/commit/6b00209)), closes [#46](https://github.com/stormpath/stormpath-sdk-angular/issues/46)
+* **security:** Set autocomplete="off" for all forms ([#52](https://github.com/stormpath/stormpath-sdk-angular/issues/52)) ([e85dc7d](https://github.com/stormpath/stormpath-sdk-angular/commit/e85dc7d)), closes [#51](https://github.com/stormpath/stormpath-sdk-angular/issues/51)
 
 
 
@@ -17,6 +19,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
+* **build:** Fix installation by downgrading to TypeScript 2.0.10. ([#45](https://github.com/stormpath/stormpath-sdk-angular/issues/45)) ([2ec5ae3](https://github.com/stormpath/stormpath-sdk-angular/commit/2ec5ae3))
 * **demo:** Fix logout link so event propogation is stopped ([7758ed2](https://github.com/stormpath/stormpath-sdk-angular/commit/7758ed2)), closes [#22](https://github.com/stormpath/stormpath-sdk-angular/issues/22)
 * **forms:** Add required field validation to login and forgot password forms. ([#40](https://github.com/stormpath/stormpath-sdk-angular/issues/40)) ([ca2f339](https://github.com/stormpath/stormpath-sdk-angular/commit/ca2f339)), closes [#24](https://github.com/stormpath/stormpath-sdk-angular/issues/24)
 * **webpack:** Change X-Stormpath-Agent to read versions from package.json and Angular ([8e3747e](https://github.com/stormpath/stormpath-sdk-angular/commit/8e3747e))

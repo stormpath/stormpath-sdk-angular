@@ -3,15 +3,22 @@ node_js:
 - '6'
 script:
 - npm test
-- npm start &
-- npm run e2e # run protractor tests against local instance
-- npm run e2e:cookies # run protractor tests against local instance with cookie storage
-- npm run e2e:client # run protractor tests against client api
-- npm run e2e:client+cookies # run protractor tests against client api with cookie storage
+#- npm start &
+#- npm run e2e # run protractor tests against local instance
+#- npm run e2e:cookies # run protractor tests against local instance with cookie storage
+#- npm run e2e:client # run protractor tests against client api
+#- npm run e2e:client+cookies # run protractor tests against client api with cookie storage
 - npm run typedoc
 cache:
   directories:
   - node_modules
+addons:
+apt:
+  sources:
+  - google-chrome
+  packages:
+  - google-chrome-stable
+  - google-chrome-beta
 before_install:
 - if [ $TRAVIS_PULL_REQUEST == 'false'  ]; then
     test -z "$BUILD_DOCS" || openssl aes-256-cbc -K $encrypted_d98a3227cf72_key -iv $encrypted_d98a3227cf72_iv -in keypair.enc -out ~/.ssh/id_rsa -d;
