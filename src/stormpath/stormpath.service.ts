@@ -197,17 +197,22 @@ export class Stormpath {
         .subscribe(() => this.userSource.next(false));
     } else {
       let token: AuthToken = this.getToken();
-      let tokenValue: any = token.refreshToken || token.accessToken;
-      let tokenHint: any = token.refreshToken ? 'refresh_token' : 'access_token';
-      let data: any = 'token=' + encodeURIComponent(tokenValue) + '&token_type_hint=' +
-        encodeURIComponent(tokenHint);
+      if (token) {
+        let tokenValue: any = token.refreshToken || token.accessToken;
+        let tokenHint: any = token.refreshToken ? 'refresh_token' : 'access_token';
+        let data: any = 'token=' + encodeURIComponent(tokenValue) + '&token_type_hint=' +
+          encodeURIComponent(tokenHint);
 
-      this.http.post(this.config.oauthLogoutUri, data, {headers: this.oauthHeaders})
-        .map((response: Response) => {
-          this.tokenStore.remove(this.config.oauthTokenName);
-        })
-        .catch(this.errorThrower)
-        .subscribe(() => this.userSource.next(false));
+        this.http.post(this.config.oauthLogoutUri, data, {headers: this.oauthHeaders})
+          .map((response: Response) => {
+            this.tokenStore.remove(this.config.oauthTokenName);
+          })
+          .catch(this.errorThrower)
+          .subscribe(() => this.userSource.next(false));
+      } else {
+        this.tokenStore.remove(this.config.oauthTokenName);
+        this.userSource.next(false);
+      }
     }
   }
 
