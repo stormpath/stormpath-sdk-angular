@@ -84,10 +84,11 @@ export class StormpathHttp extends Http {
       options.headers = new Headers();
     }
 
+    let version: string = (VERSION) ? VERSION.full : '2.x';
     if (this.config.endpointUris.indexOf(requestUri) > -1) {
-      options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/' + this.config.version + ' angular/' + VERSION.full);
+      options.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/' + this.config.version + ' angular/' + version);
       if (url instanceof Request) {
-        url.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/' + this.config.version + ' angular/' + VERSION.full);
+        url.headers.set('X-Stormpath-Agent', 'stormpath-sdk-angular/' + this.config.version + ' angular/' + version);
       }
     }
 
