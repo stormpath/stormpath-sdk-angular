@@ -7,7 +7,6 @@ const TsConfigPathsPlugin = require('awesome-typescript-loader').TsConfigPathsPl
 const TOKENS = {
   VERSION: JSON.stringify(require('./package.json').version).replace(/['"]+/g, '')
 };
-
 module.exports = {
   devtool: IS_PROD ? 'source-map' : 'eval',
   entry: './demo/entry.ts',
