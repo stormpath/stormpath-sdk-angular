@@ -3,7 +3,9 @@ const webpack = require('webpack');
 const IS_PROD = process.argv.indexOf('-p') > -1;
 const StringReplacePlugin = require('string-replace-webpack-plugin');
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
-
+const TOKENS = {
+  VERSION: JSON.stringify(require('./package.json').version).replace(/['"]+/g, '')
+};
 module.exports = {
   entry: './src/index.ts',
   output: {
