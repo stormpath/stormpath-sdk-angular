@@ -39,52 +39,23 @@ Then use it in your app like so:
 
 ```typescript
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Account, Stormpath } from 'angular-stormpath';
+import { AuthPortComponent } from 'angular-stormpath';
 
 @Component({
   selector: 'app-root',
   template: `<div *ngIf="(user$ | async)" class="row text-center">
-       <h2 class="">
-         Welcome, ({{ ( user$ | async ).fullName }}).
-       </h2>
-       <hr/>
-       <h4>What would you like to do?</h4>
+ <h2>
+   Welcome, {{ ( user$ | async ).fullName }}.
+ </h2>
 
-       <ul class="nav nav-pills nav-stacked text-centered">
-         <li role="presentation" (click)="logout()"><a href="#">Logout</a></li>
-       </ul>
-     </div>
+ <ul class="nav nav-pills nav-stacked text-centered">
+   <li role="presentation" (click)="logout()"><a href="#">Logout</a></li>
+ </ul>
+</div>
 
-     <sp-authport></sp-authport>`,
-  providers: [Stormpath]
+<sp-authport></sp-authport>`
 })
-export class AppComponent {
-  private user$: Observable<Account | boolean>;
-  private loggedIn$: Observable<boolean>;
-  private login: boolean;
-  private register: boolean;
-
-  constructor(public stormpath: Stormpath) {}
-
-  ngOnInit() {
-    this.login = true;
-    this.register = false;
-    this.user$ = this.stormpath.user$;
-    this.loggedIn$ = this.user$.map(user => !!user);
-  }
-
-  showLogin() {
-    this.login = !(this.register = false);
-  }
-
-  showRegister() {
-    this.register = !(this.login = false);
-  }
-
-  logout() {
-    this.stormpath.logout();
-  }
+export class AppComponent extends AuthPortComponent {
 }
 ```
 
@@ -138,44 +109,39 @@ import { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from 'angu
 
 @Component({
   selector: 'demo-app',
-  template: `
-      <div class="container">
-        <br/>
-        <br/>
-        <div *ngIf="(user$ | async)" class="row text-center">
-          <h2 class="">
-            Welcome, ({{ ( user$ | async ).fullName }}).
-          </h2>
-          <hr/>
+  template: `<div class="container">
+<div *ngIf="(user$ | async)" class="row text-center">
+  <h2>
+    Welcome, {{ ( user$ | async ).fullName }}.
+  </h2>
+  <hr/>
 
-          <ul class="nav nav-pills nav-stacked text-centered">
-            <li role="presentation" (click)="logout(); false"><a href="">Logout</a></li>
-          </ul>
-        </div>
+  <ul class="nav nav-pills nav-stacked text-centered">
+    <li role="presentation" (click)="logout(); false"><a href="">Logout</a></li>
+  </ul>
+</div>
 
-        <template #loginform>
-          <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-          <form>
-              <label for="email">Email</label>
-              <input id="email" name="login" type="text" [(ngModel)]="loginFormModel.login">
-              <label for="passwordField">Password</label>
-              <input id="passwordField" name="password" type="password" [(ngModel)]="loginFormModel.password">
-              <button (click)="login()">Login</button>
-          </form>
-        </template>
-        
-        <template #authport>
-            <div *ngIf="(user$ | async) === false">
-                <h2>Sign In</h2>
-                <login-form [customTemplate]="loginform"></login-form>
-            </div>
-        </template>
-        
-        <sp-authport [customTemplate]="authport"></sp-authport>
+<template #loginform>
+  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+  <form>
+      <label for="email">Email</label>
+      <input id="email" name="login" type="text" [(ngModel)]="loginFormModel.login">
+      <label for="passwordField">Password</label>
+      <input id="passwordField" name="password" type="password" [(ngModel)]="loginFormModel.password">
+      <button (click)="login()">Login</button>
+  </form>
+</template>
 
-      </div>
-    `,
-  providers: [Stormpath]
+<template #authport>
+  <div *ngIf="(user$ | async) === false">
+      <h2>Sign In</h2>
+      <login-form [customTemplate]="loginform"></login-form>
+  </div>
+</template>
+
+<sp-authport [customTemplate]="authport"></sp-authport>
+
+</div>`
 })
 export class AppComponent implements OnInit {
 
@@ -223,7 +189,7 @@ export class AppComponent implements OnInit {
 }
 ```
 
-**NOTE:** One problem with this approach is you'll need to copy all the referenced variables in the template into your component. Another option is to extend the existing Stormpath component and override its `template` variable in `@Component`.
+**NOTE:** One problem with this approach is you'll need to copy all the referenced variables in the template into your component. Another option is to extend the existing Stormpath component and override its `template` variable in `@Component`. This is the recommended solution if you're using Angular 2.3+.
 
 #### Access Token Storage
 
@@ -254,13 +220,12 @@ Below is a list of direct links to each component. You can use the HTML defined 
 ```
 
 ## Documentation
-All documentation is auto-generated from the source via typedoc and can be viewed here:
-https://docs.stormpath.com/angular/api
+All documentation is auto-generated from the source via typedoc and can be viewed at https://docs.stormpath.com/angular/api.
 
 ## Development
 
 ### Prepare your environment
-* Install [Node.js](http://nodejs.org/) and NPM (should come with)
+* Install [Node.js](http://nodejs.org/) and npm
 * Install local dev dependencies: `npm install` while current directory is this repo
 
 ### Development server
