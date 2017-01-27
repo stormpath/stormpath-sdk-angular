@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const IS_PROD = process.argv.indexOf('-p') > -1;
+const StringReplacePlugin = require('string-replace-webpack-plugin');
 const LoaderOptionsPlugin = require("webpack/lib/LoaderOptionsPlugin");
 
 module.exports = {
