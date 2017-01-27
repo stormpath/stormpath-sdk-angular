@@ -17,6 +17,8 @@ import { LocalStorageTokenStoreManager, CookieTokenStoreManager } from './stormp
 import { Stormpath } from './stormpath/stormpath.service';
 import { Ng2Webstorage } from 'ng2-webstorage';
 import { CookieService } from 'angular2-cookie/core';
+import { IfUserInGroupDirective } from './user/if-user-in-group.directive';
+import { IfUserDirective } from './user/if-user.directive';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CookieService } from 'angular2-cookie/core';
     RegisterComponent,
     EmailVerificationComponent,
     ResetPasswordComponent,
-    ResendEmailVerificationComponent
+    ResendEmailVerificationComponent,
+    IfUserDirective,
+    IfUserInGroupDirective
   ],
   imports: [CommonModule, FormsModule, HttpModule, Ng2Webstorage],
   exports: [
@@ -36,7 +40,9 @@ import { CookieService } from 'angular2-cookie/core';
     RegisterComponent,
     EmailVerificationComponent,
     ResetPasswordComponent,
-    ResendEmailVerificationComponent
+    ResendEmailVerificationComponent,
+    IfUserDirective,
+    IfUserInGroupDirective,
   ],
   providers: [
     EventManager, LocalStorageTokenStoreManager, CookieTokenStoreManager, CookieService,

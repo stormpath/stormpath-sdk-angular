@@ -246,6 +246,15 @@ export class Stormpath {
       .catch(this.errorTranslator);
   }
 
+  isInGroup(authorities: any, groups: Array<any>): boolean {
+    // if at least one authority matches, allow
+    return authorities.filter(authority => this.inGroup(authority, groups)).length > 0;
+  }
+
+  private inGroup(groupName: string, groups: Array<any>): boolean {
+    return groups.filter(group => group.name == groupName).length > 0
+  };
+
   /**
    * Returns the JSON error from an HTTP response, or a generic error if the
    * response is not a JSON error

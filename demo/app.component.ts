@@ -23,7 +23,10 @@ import { Account, Stormpath } from 'angular-stormpath';
         </div>
 
         <sp-authport></sp-authport>
-
+        
+        <h3 ifUser>Directives</h3>
+        <a href="#" ifUserInGroup="admin">Only show for 'admin' group</a><br>
+        <span ifUser>Only show if user logged in</span>
       </div>
     `,
   providers: [Stormpath]
