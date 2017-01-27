@@ -36,6 +36,18 @@ module.exports = {
         loaders: ['awesome-typescript-loader', 'angular2-template-loader?keepUrl=true'],
         exclude: [/\.(spec|e2e)\.ts$/, /node_modules/]
       },
+      /* Replace version from package.json */
+      {
+        test: /\.config.ts$/,
+        loader: StringReplacePlugin.replace({
+          replacements: [{
+            pattern: /\${(.*)}/g,
+            replacement: function (match, p1, offset, string) {
+              return TOKENS[p1];
+            }
+          }]
+        })
+      },
       /* Embed files. */
       {
         test: /\.(html|css)$/,
@@ -58,13 +70,16 @@ module.exports = {
       VERSION: JSON.stringify(require('./package.json').version)
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new LoaderOptionsPlugin({
+    // the LoaderOptionsPlugin is necessary to configure tslint, but causes issues with StringReplacePlugin
+    // https://github.com/wbuchwalter/tslint-loader/issues/38
+    /*new LoaderOptionsPlugin({
       options: {
         tslint: {
           emitErrors: false,
           failOnHint: false
         }
       }
-    })
+    }),*/
+    new StringReplacePlugin()
   ]
 };
