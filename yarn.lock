@@ -2,11 +2,11 @@
 # yarn lockfile v1
 
 
-"@angular/common@^2.2.1":
+"@angular/common@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-2.4.5.tgz#ada1a22b7ba01d1fdeb300115584478e031e9a4f"
 
-"@angular/compiler-cli@^2.2.1":
+"@angular/compiler-cli@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/compiler-cli/-/compiler-cli-2.4.5.tgz#efabbe10558b233dcdfe985af2bd2e84f1414c97"
   dependencies:
@@ -14,31 +14,31 @@
     minimist "^1.2.0"
     reflect-metadata "^0.1.2"
 
-"@angular/compiler@^2.2.1":
+"@angular/compiler@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/compiler/-/compiler-2.4.5.tgz#521da325e2e002398e8f9de52cfb03d303729e72"
 
-"@angular/core@^2.2.1":
+"@angular/core@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/core/-/core-2.4.5.tgz#8b05156398afde9636e65527ffb61fc74236af5a"
 
-"@angular/forms@^2.2.1":
+"@angular/forms@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/forms/-/forms-2.4.5.tgz#468bd040518595c3598742ac1a22c506a7f1ab0f"
 
-"@angular/http@^2.2.1":
+"@angular/http@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/http/-/http-2.4.5.tgz#de94b2daa4ff24e8b6c8839ffaf8089b62d4430b"
 
-"@angular/platform-browser-dynamic@^2.2.1":
+"@angular/platform-browser-dynamic@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-2.4.5.tgz#36fa975a8ee2dfe3f60bab561143974e6bdb1eff"
 
-"@angular/platform-browser@^2.2.1":
+"@angular/platform-browser@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-2.4.5.tgz#fa1bc891b1309bca83845787b9a08db36a787fee"
 
-"@angular/platform-server@^2.2.1":
+"@angular/platform-server@^2.4.0":
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/@angular/platform-server/-/platform-server-2.4.5.tgz#4322d6a3609603edf34101f286d47db8762a08bc"
   dependencies:
