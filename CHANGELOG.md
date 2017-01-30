@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.2...v0.1.3) (2017-01-30)
+
+
+### Bug Fixes
+
+* **angular:** Change to peerDependencies and allow Angular 2.0.0+ ([cbf9637](https://github.com/stormpath/stormpath-sdk-angular/commit/cbf9637))
+
+
 
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.1...v0.1.2) (2017-01-27)
