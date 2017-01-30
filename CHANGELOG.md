@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.4"></a>
+## [0.1.4](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.3...v0.1.4) (2017-01-30)
+
+
+### Bug Fixes
+
+* **build:** Move ng2-webstorage and angular2-cookies to dependencies since they're required ([d05d730](https://github.com/stormpath/stormpath-sdk-angular/commit/d05d730)), closes [#62](https://github.com/stormpath/stormpath-sdk-angular/issues/62)
+
+
+
 <a name="0.1.3"></a>
 ## [0.1.3](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.2...v0.1.3) (2017-01-30)
 
