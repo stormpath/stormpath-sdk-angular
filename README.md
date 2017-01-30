@@ -59,6 +59,24 @@ export class AppComponent extends AuthPortComponent {
 }
 ```
 
+If you're using a version of Angular < 2.3, extending AuthPortComponent won't work for you. As an alternative, you can inject the `Stormpath` service into your component, subscribe to `stormpath.user$` and implement logout yourself.
+
+```typescript
+import { Account, Stormpath } from 'angular-stormpath';
+...
+export class AppComponent {
+  user$: Observable<Account | boolean>;
+
+  constructor(private stormpath: Stormpath) {
+    this.user$ = this.stormpath.user$;
+  }
+
+  logout(): void {
+    this.stormpath.logout();
+  }
+}
+```
+
 You may also find it useful to view the [demo source](https://github.com/stormpath/stormpath-sdk-angular/blob/master/demo/app.component.ts).
 
 ### Configuration
