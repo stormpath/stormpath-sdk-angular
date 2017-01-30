@@ -2,25 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name="0.1.2"></a>
-## [0.1.2](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.1...v0.1.2) (2017-01-27)
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.2...v0.1.3) (2017-01-30)
 
 
 ### Bug Fixes
 
-* **http:** Fix compatibility with Angular versions < 2.3 ([b3ae345](https://github.com/stormpath/stormpath-sdk-angular/commit/b3ae345))
-* **logout:** Fix logout fails when no access token found ([6fcaeda](https://github.com/stormpath/stormpath-sdk-angular/commit/6fcaeda))
-
-
-
-<a name="0.1.2"></a>
-## [0.1.2](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.1...v0.1.2) (2017-01-27)
-
-
-### Bug Fixes
-
-* **http:** Fix compatibility with Angular versions < 2.3 ([b3ae345](https://github.com/stormpath/stormpath-sdk-angular/commit/b3ae345))
-* **logout:** Fix logout fails when no access token found ([6fcaeda](https://github.com/stormpath/stormpath-sdk-angular/commit/6fcaeda))
+* **angular:** Change to peerDependencies and allow Angular 2.0.0+ ([cbf9637](https://github.com/stormpath/stormpath-sdk-angular/commit/cbf9637))
 
 
 
