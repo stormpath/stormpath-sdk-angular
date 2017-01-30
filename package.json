@@ -1,6 +1,6 @@
 {
   "name": "angular-stormpath",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Stormpath Components for Angular.",
   "main": "./dist/umd/stormpath-sdk-angular.js",
   "module": "./dist/esm/src/index.js",
