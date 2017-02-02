@@ -10,3 +10,4 @@ export * from './resend-email-verification/index';
 export * from './reset-password/index';
 export * from './shared/index';
 export * from './stormpath/index';
+export * from './extensions/ionic/index';
