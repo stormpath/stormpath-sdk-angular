@@ -266,8 +266,25 @@ If you want to use `npm link` to use this module in another Angular project, fol
 npm install ng2-webstorage angular2-cookie --save
 ```
 
+You'll know if this doesn't work because you'll see an error message like the following:
+
+```
+Type 'Observable<boolean | Account>' is not assignable to type 'Observable<boolean | Account>'. '
+Property 'source' is protected but type 'Observable<T>' is not a class derived from 'Observable<T>'.
+```
+
+When this happens, you can use the ol' fashioned copy and paste method. If you have `stormpath-sdk-angular` in an adjacent directory, the commands below should work on your project that has `angular-stormpath` already installed. You will need to run `npm run build:dist` every time you change code in this project.
+
+```
+rm -rf node_modules/angular-stormpath/dist
+cp -r ../stormpath-sdk-angular/dist node_modules/angular-stormpath/.
+cp ../stormpath-sdk-angular/package.json .
+```
+
 ### Release
-* Bump the version in package.json (once the module hits 1.0 this will become automatic)
+
+Bump the version in package.json (once the module hits 1.0 this will become automatic).
+
 ```bash
 npm run release
 ```
