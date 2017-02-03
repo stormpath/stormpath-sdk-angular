@@ -1,4 +1,5 @@
 export * from './stormpath.module';
+export * from './stormpath.ionic.module';
 
 // all components that will be codegen'd need to be exported for AOT to work
 export * from './authport/index';
@@ -10,3 +11,4 @@ export * from './resend-email-verification/index';
 export * from './reset-password/index';
 export * from './shared/index';
 export * from './stormpath/index';
+export * from './extensions/ionic/index';
