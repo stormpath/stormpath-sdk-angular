@@ -15,7 +15,6 @@ import { ResendEmailVerificationComponent } from './resend-email-verification/re
 import { EventManager } from './stormpath/event.manager';
 import { LocalStorageTokenStoreManager, CookieTokenStoreManager } from './stormpath/token-store.manager';
 import { Stormpath } from './stormpath/stormpath.service';
-import { ForgotPasswordPage, LoginPage, RegisterPage } from './extensions/ionic/index';
 import { Ng2Webstorage } from 'ng2-webstorage';
 import { CookieService } from 'angular2-cookie/core';
 
@@ -27,10 +26,7 @@ import { CookieService } from 'angular2-cookie/core';
     RegisterComponent,
     EmailVerificationComponent,
     ResetPasswordComponent,
-    ResendEmailVerificationComponent,
-    ForgotPasswordPage,
-    LoginPage,
-    RegisterPage
+    ResendEmailVerificationComponent
   ],
   imports: [CommonModule, FormsModule, HttpModule, Ng2Webstorage],
   exports: [
@@ -40,10 +36,7 @@ import { CookieService } from 'angular2-cookie/core';
     RegisterComponent,
     EmailVerificationComponent,
     ResetPasswordComponent,
-    ResendEmailVerificationComponent,
-    ForgotPasswordPage,
-    LoginPage,
-    RegisterPage
+    ResendEmailVerificationComponent
   ],
   providers: [
     EventManager, LocalStorageTokenStoreManager, CookieTokenStoreManager, CookieService,

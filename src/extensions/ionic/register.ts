@@ -3,7 +3,7 @@ import { RegisterComponent } from '../../register/index';
 
 @Component({
   selector: 'page-register',
-  templateUrl: `<ion-header>
+  template: `<ion-header>
   <ion-navbar>
     <ion-title>
       Create Account

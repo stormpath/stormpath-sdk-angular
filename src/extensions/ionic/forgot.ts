@@ -3,7 +3,7 @@ import { ForgotPasswordComponent } from '../../forgot-password/index';
 
 @Component({
   selector: 'page-forgot-password',
-  templateUrl: `<ion-header>
+  template: `<ion-header>
   <ion-navbar>
     <ion-title>
       Forgot Password
