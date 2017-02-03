@@ -1,6 +1,6 @@
 {
   "name": "angular-stormpath",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Stormpath Components for Angular.",
   "main": "./dist/umd/stormpath-sdk-angular.js",
   "module": "./dist/esm/src/index.js",
@@ -17,9 +17,9 @@
     "test:watch": "karma start --watch",
     "pree2e": "webdriver-manager update",
     "e2e": "protractor",
-    "e2e:cookies": "protractor --params.storage cookies",
     "e2e:client": "protractor --params.api https://raible.apps.stormpath.io",
     "e2e:client+cookies": "protractor --params.api https://raible.apps.stormpath.io --params.storage cookies",
+    "e2e:all": "npm run e2e && npm run e2e:client && npm run e2e:client+cookies",
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "typedoc": "mkdir -p dist/docs && typedoc --options typedoc.json src/*.ts",
