@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.6"></a>
+## [0.1.6](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.5...v0.1.6) (2017-02-04)
+
+
+### Bug Fixes
+
+* **dependencies:** Remove Ionic pages and module ([a3e837b](https://github.com/stormpath/stormpath-sdk-angular/commit/a3e837b))
+
+
+
 <a name="0.1.5"></a>
 ## [0.1.5](https://github.com/stormpath/stormpath-sdk-angular/compare/v0.1.4...v0.1.5) (2017-02-03)
 

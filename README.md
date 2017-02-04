@@ -278,7 +278,7 @@ When this happens, you can use the ol' fashioned copy and paste method. If you h
 ```
 rm -rf node_modules/angular-stormpath/dist
 cp -r ../stormpath-sdk-angular/dist node_modules/angular-stormpath/.
-cp ../stormpath-sdk-angular/package.json .
+cp ../stormpath-sdk-angular/package.json node_modules/angular-stormpath/.
 ```
 
 ### Release
