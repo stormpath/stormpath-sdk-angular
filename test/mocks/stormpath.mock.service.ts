@@ -1,6 +1,6 @@
 import { SpyObject } from './helper';
 import Spy = jasmine.Spy;
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Account, BaseStormpathAccount } from '../../src/shared/account';
 import { Stormpath } from '../../src/stormpath/stormpath.service';

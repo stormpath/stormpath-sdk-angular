@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, Observer, Subscription} from 'rxjs/Rx';
+import { Observer, Subscription} from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class EventManager {

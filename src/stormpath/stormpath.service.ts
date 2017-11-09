@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Location } from '@angular/common';
-import { ReplaySubject } from 'rxjs/Rx';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import { Account, BaseStormpathAccount } from '../shared/account';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
