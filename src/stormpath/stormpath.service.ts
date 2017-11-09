@@ -9,6 +9,11 @@ import { AuthToken } from './auth.token';
 import { StormpathConfiguration, StormpathConstants } from './stormpath.config';
 import { CurrentDomain } from './stormpath.http';
 import { TokenStoreManager } from './token-store.manager';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/catch';
 
 let APPLICATION_JSON: string = 'application/json';
 
@@ -251,7 +256,7 @@ export class Stormpath {
    * response is not a JSON error
    * @param {any} error
    */
-  private errorTranslator(error: any): ErrorObservable<StormpathErrorResponse> {
+  private errorTranslator(error: any): Observable<any> {
     let errorObject: StormpathErrorResponse;
     try {
       errorObject = error.json();
@@ -264,7 +269,7 @@ export class Stormpath {
     return Observable.throw(errorObject);
   }
 
-  private errorThrower(error: any): ErrorObservable<StormpathErrorResponse> {
+  private errorThrower(error: any): Observable<StormpathErrorResponse> {
     return Observable.throw(error);
   }
 
@@ -276,7 +281,7 @@ export class Stormpath {
     }
   }
 
-  private jsonParser(res: Response): any {
+  private jsonParser(res: Response): Account {
     if (res.text() === '') {
       return null;
     }

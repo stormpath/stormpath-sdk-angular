@@ -1,4 +1,6 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+// import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { MockStormpathService } from '../mocks/stormpath.mock.service';
 import { FormsModule } from '@angular/forms';
 import { AuthPortComponent, LoginComponent, ForgotPasswordComponent, RegisterComponent, Stormpath } from '../../src';

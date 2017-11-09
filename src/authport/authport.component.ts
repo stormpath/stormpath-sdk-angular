@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Stormpath, LoginService } from '../stormpath/stormpath.service';
 import { Account } from '../shared/account';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'sp-authport',

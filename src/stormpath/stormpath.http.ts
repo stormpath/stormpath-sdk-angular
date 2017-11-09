@@ -14,6 +14,8 @@ import { JsonGetOptions } from './stormpath.service';
 import { TokenStoreManager } from './token-store.manager';
 import { StormpathConfiguration, StormpathConstants } from './stormpath.config';
 import { AuthToken } from './auth.token';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 // function that allows overriding the default Http provider
 export function httpFactory(backend: XHRBackend, defaultOptions: RequestOptions,
