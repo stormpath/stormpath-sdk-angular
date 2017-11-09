@@ -9,7 +9,7 @@ import {
   XHRBackend,
   Headers
 } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { JsonGetOptions } from './stormpath.service';
 import { TokenStoreManager } from './token-store.manager';
 import { StormpathConfiguration, StormpathConstants } from './stormpath.config';
