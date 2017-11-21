@@ -22,7 +22,7 @@
     "e2e:all": "npm run e2e && npm run e2e:client && npm run e2e:client+cookies",
     "commit": "git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "typedoc": "mkdir -p dist/docs && typedoc --options typedoc.json src/*.ts",
+    "typedoc": "mkdir -p dist/docs && typedoc --options typedoc.json src/*.ts --out dist/docs",
     "gh-pages": "git checkout gh-pages && git merge master && npm run build:demo && npm run typedoc && git add . && git commit -m 'chore: build demo and docs' && git push && git checkout master",
     "prerelease": "npm test",
     "release": "standard-version --first-release && git push --follow-tags origin master && npm run build:dist && npm publish",
