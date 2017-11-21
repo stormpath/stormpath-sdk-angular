@@ -251,7 +251,7 @@ export class Stormpath {
    * response is not a JSON error
    * @param {any} error
    */
-  private errorTranslator(error: any): ErrorObservable<StormpathErrorResponse> {
+  private errorTranslator(error: any): Observable<any> {
     let errorObject: StormpathErrorResponse;
     try {
       errorObject = error.json();
@@ -264,7 +264,7 @@ export class Stormpath {
     return Observable.throw(errorObject);
   }
 
-  private errorThrower(error: any): ErrorObservable<StormpathErrorResponse> {
+  private errorThrower(error: any): Observable<StormpathErrorResponse> {
     return Observable.throw(error);
   }
 

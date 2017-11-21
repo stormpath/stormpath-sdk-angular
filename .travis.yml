@@ -8,7 +8,7 @@ script:
 #- npm run e2e:cookies # run protractor tests against local instance with cookie storage
 #- npm run e2e:client # run protractor tests against client api
 #- npm run e2e:client+cookies # run protractor tests against client api with cookie storage
-- npm run typedoc
+#- npm run typedoc
 cache:
   directories:
   - node_modules

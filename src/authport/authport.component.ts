@@ -6,7 +6,7 @@ import { Account } from '../shared/account';
 
 @Component({
   selector: 'sp-authport',
-  template: `<template #defaultTemplate>
+  template: `<ng-template #defaultTemplate>
   <div class="container">
     <div class="row" *ngIf="(user$ | async) === false">
       <div class="col-xs-12 col-sm-offset-3 col-sm-6">
@@ -42,20 +42,20 @@ import { Account } from '../shared/account';
       </div>
     </div>
   </div>
-</template>
-<template
+</ng-template>
+<ng-template
   [ngTemplateOutlet]="customTemplate || defaultTemplate">
-</template>`,
+</ng-template>`,
   providers: [LoginService]
 })
 @Injectable()
 export class AuthPortComponent implements OnInit {
   /**
-   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * A reference to a `<ng-template>` tag that if set will override this component's template. Use like so:
    * ```
-   * <template #customTemplate>
+   * <ng-template #customTemplate>
    *   // custom HTML with login form
-   * </template>
+   * </ng-template>
    * ```
    * Then pass customTemplate to the sp-authport component like so `[customTemplate]="customTemplate"`
    */

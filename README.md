@@ -144,7 +144,7 @@ import { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from 'angu
   </ul>
 </div>
 
-<template #loginform>
+<ng-template #loginform>
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
   <form>
       <label for="email">Email</label>
@@ -153,14 +153,14 @@ import { Stormpath, StormpathErrorResponse, Account, LoginFormModel } from 'angu
       <input id="passwordField" name="password" type="password" [(ngModel)]="loginFormModel.password">
       <button (click)="login()">Login</button>
   </form>
-</template>
+</ng-template>
 
-<template #authport>
+<ng-template #authport>
   <div *ngIf="(user$ | async) === false">
       <h2>Sign In</h2>
       <login-form [customTemplate]="loginform"></login-form>
   </div>
-</template>
+</ng-template>
 
 <sp-authport [customTemplate]="authport"></sp-authport>
 

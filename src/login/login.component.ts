@@ -8,7 +8,7 @@ import {
 
 @Component({
   selector: 'login-form',
-  template: `<template #defaultTemplate>
+  template: `<ng-template #defaultTemplate>
 <form class="form-horizontal" #form="ngForm" (ngSubmit)="login(form.value)" autocomplete="off">
   <div class="form-group">
     <label for="loginField" class="col-sm-3 control-label">Email</label>
@@ -32,19 +32,19 @@ import {
   <div *ngIf="error" class="alert alert-danger">{{error}}</div>
   <button id="loginBtn" type="submit" class="btn btn-primary pull-right">Login</button>
 </form>
-</template>
-<template
+</ng-template>
+<ng-template
   [ngTemplateOutlet]="customTemplate || defaultTemplate">
-</template>`
+</ng-template>`
 })
 @Injectable()
 export class LoginComponent implements OnInit {
   /**
-   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * A reference to a `<ng-template>` tag that if set will override this component's template. Use like so:
    * ```
-   * <template #customTemplate>
+   * <ng-template #customTemplate>
    *   // custom HTML with login form
-   * </template>
+   * </ng-template>
    * ```
    * Then pass customTemplate to the `login-form` component like so `[customTemplate]="customTemplate"`
    */

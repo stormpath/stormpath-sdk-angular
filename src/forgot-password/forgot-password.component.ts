@@ -4,7 +4,7 @@ import { Stormpath, ForgotPasswordFormModel, StormpathErrorResponse } from '../s
 
 @Component({
   selector: 'forgot-password-form',
-  template: `<template #defaultTemplate>
+  template: `<ng-template #defaultTemplate>
   <div class="row">
     <div class="col-xs-12">
       <p *ngIf="sent" class="alert alert-success">
@@ -32,19 +32,19 @@ import { Stormpath, ForgotPasswordFormModel, StormpathErrorResponse } from '../s
       </form>
     </div>
   </div>
-</template>
-<template
+</ng-template>
+<ng-template
   [ngTemplateOutlet]="customTemplate || defaultTemplate">
-</template>`
+</ng-template>`
 })
 @Injectable()
 export class ForgotPasswordComponent implements OnInit {
   /**
-   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * A reference to a `<ng-template>` tag that if set will override this component's template. Use like so:
    * ```
-   * <template #customTemplate>
+   * <ng-template #customTemplate>
    *   // custom HTML with login form
-   * </template>
+   * </ng-template>
    * ```
    * Then pass customTemplate to the `forgot-password-form` component like so `[customTemplate]="customTemplate"`
    */
