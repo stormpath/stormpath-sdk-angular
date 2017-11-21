@@ -7,7 +7,7 @@ import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/s
 
 @Component({
   selector: 'register-form',
-  template: `<template #defaultTemplate>
+  template: `<ng-template #defaultTemplate>
   <form *ngIf="!registered" (ngSubmit)="onSubmit()" class="form-horizontal" autocomplete="off">
     <div class="form-group" *ngFor="let field of model?.form?.fields">
       <label [attr.for]="field.name" class="col-sm-4 control-label">{{field.label}}</label>
@@ -26,19 +26,19 @@ import { Stormpath, LoginFormModel, RegistrationFormModel } from '../stormpath/s
   <p class="alert alert-success" *ngIf="canLogin">
     Your account has been created, you may now log in.
   </p>
-</template>
-<template
+</ng-template>
+<ng-template
   [ngTemplateOutlet]="customTemplate || defaultTemplate">
-</template>`
+</ng-template>`
 })
 @Injectable()
 export class RegisterComponent implements OnInit {
   /**
-   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * A reference to a `<ng-template>` tag that if set will override this component's template. Use like so:
    * ```
-   * <template #customTemplate>
+   * <ng-template #customTemplate>
    *   // custom HTML with login form
-   * </template>
+   * </ng-template>
    * ```
    * Then pass customTemplate to the `register-form` component like so `[customTemplate]="customTemplate"`
    */

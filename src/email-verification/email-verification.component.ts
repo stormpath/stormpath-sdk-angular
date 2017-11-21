@@ -5,7 +5,7 @@ import { Stormpath, defaultSpTokenResolver } from '../stormpath/stormpath.servic
 
 @Component({
   selector: 'email-verification',
-  template: `<template #defaultTemplate>
+  template: `<ng-template #defaultTemplate>
 <div class="row">
   <div class="col-sm-offset-4 col-xs-12 col-sm-4">
     <p *ngIf="verifying" class="alert alert-warning">We are verifying your account</p>
@@ -18,19 +18,19 @@ import { Stormpath, defaultSpTokenResolver } from '../stormpath/stormpath.servic
     <p class="text-danger" *ngIf="error">{{error}}</p>
   </div>
 </div>
-</template>
-<template
+</ng-template>
+<ng-template
   [ngTemplateOutlet]="customTemplate || defaultTemplate">
-</template>`
+</ng-template>`
 })
 @Injectable()
 export class EmailVerificationComponent implements OnInit {
   /**
-   * A reference to a `<template>` tag that if set will override this component's template. Use like so:
+   * A reference to a `<ng-template>` tag that if set will override this component's template. Use like so:
    * ```
-   * <template #customTemplate>
+   * <ng-template #customTemplate>
    *   // custom HTML with login form
-   * </template>
+   * </ng-template>
    * ```
    * Then pass customTemplate to the `email-verification` component like so `[customTemplate]="customTemplate"`
    */
